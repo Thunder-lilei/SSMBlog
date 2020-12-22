@@ -2,6 +2,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pers.lilei.blog.po.User;
 import pers.lilei.blog.service.UserService;
+import pers.lilei.blog.util.BCrypt;
 
 import java.util.Date;
 
@@ -61,5 +62,9 @@ public class UserServiceTest extends BaseTest{
 		User user = new User("gaoxieen2", "2", "gaoxieen@qq.com", "https://i.loli.net/2020/12/11/Gh9HoUW8qQcZKvV.jpg",
 				new Date(), (byte) age, 15149039288L, "高谢恩");
 		System.out.println(userService.updateUserSelective(user));
+	}
+	@Test
+	public void passwordAdd() {
+		System.out.println(BCrypt.hashpw("1",BCrypt.gensalt()));
 	}
 }

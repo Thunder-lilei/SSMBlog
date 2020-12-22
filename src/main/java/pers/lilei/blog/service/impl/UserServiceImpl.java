@@ -35,9 +35,21 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByTel(tel);
     }
 
+    /*
+     * @Author 李雷
+     * @Description
+     * 添加用户
+     * 用户名、电话、邮箱不能重复
+     * @CreateDate 12:20 2020/12/22
+     * @UpdateDate 12:20 2020/12/22
+     * @Param [user]
+     * @return java.lang.Integer
+     **/
     @Override
-    public Integer addUserSelective(User User) {
-        return userMapper.insertSelective(User);
+    public Integer addUserSelective(User user) {
+        if (selectByUserName(user.getUserName()) != null || selectByEmail(user.getUserEmail()) != null
+                || selectByTel(user.getUserTelephoneNumber()) != null) {return 0;}
+        return userMapper.insertSelective(user);
     }
 
     @Override
