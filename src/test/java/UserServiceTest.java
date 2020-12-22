@@ -49,6 +49,8 @@ public class UserServiceTest extends BaseTest{
 		int age = 22;
 		User user = new User("高学博", "1", "gaoxuebo@qq.com", "https://i.loli.net/2020/12/11/Gh9HoUW8qQcZKvV.jpg",
 				new Date(), (byte) age, 15149039277L, "高学博");
+//		User user = new User("高学博", "1", null, "https://i.loli.net/2020/12/11/Gh9HoUW8qQcZKvV.jpg",
+//				new Date(), (byte) age, null, "高学博");
 		System.out.println(userService.addUserSelective(user));
 	}
 	@Test
@@ -59,8 +61,9 @@ public class UserServiceTest extends BaseTest{
 	@Test
 	public void updateUserSelective() {
 		int age = 23;
-		User user = new User("gaoxieen2", "2", "gaoxieen@qq.com", "https://i.loli.net/2020/12/11/Gh9HoUW8qQcZKvV.jpg",
+		User user = new User("gaoxieen2", "1", "gaoxieen@qq.com", "https://i.loli.net/2020/12/11/Gh9HoUW8qQcZKvV.jpg",
 				new Date(), (byte) age, 15149039288L, "高谢恩");
+		user.setUserId(3L);
 		System.out.println(userService.updateUserSelective(user));
 	}
 	@Test

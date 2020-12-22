@@ -20,11 +20,17 @@ public interface UserMapper {
 
     User selectByPrimaryKey(Long userId);
 
+    String selectUserPasswordByPrimaryKey(Long userId);
+
     User selectByUserName(String userName);
 
     User selectByEmail(String email);
 
     User selectByTel(Long tel);
+
+    User selectByUserNameAndEmailAndTel(User user);
+
+    User selectByUserNameAndEmailAndTelWithoutUserId(User user);
 
     int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
 

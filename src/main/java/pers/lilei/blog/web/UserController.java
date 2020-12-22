@@ -122,4 +122,28 @@ public class UserController extends BaseController{
         }
         return modelMap;
     }
+    /*
+     * @Author 李雷
+     * @Description
+     * 修改用户信息
+     * @CreateDate 22:37 2020/12/22
+     * @UpdateDate 22:37 2020/12/22
+     * @Param [user]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+    private Map<String,Object> updateUser(User user){
+        Map<String,Object> modelMap = new HashMap<>();
+        if (user != null) {
+            if (!userService.updateUserSelective(user).equals(0)) {
+                modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            } else {
+                modelMap.put(MessageConstant.MESSAGE, "尝试更换用户名！电话已被注册！邮箱已被注册！");
+            }
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "请填写用户基本信息！");
+        }
+        return modelMap;
+    }
 }

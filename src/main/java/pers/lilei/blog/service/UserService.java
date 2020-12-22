@@ -16,9 +16,17 @@ public interface UserService {
 
     User selectByTel(Long tel);
 
-    Integer addUserSelective(User User);
+    User selectByPrimaryKey(Long userId);
+
+    String selectUserPasswordByPrimaryKey(Long userId);
+
+    User selectByUserNameAndEmailAndTel(User user);
+
+    User selectByUserNameAndEmailAndTelWithoutUserId(User user);
+
+    Integer addUserSelective(User user);
 
     Integer deleteUserByUserId(Long userId);
 
-    Integer updateUserSelective(User User);
+    Integer updateUserSelective(User user);
 }

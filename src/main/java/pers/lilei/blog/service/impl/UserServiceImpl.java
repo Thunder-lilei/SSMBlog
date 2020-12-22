@@ -36,6 +36,26 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByTel(tel);
     }
 
+    @Override
+    public User selectByPrimaryKey(Long userId) {
+        return userMapper.selectByPrimaryKey(userId);
+    }
+
+    @Override
+    public String selectUserPasswordByPrimaryKey(Long userId) {
+        return userMapper.selectUserPasswordByPrimaryKey(userId);
+    }
+
+    @Override
+    public User selectByUserNameAndEmailAndTel(User user) {
+        return userMapper.selectByUserNameAndEmailAndTel(user);
+    }
+
+    @Override
+    public User selectByUserNameAndEmailAndTelWithoutUserId(User user) {
+        return userMapper.selectByUserNameAndEmailAndTelWithoutUserId(user);
+    }
+
     /*
      * @Author 李雷
      * @Description
@@ -49,8 +69,7 @@ public class UserServiceImpl implements UserService {
      **/
     @Override
     public Integer addUserSelective(User user) {
-        if (selectByUserName(user.getUserName()) != null || selectByEmail(user.getUserEmail()) != null
-                || selectByTel(user.getUserTelephoneNumber()) != null) {return 0;}
+        if (selectByUserNameAndEmailAndTel(user) != null) {return 0;}
         user.setUserPassword(BCrypt.hashpw(user.getUserPassword(),BCrypt.gensalt()));
         return userMapper.insertSelective(user);
     }
@@ -60,8 +79,24 @@ public class UserServiceImpl implements UserService {
         return userMapper.deleteByPrimaryKey(userId);
     }
 
+    /*
+     * @Author 李雷
+     * @Description
+     * 更新用户信息
+     * 新密码加密
+     * 用户名 电话 邮箱不能重复
+     * @CreateDate 22:25 2020/12/22
+     * @UpdateDate 22:25 2020/12/22
+     * @Param [user]
+     * @return java.lang.Integer
+     **/
     @Override
-    public Integer updateUserSelective(User User) {
-        return userMapper.updateByPrimaryKeySelective(User);
+    public Integer updateUserSelective(User user) {
+        if (selectByUserNameAndEmailAndTelWithoutUserId(user) != null) {return 0;}
+        String userPassword = selectUserPasswordByPrimaryKey(user.getUserId());
+        if (!user.getUserPassword().equals(userPassword)) {
+            user.setUserPassword(BCrypt.hashpw(user.getUserPassword(),BCrypt.gensalt()));
+        }
+        return userMapper.updateByPrimaryKeySelective(user);
     }
 }
