@@ -70,7 +70,7 @@ public class UserController extends BaseController{
         User user = (User) session.getAttribute("user");
         if (user != null) {
             modelMap.put("loginUser",user);
-            modelMap.put(MessageConstant.MESSAGE,MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
         } else {
             modelMap.put(MessageConstant.MESSAGE, "未登录！");
         }
@@ -92,9 +92,33 @@ public class UserController extends BaseController{
         User user = (User) session.getAttribute("user");
         if (user != null) {
             session.invalidate();
-            modelMap.put(MessageConstant.MESSAGE,MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
         } else {
-            modelMap.put(MessageConstant.MESSAGE,"未登录！");
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 注册用户
+     * @CreateDate 20:05 2020/12/22
+     * @UpdateDate 20:05 2020/12/22
+     * @Param [user]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/registerUser", method = RequestMethod.POST)
+    private Map<String,Object> registerUser(User user){
+        Map<String,Object> modelMap = new HashMap<>();
+        if (user != null) {
+            if (!userService.addUserSelective(user).equals(0)) {
+                modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            } else {
+                modelMap.put(MessageConstant.MESSAGE, "尝试更换用户名！");
+            }
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "请填写用户基本信息！");
         }
         return modelMap;
     }

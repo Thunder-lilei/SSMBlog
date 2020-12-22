@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pers.lilei.blog.dao.UserMapper;
 import pers.lilei.blog.po.User;
 import pers.lilei.blog.service.UserService;
+import pers.lilei.blog.util.BCrypt;
 
 /**
  * <h3>SSMBlog</h3>
@@ -40,6 +41,7 @@ public class UserServiceImpl implements UserService {
      * @Description
      * 添加用户
      * 用户名、电话、邮箱不能重复
+     * 密码加密
      * @CreateDate 12:20 2020/12/22
      * @UpdateDate 12:20 2020/12/22
      * @Param [user]
@@ -49,6 +51,7 @@ public class UserServiceImpl implements UserService {
     public Integer addUserSelective(User user) {
         if (selectByUserName(user.getUserName()) != null || selectByEmail(user.getUserEmail()) != null
                 || selectByTel(user.getUserTelephoneNumber()) != null) {return 0;}
+        user.setUserPassword(BCrypt.hashpw(user.getUserPassword(),BCrypt.gensalt()));
         return userMapper.insertSelective(user);
     }
 
