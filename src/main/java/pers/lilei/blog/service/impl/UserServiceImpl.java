@@ -1,5 +1,7 @@
 package pers.lilei.blog.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.lilei.blog.dao.UserMapper;
@@ -60,13 +62,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserBaseInfoPojo> selectUserBaseInfoByKey(String key) {
-        return userMapper.selectUserBaseInfoByKey(key);
+    public PageInfo<UserBaseInfoPojo> selectUserBaseInfoByKey(int pageNow, int pageSize, String key) {
+        PageHelper.startPage(pageNow, pageSize);
+        List<UserBaseInfoPojo> userBaseInfoPojoList = userMapper.selectUserBaseInfoByKey(key);
+        return new PageInfo<>(userBaseInfoPojoList);
     }
 
     @Override
-    public List<UserBaseInfoPojo> selectAllUserBaseInfo() {
-        return userMapper.selectAllUserBaseInfo();
+    public PageInfo<UserBaseInfoPojo> selectAllUserBaseInfo(int pageNow, int pageSize) {
+        PageHelper.startPage(pageNow, pageSize);
+        List<UserBaseInfoPojo> userBaseInfoPojoList = userMapper.selectAllUserBaseInfo();
+        return new PageInfo<>(userBaseInfoPojoList);
     }
 
     /*

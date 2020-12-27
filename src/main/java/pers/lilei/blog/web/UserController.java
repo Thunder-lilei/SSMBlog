@@ -206,16 +206,16 @@ public class UserController extends BaseController{
      **/
     @ResponseBody
     @RequestMapping(value = "/selectUserBaseInfoByKey", method = RequestMethod.POST)
-    private Map<String,Object> selectUserBaseInfoByKey(@RequestParam String key) {
+    private Map<String,Object> selectUserBaseInfoByKey(@RequestParam Integer pageNow, @RequestParam Integer pageSize, @RequestParam String key) {
         Map<String, Object> modelMap = new HashMap<>();
-        modelMap.put("userList", userService.selectUserBaseInfoByKey(key));
+        modelMap.put("userPageInfo", userService.selectUserBaseInfoByKey(pageNow, pageSize, key));
         return modelMap;
     }
     @ResponseBody
     @RequestMapping(value = "/selectAllUserBaseInfo", method = RequestMethod.POST)
-    private Map<String,Object> selectAllUserBaseInfo() {
+    private Map<String,Object> selectAllUserBaseInfo(@RequestParam Integer pageNow, @RequestParam Integer pageSize) {
         Map<String, Object> modelMap = new HashMap<>();
-        modelMap.put("userList", userService.selectAllUserBaseInfo());
+        modelMap.put("allUserPageInfo", userService.selectAllUserBaseInfo(pageNow, pageSize));
         return modelMap;
     }
 

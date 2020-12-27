@@ -1,5 +1,6 @@
 package pers.lilei.blog.service;
 
+import com.github.pagehelper.PageInfo;
 import pers.lilei.blog.po.User;
 import pers.lilei.blog.pojo.UserBaseInfoPojo;
 
@@ -27,9 +28,9 @@ public interface UserService {
 
     User selectByUserNameAndEmailAndTelWithoutUserId(User user);
 
-    List<UserBaseInfoPojo> selectUserBaseInfoByKey(String key);
+    PageInfo<UserBaseInfoPojo> selectUserBaseInfoByKey(int pageNow, int pageSize, String key);
 
-    List<UserBaseInfoPojo> selectAllUserBaseInfo();
+    PageInfo<UserBaseInfoPojo> selectAllUserBaseInfo(int pageNow, int pageSize);
 
     Integer addUserSelective(User user);
 

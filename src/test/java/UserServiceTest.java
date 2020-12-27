@@ -1,3 +1,4 @@
+import com.github.pagehelper.PageInfo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -112,12 +113,12 @@ public class UserServiceTest extends BaseTest{
 	}
 	@Test
 		public void selectUserBaseInfoByKey() {
-		List<UserBaseInfoPojo> userBaseInfoPojoList = userService.selectUserBaseInfoByKey("l");
-		userBaseInfoPojoList.forEach(temp-> System.out.println(temp.getUserNickname()));
+		PageInfo<UserBaseInfoPojo> pageInfo = userService.selectUserBaseInfoByKey(1, 10, "l");
+		System.out.println(pageInfo);
 	}
 	@Test
 	public void selectAllUserBaseInfo() {
-		List<UserBaseInfoPojo> userBaseInfoPojoList = userService.selectAllUserBaseInfo();
-		userBaseInfoPojoList.forEach(temp-> System.out.println(temp.getUserNickname()));
+		PageInfo<UserBaseInfoPojo> pageInfo = (PageInfo<UserBaseInfoPojo>) userService.selectAllUserBaseInfo(1, 10);
+		System.out.println(pageInfo);
 	}
 }
