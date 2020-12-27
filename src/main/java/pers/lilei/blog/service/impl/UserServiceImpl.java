@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.lilei.blog.dao.UserMapper;
 import pers.lilei.blog.po.User;
+import pers.lilei.blog.pojo.UserBaseInfoPojo;
 import pers.lilei.blog.service.UserService;
 import pers.lilei.blog.util.BCrypt;
+
+import java.util.List;
 
 /**
  * <h3>SSMBlog</h3>
@@ -56,6 +59,16 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByUserNameAndEmailAndTelWithoutUserId(user);
     }
 
+    @Override
+    public List<UserBaseInfoPojo> selectUserBaseInfoByKey(String key) {
+        return userMapper.selectUserBaseInfoByKey(key);
+    }
+
+    @Override
+    public List<UserBaseInfoPojo> selectAllUserBaseInfo() {
+        return userMapper.selectAllUserBaseInfo();
+    }
+
     /*
      * @Author 李雷
      * @Description
@@ -93,10 +106,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer updateUserSelective(User user) {
         if (selectByUserNameAndEmailAndTelWithoutUserId(user) != null) {return 0;}
+        user.setTimeNull();
         String userPassword = selectUserPasswordByPrimaryKey(user.getUserId());
         if (!user.getUserPassword().equals(userPassword)) {
             user.setUserPassword(BCrypt.hashpw(user.getUserPassword(),BCrypt.gensalt()));
         }
         return userMapper.updateByPrimaryKeySelective(user);
     }
+
+    @Override
+    public Integer updatePasswordByTel(User user) {
+        //密码加密
+        user.setUserPassword(BCrypt.hashpw(user.getUserPassword(), BCrypt.gensalt()));
+        return userMapper.updatePasswordByTel(user);
+    }
+
+    @Override
+    public Integer updatePasswordByEmail(User user) {
+        //密码加密
+        user.setUserPassword(BCrypt.hashpw(user.getUserPassword(), BCrypt.gensalt()));
+        return userMapper.updatePasswordByEmail(user);
+    }
+
 }

@@ -1,10 +1,16 @@
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestParam;
+import pers.lilei.blog.constant.MessageConstant;
 import pers.lilei.blog.po.User;
+import pers.lilei.blog.pojo.UserBaseInfoPojo;
 import pers.lilei.blog.service.UserService;
 import pers.lilei.blog.util.BCrypt;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class UserServiceTest extends BaseTest{
@@ -69,5 +75,49 @@ public class UserServiceTest extends BaseTest{
 	@Test
 	public void passwordAdd() {
 		System.out.println(BCrypt.hashpw("1",BCrypt.gensalt()));
+	}
+	@Test
+	public void updatePasswordByCode(){
+		Integer code = 1234;
+		User user = new User();
+		user.setUserPassword("1");
+		user.setUserTelephoneNumber(15149039299L);
+		//验证码校验
+		if (code == null && !code.equals(1234)) {
+			System.out.println("请填写正确的验证码！");
+		}
+		if (user.getUserPassword() == null) {
+			System.out.println("请填写密码！");
+		}
+		User selectUser;
+		if (user.getUserTelephoneNumber() != null) {
+			selectUser = userService.selectByTel(user.getUserTelephoneNumber());
+		}else if (user.getUserEmail() != null) {
+			selectUser = userService.selectByEmail(user.getUserEmail());
+		}else {
+			selectUser = null;
+		}
+
+		if (selectUser != null) {
+			selectUser.setUserPassword(user.getUserPassword());
+			selectUser.setTimeNull();
+			if (!userService.updateUserSelective(selectUser).equals(0)) {
+				System.out.println(MessageConstant.MESSAGE_SUCCESS);
+			}else {
+				System.out.println("密码修改失败！");
+			}
+		}else {
+			System.out.println("电话或邮箱未匹配！");
+		}
+	}
+	@Test
+		public void selectUserBaseInfoByKey() {
+		List<UserBaseInfoPojo> userBaseInfoPojoList = userService.selectUserBaseInfoByKey("l");
+		userBaseInfoPojoList.forEach(temp-> System.out.println(temp.getUserNickname()));
+	}
+	@Test
+	public void selectAllUserBaseInfo() {
+		List<UserBaseInfoPojo> userBaseInfoPojoList = userService.selectAllUserBaseInfo();
+		userBaseInfoPojoList.forEach(temp-> System.out.println(temp.getUserNickname()));
 	}
 }

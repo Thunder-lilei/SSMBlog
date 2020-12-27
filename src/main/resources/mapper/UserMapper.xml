@@ -119,6 +119,17 @@
     from tbl_user
     where user_telephone_number = #{userTelephoneNumber,jdbcType=BIGINT}
   </select>
+  <select id="selectUserBaseInfoByKey" parameterType="java.lang.String" resultType="pers.lilei.blog.pojo.UserBaseInfoPojo">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_user
+    where CONCAT(user_name, user_nickname) LIKE "%"#{key,jdbcType=VARCHAR}"%"
+  </select>
+  <select id="selectAllUserBaseInfo" resultType="pers.lilei.blog.pojo.UserBaseInfoPojo">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_user
+  </select>
   <select id="selectByUserNameAndEmailAndTel" parameterType="pers.lilei.blog.po.User" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -323,6 +334,20 @@
       </if>
     </set>
     where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updatePasswordByEmail" parameterType="pers.lilei.blog.po.User">
+    update tbl_user
+    <set>
+        user_password = #{userPassword,jdbcType=VARCHAR},
+    </set>
+    where user_email = #{userEmail,jdbcType=VARCHAR}
+  </update>
+  <update id="updatePasswordByTel" parameterType="pers.lilei.blog.po.User">
+    update tbl_user
+    <set>
+        user_password = #{userPassword,jdbcType=VARCHAR},
+    </set>
+    where user_telephone_number = #{userTelephoneNumber,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="pers.lilei.blog.po.User">
     update tbl_user

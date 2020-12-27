@@ -44,6 +44,11 @@ public class User {
         this.userNickname = userNickname;
     }
 
+    public void setTimeNull() {
+        this.createTime = null;
+        this.updateTime = null;
+    }
+
     public Long getUserId() {
         return userId;
     }

@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import pers.lilei.blog.po.User;
 import pers.lilei.blog.po.UserExample;
+import pers.lilei.blog.pojo.UserBaseInfoPojo;
 
 public interface UserMapper {
     long countByExample(UserExample example);
@@ -32,11 +33,19 @@ public interface UserMapper {
 
     User selectByUserNameAndEmailAndTelWithoutUserId(User user);
 
+    List<UserBaseInfoPojo> selectUserBaseInfoByKey(String key);
+
+    List<UserBaseInfoPojo> selectAllUserBaseInfo();
+
     int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
 
     int updateByExample(@Param("record") User record, @Param("example") UserExample example);
 
     int updateByPrimaryKeySelective(User record);
+
+    int updatePasswordByTel(User record);
+
+    int updatePasswordByEmail(User record);
 
     int updateByPrimaryKey(User record);
 }
