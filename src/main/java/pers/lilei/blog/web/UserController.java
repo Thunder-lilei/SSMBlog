@@ -8,12 +8,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pers.lilei.blog.constant.MessageConstant;
 import pers.lilei.blog.po.User;
-import pers.lilei.blog.pojo.UserBaseInfoPojo;
 import pers.lilei.blog.service.UserService;
 import pers.lilei.blog.util.BCrypt;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -165,7 +163,8 @@ public class UserController extends BaseController{
     private Map<String,Object> updatePasswordByCode(User user, @RequestParam Integer code){
         Map<String,Object> modelMap = new HashMap<>();
         //验证码校验
-        if (code == null && !session.getAttribute("code").equals(code)) {
+        Integer sessionCode = (Integer) session.getAttribute("code");
+        if (code == null && !sessionCode.equals(code)) {
             modelMap.put(MessageConstant.MESSAGE, "请填写正确的验证码！");
             return modelMap;
         }
@@ -208,6 +207,7 @@ public class UserController extends BaseController{
     @RequestMapping(value = "/selectUserBaseInfoByKey", method = RequestMethod.POST)
     private Map<String,Object> selectUserBaseInfoByKey(@RequestParam Integer pageNow, @RequestParam Integer pageSize, @RequestParam String key) {
         Map<String, Object> modelMap = new HashMap<>();
+        modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
         modelMap.put("userPageInfo", userService.selectUserBaseInfoByKey(pageNow, pageSize, key));
         return modelMap;
     }
@@ -215,6 +215,7 @@ public class UserController extends BaseController{
     @RequestMapping(value = "/selectAllUserBaseInfo", method = RequestMethod.POST)
     private Map<String,Object> selectAllUserBaseInfo(@RequestParam Integer pageNow, @RequestParam Integer pageSize) {
         Map<String, Object> modelMap = new HashMap<>();
+        modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
         modelMap.put("allUserPageInfo", userService.selectAllUserBaseInfo(pageNow, pageSize));
         return modelMap;
     }
