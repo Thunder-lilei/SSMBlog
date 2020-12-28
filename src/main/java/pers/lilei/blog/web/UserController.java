@@ -313,5 +313,27 @@ public class UserController extends BaseController{
         }
         return modelMap;
     }
+    /*
+     * @Author 李雷
+     * @Description
+     * 更改头像地址
+     * @CreateDate 17:58 2020/12/28
+     * @UpdateDate 17:58 2020/12/28
+     * @Param [imgUrl]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/changeHeadImg", method = RequestMethod.POST)
+    private Map<String,Object> changeHeadImg(@RequestParam String imgUrl) {
+        Map<String, Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        user.setUserProfilePhoto(imgUrl);
+        if (!userService.updateUserSelective(user).equals(0)) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+        }else {
+            modelMap.put(MessageConstant.MESSAGE, "更改失败！");
+        }
+        return modelMap;
+    }
 
 }
