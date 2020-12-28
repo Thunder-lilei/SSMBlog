@@ -2,10 +2,7 @@ package pers.lilei.blog.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import pers.lilei.blog.constant.MessageConstant;
 import pers.lilei.blog.po.User;
 import pers.lilei.blog.service.UserService;
@@ -40,7 +37,7 @@ public class UserController extends BaseController{
      **/
     @ResponseBody
     @RequestMapping(value = "/toLoginByUserName", method = RequestMethod.POST)
-    private Map<String,Object> toLoginByUserName(User user){
+    private Map<String,Object> toLoginByUserName(@RequestBody User user){
         Map<String,Object> modelMap = new HashMap<>();
         if (user != null) {
             User LoginUser = userService.selectByUserName(user.getUserName());
@@ -110,7 +107,7 @@ public class UserController extends BaseController{
      **/
     @ResponseBody
     @RequestMapping(value = "/registerUser", method = RequestMethod.POST)
-    private Map<String,Object> registerUser(User user){
+    private Map<String,Object> registerUser(@RequestBody  User user){
         Map<String,Object> modelMap = new HashMap<>();
         if (user != null) {
             if (!userService.addUserSelective(user).equals(0)) {
@@ -134,7 +131,7 @@ public class UserController extends BaseController{
      **/
     @ResponseBody
     @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
-    private Map<String,Object> updateUser(User user){
+    private Map<String,Object> updateUser(@RequestBody User user){
         Map<String,Object> modelMap = new HashMap<>();
         if (user != null) {
             if (!userService.updateUserSelective(user).equals(0)) {
@@ -211,12 +208,41 @@ public class UserController extends BaseController{
         modelMap.put("userPageInfo", userService.selectUserBaseInfoByKey(pageNow, pageSize, key));
         return modelMap;
     }
+    /*
+     * @Author 李雷
+     * @Description
+     * 分页查询所有用户基本信息
+     * @CreateDate 9:04 2020/12/28
+     * @UpdateDate 9:04 2020/12/28
+     * @Param [pageNow, pageSize]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
     @ResponseBody
     @RequestMapping(value = "/selectAllUserBaseInfo", method = RequestMethod.POST)
     private Map<String,Object> selectAllUserBaseInfo(@RequestParam Integer pageNow, @RequestParam Integer pageSize) {
         Map<String, Object> modelMap = new HashMap<>();
         modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
         modelMap.put("allUserPageInfo", userService.selectAllUserBaseInfo(pageNow, pageSize));
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 根据用户id删除用户
+     * @CreateDate 9:08 2020/12/28
+     * @UpdateDate 9:08 2020/12/28
+     * @Param [userId]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
+    private Map<String,Object> deleteUser(@RequestParam Long userId) {
+        Map<String, Object> modelMap = new HashMap<>();
+        if (!userService.deleteUserByUserId(userId).equals(0)) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+        }else {
+            modelMap.put(MessageConstant.MESSAGE, "删除失败");
+        }
         return modelMap;
     }
 
