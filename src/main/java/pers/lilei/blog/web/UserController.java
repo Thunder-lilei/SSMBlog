@@ -77,6 +77,74 @@ public class UserController extends BaseController{
     /*
      * @Author 李雷
      * @Description
+     * 获取需要更新的用户信息
+     * 移除位于session的用户信息
+     * @CreateDate 14:50 2020/12/28
+     * @UpdateDate 14:50 2020/12/28
+     * @Param []
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/getUpdateUser", method = RequestMethod.POST)
+    private Map<String,Object> getUpdateUser(){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("updateUser");
+        if (user != null) {
+            modelMap.put("updateUser",user);
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            session.setAttribute("updateUser", null);
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "没有设置需要修改信息的用户！");
+        }
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 设置需要更新的用户信息
+     * @CreateDate 14:51 2020/12/28
+     * @UpdateDate 14:51 2020/12/28
+     * @Param [updateUserId]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/setUpdateUser", method = RequestMethod.POST)
+    private Map<String,Object> setUpdateUser(@RequestParam Long updateUserId){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = userService.selectByPrimaryKey(updateUserId);
+        if (user != null) {
+            session.setAttribute("updateUser", user);
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未查询到用户信息！");
+        }
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 通过用户id查询用户
+     * @CreateDate 13:37 2020/12/28
+     * @UpdateDate 13:37 2020/12/28
+     * @Param [userId]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/getUser", method = RequestMethod.POST)
+    private Map<String,Object> getUser(@RequestParam Long userId){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = userService.selectByPrimaryKey(userId);
+        if (user != null) {
+            modelMap.put("updateUser",user);
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未查询到用户！");
+        }
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
      * 登出 清空session
      * @CreateDate 16:37 2020/12/22
      * @UpdateDate 16:37 2020/12/22
