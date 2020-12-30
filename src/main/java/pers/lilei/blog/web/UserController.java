@@ -335,5 +335,36 @@ public class UserController extends BaseController{
         }
         return modelMap;
     }
-
+    /*
+     * @Author 李雷
+     * @Description
+     * 重复信息判断
+     * @CreateDate 20:01 2020/12/30
+     * @UpdateDate 20:01 2020/12/30
+     * @Param [userName, email, tel, id]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/ifHaveSame", method = RequestMethod.POST)
+    private Map<String,Object> checkUserName(String userName, String email, Long tel, @RequestParam Long userId) {
+        Map<String, Object> modelMap = new HashMap<>();
+        User user = null;
+        //选择判断方式
+        if (userName != null) {
+            user = userService.selectByUserName(userName);
+        } else if (email != null) {
+            user = userService.selectByEmail(email);
+        } else if (tel != null) {
+            user = userService.selectByTel(tel);
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "请选择判断条件！");
+        }
+        //抛出自己
+        if (user != null && !user.getUserId().equals(userId)) {
+            modelMap.put(MessageConstant.MESSAGE, true);
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, false);
+        }
+        return modelMap;
+    }
 }
