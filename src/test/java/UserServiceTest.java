@@ -9,10 +9,6 @@ import pers.lilei.blog.service.UserService;
 import pers.lilei.blog.util.BCrypt;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 
 public class UserServiceTest extends BaseTest{
 	private UserService userService;

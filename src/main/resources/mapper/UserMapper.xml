@@ -134,17 +134,17 @@
     select
     <include refid="Base_Column_List" />
     from tbl_user
-    where (user_name = #{userName,jdbcType=VARCHAR} AND user_name != null)
-    OR (user_telephone_number = #{userTelephoneNumber,jdbcType=BIGINT} AND user_telephone_number != null)
-    OR (user_email = #{userEmail,jdbcType=VARCHAR} AND user_email != null)
+    where (user_name = #{userName,jdbcType=VARCHAR} AND user_name != "")
+    OR (user_telephone_number = #{userTelephoneNumber,jdbcType=BIGINT} AND user_telephone_number != "")
+    OR (user_email = #{userEmail,jdbcType=VARCHAR} AND user_email != "")
   </select>
   <select id="selectByUserNameAndEmailAndTelWithoutUserId" parameterType="pers.lilei.blog.po.User" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from tbl_user
-    where (user_name = #{userName,jdbcType=VARCHAR} AND user_name != null)
-    OR (user_telephone_number = #{userTelephoneNumber,jdbcType=BIGINT} AND user_telephone_number != null)
-    OR (user_email = #{userEmail,jdbcType=VARCHAR} AND user_email != null)
+    where ((user_name = #{userName,jdbcType=VARCHAR} AND user_name != "")
+    OR (user_telephone_number = #{userTelephoneNumber,jdbcType=BIGINT} AND user_telephone_number != "")
+    OR (user_email = #{userEmail,jdbcType=VARCHAR} AND user_email != ""))
     AND user_id != #{userId,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
