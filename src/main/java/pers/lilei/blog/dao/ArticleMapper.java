@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import pers.lilei.blog.po.Article;
 import pers.lilei.blog.po.ArticleExample;
 import pers.lilei.blog.po.ArticleWithBLOBs;
+import pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo;
 
 public interface ArticleMapper {
     long countByExample(ArticleExample example);
@@ -22,6 +23,8 @@ public interface ArticleMapper {
     List<Article> selectByExample(ArticleExample example);
 
     ArticleWithBLOBs selectByPrimaryKey(Long articleId);
+
+    List<ArticleWithUserBaseInfoPojo> selectAllArticleWithUserBaseInfoByUserId(Long userId);
 
     int updateByExampleSelective(@Param("record") ArticleWithBLOBs record, @Param("example") ArticleExample example);
 

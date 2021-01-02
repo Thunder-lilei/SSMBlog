@@ -177,14 +177,10 @@ public class UserController extends BaseController{
     @RequestMapping(value = "/registerUser", method = RequestMethod.POST)
     private Map<String,Object> registerUser(@RequestBody  User user){
         Map<String,Object> modelMap = new HashMap<>();
-        if (user != null) {
-            if (!userService.addUserSelective(user).equals(0)) {
-                modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-            } else {
-                modelMap.put(MessageConstant.MESSAGE, "尝试更换用户名！");
-            }
+        if (!userService.addUserSelective(user).equals(0)) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "请填写用户基本信息！");
+            modelMap.put(MessageConstant.MESSAGE, "尝试更换用户名！");
         }
         return modelMap;
     }
@@ -225,7 +221,7 @@ public class UserController extends BaseController{
      **/
     @ResponseBody
     @RequestMapping(value = "/updatePasswordByCode", method = RequestMethod.POST)
-    private Map<String,Object> updatePasswordByCode(User user, @RequestParam Integer code){
+    private Map<String,Object> updatePasswordByCode(@RequestBody User user, @RequestParam Integer code){
         Map<String,Object> modelMap = new HashMap<>();
         //验证码校验
         Integer sessionCode = (Integer) session.getAttribute("code");

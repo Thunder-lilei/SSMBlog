@@ -12,6 +12,16 @@ public class UserBaseInfoPojo {
 
     private String userNickname;
 
+    private String userProfilePhoto;
+
+    public String getUserProfilePhoto() {
+        return userProfilePhoto;
+    }
+
+    public void setUserProfilePhoto(String userProfilePhoto) {
+        this.userProfilePhoto = userProfilePhoto;
+    }
+
     public Long getUserId() {
         return userId;
     }

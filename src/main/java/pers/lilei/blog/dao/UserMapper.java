@@ -21,6 +21,8 @@ public interface UserMapper {
 
     User selectByPrimaryKey(Long userId);
 
+    UserBaseInfoPojo selectUserBaseInfoByPrimaryKey(Long userId);
+
     String selectUserPasswordByPrimaryKey(Long userId);
 
     User selectByUserName(String userName);

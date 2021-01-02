@@ -74,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    article_id, user_id, article_views, article_comment_count, article_date, article_like_count, 
+    article_id, user_id, article_views, article_comment_count, article_date, article_like_count,
     create_time, update_time
   </sql>
   <sql id="Blob_Column_List">
@@ -111,12 +111,20 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from tbl_article
     where article_id = #{articleId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAllArticleWithUserBaseInfoByUserId" parameterType="java.lang.Long" resultType="pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_article
+    where user_id = #{userId,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from tbl_article
@@ -129,13 +137,13 @@
     </if>
   </delete>
   <insert id="insert" parameterType="pers.lilei.blog.po.ArticleWithBLOBs">
-    insert into tbl_article (article_id, user_id, article_views, 
-      article_comment_count, article_date, article_like_count, 
-      create_time, update_time, article_title, 
+    insert into tbl_article (article_id, user_id, article_views,
+      article_comment_count, article_date, article_like_count,
+      create_time, update_time, article_title,
       article_content)
-    values (#{articleId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{articleViews,jdbcType=BIGINT}, 
-      #{articleCommentCount,jdbcType=BIGINT}, #{articleDate,jdbcType=TIMESTAMP}, #{articleLikeCount,jdbcType=BIGINT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{articleTitle,jdbcType=LONGVARCHAR}, 
+    values (#{articleId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{articleViews,jdbcType=BIGINT},
+      #{articleCommentCount,jdbcType=BIGINT}, #{articleDate,jdbcType=TIMESTAMP}, #{articleLikeCount,jdbcType=BIGINT},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{articleTitle,jdbcType=LONGVARCHAR},
       #{articleContent,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="pers.lilei.blog.po.ArticleWithBLOBs">
