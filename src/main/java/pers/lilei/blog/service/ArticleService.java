@@ -16,6 +16,8 @@ import java.util.List;
 public interface ArticleService {
     PageInfo<ArticleWithUserBaseInfoPojo> selectAllArticleWithUserBaseInfoByUserId(int pageNow, int pageSize, Long userId);
 
+    PageInfo<ArticleWithUserBaseInfoPojo> selectArticleBaseInfoByKey(int pageNow, int pageSize, Long userId, String key);
+
     Integer addArticle(ArticleWithBLOBs articleWithBLOBs);
 
     Integer deleteArticleByArticleId(Long articleId);

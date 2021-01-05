@@ -4,15 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pers.lilei.blog.constant.MessageConstant;
-import pers.lilei.blog.po.Article;
 import pers.lilei.blog.po.ArticleWithBLOBs;
 import pers.lilei.blog.po.User;
-import pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo;
 import pers.lilei.blog.service.ArticleService;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,6 +44,28 @@ public class ArticleController extends BaseController{
         if (user != null) {
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             modelMap.put("articleWithUserPageInfo", articleService.selectAllArticleWithUserBaseInfoByUserId(pageNow, pageSize, user.getUserId()));
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 通过关键词获取所有登录用户的博文基本信息
+     * @CreateDate 14:50 2021/1/5
+     * @UpdateDate 14:50 2021/1/5
+     * @Param [pageNow, pageSize, userId, key]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/selectArticleBaseInfoByKey", method = RequestMethod.POST)
+    private Map<String,Object> selectArticleBaseInfoByKey(@RequestParam Integer pageNow, @RequestParam Integer pageSize, @RequestParam String key) {
+        Map<String, Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("articleWithUserPageInfo", articleService.selectArticleBaseInfoByKey(pageNow, pageSize, user.getUserId(), key));
         } else {
             modelMap.put(MessageConstant.MESSAGE, "未登录！");
         }
@@ -131,13 +150,36 @@ public class ArticleController extends BaseController{
      * @return java.util.Map<java.lang.String,java.lang.Object>
      **/
     @ResponseBody
-    @RequestMapping(value = "/getArticle", method = RequestMethod.POST)
-    private Map<String,Object> getArticle(@RequestParam Long articleId){
+    @RequestMapping(value = "/setArticle", method = RequestMethod.POST)
+    private Map<String,Object> setArticle(@RequestParam Long articleId){
         Map<String,Object> modelMap = new HashMap<>();
         ArticleWithBLOBs articleWithBLOBs = articleService.getArticleByArticleId(articleId);
         if (articleWithBLOBs != null) {
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            session.setAttribute("article", articleWithBLOBs);
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "获取失败！");
+        }
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 获取博文 返回给前端
+     * @CreateDate 13:51 2021/1/5
+     * @UpdateDate 13:51 2021/1/5
+     * @Param []
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/getArticle", method = RequestMethod.POST)
+    private Map<String,Object> getArticle(){
+        Map<String,Object> modelMap = new HashMap<>();
+        ArticleWithBLOBs articleWithBLOBs = (ArticleWithBLOBs) session.getAttribute("article");
+        if (articleWithBLOBs != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             modelMap.put("article", articleWithBLOBs);
+            session.setAttribute("article", null);
         } else {
             modelMap.put(MessageConstant.MESSAGE, "获取失败！");
         }

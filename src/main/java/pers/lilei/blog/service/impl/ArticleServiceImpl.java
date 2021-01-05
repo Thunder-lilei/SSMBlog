@@ -51,6 +51,27 @@ public class ArticleServiceImpl implements ArticleService {
         return new PageInfo<>(articleWithUserBaseInfoPojoList);
     }
 
+    /*
+     * @Author 李雷
+     * @Description
+     * 通过关键词和用户ID获取所有博文
+     * 获取博文关联的用户基本信息
+     * @CreateDate 14:47 2021/1/5
+     * @UpdateDate 14:47 2021/1/5
+     * @Param [pageNow, pageSize, key]
+     * @return com.github.pagehelper.PageInfo<pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo>
+     **/
+    @Override
+    public PageInfo<ArticleWithUserBaseInfoPojo> selectArticleBaseInfoByKey(int pageNow, int pageSize, Long userId, String key) {
+        PageHelper.startPage(pageNow, pageSize);
+        List<ArticleWithUserBaseInfoPojo> articleWithUserBaseInfoPojoList = articleMapper.selectArticleBaseInfoByKey(userId, key);
+        //获取用户基本信息
+        for (ArticleWithUserBaseInfoPojo articleWithUserBaseInfoPojo : articleWithUserBaseInfoPojoList) {
+            articleWithUserBaseInfoPojo.setUserBaseInfoPojo(userMapper.selectUserBaseInfoByPrimaryKey(articleWithUserBaseInfoPojo.getUserId()));
+        }
+        return new PageInfo<>(articleWithUserBaseInfoPojoList);
+    }
+
     @Override
     public Integer addArticle(ArticleWithBLOBs articleWithBLOBs) {
         return articleMapper.insertSelective(articleWithBLOBs);

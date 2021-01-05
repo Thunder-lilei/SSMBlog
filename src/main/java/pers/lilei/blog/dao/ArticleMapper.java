@@ -1,6 +1,8 @@
 package pers.lilei.blog.dao;
 
 import java.util.List;
+
+import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
 import pers.lilei.blog.po.Article;
 import pers.lilei.blog.po.ArticleExample;
@@ -25,6 +27,8 @@ public interface ArticleMapper {
     ArticleWithBLOBs selectByPrimaryKey(Long articleId);
 
     List<ArticleWithUserBaseInfoPojo> selectAllArticleWithUserBaseInfoByUserId(Long userId);
+
+    List<ArticleWithUserBaseInfoPojo> selectArticleBaseInfoByKey(@Param("userId") Long userId, @Param("key") String key);
 
     int updateByExampleSelective(@Param("record") ArticleWithBLOBs record, @Param("example") ArticleExample example);
 
