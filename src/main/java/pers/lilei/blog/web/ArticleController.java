@@ -10,6 +10,7 @@ import pers.lilei.blog.po.User;
 import pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo;
 import pers.lilei.blog.service.ArticleService;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,10 +65,19 @@ public class ArticleController extends BaseController{
     @RequestMapping(value = "/addArticle", method = RequestMethod.POST)
     private Map<String,Object> addArticle(@RequestBody ArticleWithBLOBs articleWithBLOBs){
         Map<String,Object> modelMap = new HashMap<>();
-        if (!articleService.addArticle(articleWithBLOBs).equals(0)) {
-            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            //设置博文所有者
+            articleWithBLOBs.setUserId(user.getUserId());
+            //获取本地时间设置创建时间
+            articleWithBLOBs.setArticleDate(new Date());
+            if (!articleService.addArticle(articleWithBLOBs).equals(0)) {
+                modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            } else {
+                modelMap.put(MessageConstant.MESSAGE, "添加失败");
+            }
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "添加失败");
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
         }
         return modelMap;
     }
