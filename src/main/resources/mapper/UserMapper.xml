@@ -131,6 +131,13 @@
     from tbl_user
     where CONCAT(user_name, user_nickname) LIKE "%"#{key,jdbcType=VARCHAR}"%"
   </select>
+  <select id="selectUserBaseInfoByKeyWithoutMine" resultType="pers.lilei.blog.pojo.UserBaseInfoPojo">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_user
+    where CONCAT(user_name, user_nickname) LIKE "%"#{key,jdbcType=VARCHAR}"%"
+    AND user_id != #{userId,jdbcType=BIGINT}
+  </select>
   <select id="selectAllUserBaseInfo" resultType="pers.lilei.blog.pojo.UserBaseInfoPojo">
     select
     <include refid="Base_Column_List" />

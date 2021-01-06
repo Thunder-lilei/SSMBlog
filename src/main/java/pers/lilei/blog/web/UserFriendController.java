@@ -67,6 +67,36 @@ public class UserFriendController extends BaseController{
     /*
      * @Author 李雷
      * @Description
+     * 根据关键词分页查询登录用户的所有好友的基本信息
+     * @CreateDate 18:53 2021/1/6
+     * @UpdateDate 18:53 2021/1/6
+     * @Param [pageNow, pageSize, key]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/getMyFriendByKey", method = RequestMethod.POST)
+    private Map<String,Object> getMyFriendByKey(@RequestParam int pageNow, @RequestParam int pageSize, @RequestParam String key) {
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        PageInfo<UserBaseInfoPojo> userBaseInfoPojoPageInfo = new PageInfo<>();
+        if (user != null) {
+            //通过关键词获取用户的所有好友的id
+            List<Long> friendIdList = userFriendService.getAllFriendIdByUserIdAndKey(user.getUserId(), key);
+            if (!friendIdList.isEmpty()) {
+                //获取好友信息
+                userBaseInfoPojoPageInfo = userService.getAllByUserId(pageNow, pageSize, friendIdList);
+                modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            }
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("userPageInfo", userBaseInfoPojoPageInfo);
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
      * 登录用户添加好友
      * @CreateDate 13:24 2021/1/6
      * @UpdateDate 13:24 2021/1/6

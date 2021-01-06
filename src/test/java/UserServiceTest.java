@@ -127,4 +127,9 @@ public class UserServiceTest extends BaseTest{
 		PageInfo<UserBaseInfoPojo> pageInfo = userService.getAllByUserId(1, 10, userIdList);
 		System.out.println(pageInfo);
 	}
+	@Test
+	public void selectUserBaseInfoByKeyWithoutMine() {
+		PageInfo<UserBaseInfoPojo> pageInfo = userService.selectUserBaseInfoByKeyWithoutMine(1, 10, "我", 3L);
+		System.out.println(pageInfo);
+	}
 }

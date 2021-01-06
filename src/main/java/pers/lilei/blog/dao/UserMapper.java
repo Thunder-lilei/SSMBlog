@@ -37,6 +37,8 @@ public interface UserMapper {
 
     List<UserBaseInfoPojo> selectUserBaseInfoByKey(String key);
 
+    List<UserBaseInfoPojo> selectUserBaseInfoByKeyWithoutMine(@Param("key") String key, @Param("userId") Long userId);
+
     List<UserBaseInfoPojo> selectAllUserBaseInfo();
 
     List<UserBaseInfoPojo> getAllByUserId(@Param("userIdList") List<Long> userIdList);

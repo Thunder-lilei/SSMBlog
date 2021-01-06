@@ -95,6 +95,11 @@
     from tbl_user_friend
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
+  <select id="getAllFriendIdByUserIdAndKey" resultType="java.lang.Long">
+    select user_friend_id
+    from tbl_user_friend
+    where user_id = #{userId,jdbcType=BIGINT} AND CONCAT(user_nickname) LIKE "%"#{key,jdbcType=VARCHAR}"%"
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from tbl_user_friend
     where id = #{id,jdbcType=BIGINT}

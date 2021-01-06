@@ -30,6 +30,8 @@ public interface UserService {
 
     PageInfo<UserBaseInfoPojo> selectUserBaseInfoByKey(int pageNow, int pageSize, String key);
 
+    PageInfo<UserBaseInfoPojo> selectUserBaseInfoByKeyWithoutMine(int pageNow, int pageSize, String key, Long userId);
+
     PageInfo<UserBaseInfoPojo> selectAllUserBaseInfo(int pageNow, int pageSize);
 
     PageInfo<UserBaseInfoPojo> getAllByUserId(int pageNow, int pageSize, List<Long> userIdList);

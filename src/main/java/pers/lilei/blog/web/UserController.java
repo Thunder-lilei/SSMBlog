@@ -275,6 +275,29 @@ public class UserController extends BaseController{
     /*
      * @Author 李雷
      * @Description
+     * 关键词搜索用户基本信息
+     * 不包含登录用户
+     * @CreateDate 21:02 2021/1/6
+     * @UpdateDate 21:02 2021/1/6
+     * @Param [pageNow, pageSize, key]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/selectUserBaseInfoByKeyWithoutMine", method = RequestMethod.POST)
+    private Map<String,Object> selectUserBaseInfoByKeyWithoutMine(@RequestParam Integer pageNow, @RequestParam Integer pageSize, @RequestParam String key) {
+        Map<String, Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("userPageInfo", userService.selectUserBaseInfoByKeyWithoutMine(pageNow, pageSize, key, user.getUserId()));
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
      * 分页查询所有用户基本信息
      * @CreateDate 9:04 2020/12/28
      * @UpdateDate 9:04 2020/12/28

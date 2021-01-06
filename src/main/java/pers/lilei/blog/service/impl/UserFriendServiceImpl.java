@@ -29,6 +29,11 @@ public class UserFriendServiceImpl implements UserFriendService {
     }
 
     @Override
+    public List<Long> getAllFriendIdByUserIdAndKey(Long userId, String key) {
+        return userFriendMapper.getAllFriendIdByUserIdAndKey(userId, key);
+    }
+
+    @Override
     public Integer addFriend(UserFriend userFriend) {
         return userFriendMapper.insertSelective(userFriend);
     }

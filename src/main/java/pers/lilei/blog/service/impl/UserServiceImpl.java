@@ -69,6 +69,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public PageInfo<UserBaseInfoPojo> selectUserBaseInfoByKeyWithoutMine(int pageNow, int pageSize, String key, Long userId) {
+        PageHelper.startPage(pageNow, pageSize);
+        List<UserBaseInfoPojo> userBaseInfoPojoList = userMapper.selectUserBaseInfoByKeyWithoutMine(key, userId);
+        return new PageInfo<>(userBaseInfoPojoList);
+    }
+
+    @Override
     public PageInfo<UserBaseInfoPojo> selectAllUserBaseInfo(int pageNow, int pageSize) {
         PageHelper.startPage(pageNow, pageSize);
         List<UserBaseInfoPojo> userBaseInfoPojoList = userMapper.selectAllUserBaseInfo();

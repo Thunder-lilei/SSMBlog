@@ -15,6 +15,8 @@ import java.util.List;
 public interface UserFriendService {
     List<Long> getAllFriendIdByUserId(Long userId);
 
+    List<Long> getAllFriendIdByUserIdAndKey(Long userId, String key);
+
     Integer addFriend(UserFriend userFriend);
 
     Integer deleteFriend(Long userId, Long userFriendId);
