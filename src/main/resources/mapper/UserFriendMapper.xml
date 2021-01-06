@@ -85,14 +85,23 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from tbl_user_friend
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="getAllFriendIdByUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
+    select user_friend_id
+    from tbl_user_friend
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from tbl_user_friend
     where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByUserIdWithUserFriendId" parameterType="java.lang.Long">
+    delete from tbl_user_friend
+    where user_id = #{userId,jdbcType=BIGINT} AND user_friend_id = #{userFriendId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="pers.lilei.blog.po.UserFriendExample">
     delete from tbl_user_friend
@@ -101,10 +110,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="pers.lilei.blog.po.UserFriend">
-    insert into tbl_user_friend (id, user_id, user_friend_id, 
+    insert into tbl_user_friend (id, user_id, user_friend_id,
       user_nickname, create_time, update_time
       )
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{userFriendId,jdbcType=BIGINT}, 
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{userFriendId,jdbcType=BIGINT},
       #{userNickname,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -224,5 +233,10 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateFriendNickNameByUserIdAndUserFriendId" parameterType="pers.lilei.blog.po.UserFriend">
+    update tbl_user_friend
+    set user_nickname = #{userNickname,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=BIGINT} AND user_friend_id = #{userFriendId,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -75,6 +75,13 @@ public class UserServiceImpl implements UserService {
         return new PageInfo<>(userBaseInfoPojoList);
     }
 
+    @Override
+    public PageInfo<UserBaseInfoPojo> getAllByUserId(int pageNow, int pageSize, List<Long> userIdList) {
+        PageHelper.startPage(pageNow, pageSize);
+        List<UserBaseInfoPojo> userBaseInfoPojoList = userMapper.getAllByUserId(userIdList);
+        return new PageInfo<>(userBaseInfoPojoList);
+    }
+
     /*
      * @Author 李雷
      * @Description

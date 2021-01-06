@@ -8,7 +8,9 @@ import pers.lilei.blog.pojo.UserBaseInfoPojo;
 import pers.lilei.blog.service.UserService;
 import pers.lilei.blog.util.BCrypt;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class UserServiceTest extends BaseTest{
 	private UserService userService;
@@ -115,6 +117,14 @@ public class UserServiceTest extends BaseTest{
 	@Test
 	public void selectAllUserBaseInfo() {
 		PageInfo<UserBaseInfoPojo> pageInfo = (PageInfo<UserBaseInfoPojo>) userService.selectAllUserBaseInfo(1, 10);
+		System.out.println(pageInfo);
+	}
+	@Test
+	public void getAllByUserId() {
+		List<Long> userIdList = new ArrayList<>();
+		userIdList.add(1L);
+		userIdList.add(3L);
+		PageInfo<UserBaseInfoPojo> pageInfo = userService.getAllByUserId(1, 10, userIdList);
 		System.out.println(pageInfo);
 	}
 }

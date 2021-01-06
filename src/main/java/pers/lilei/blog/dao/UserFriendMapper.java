@@ -12,6 +12,8 @@ public interface UserFriendMapper {
 
     int deleteByPrimaryKey(Long id);
 
+    int deleteByUserIdWithUserFriendId(@Param("userId") Long userId, @Param("userFriendId") Long userFriendId);
+
     int insert(UserFriend record);
 
     int insertSelective(UserFriend record);
@@ -20,6 +22,8 @@ public interface UserFriendMapper {
 
     UserFriend selectByPrimaryKey(Long id);
 
+    List<Long> getAllFriendIdByUserId(Long userId);
+
     int updateByExampleSelective(@Param("record") UserFriend record, @Param("example") UserFriendExample example);
 
     int updateByExample(@Param("record") UserFriend record, @Param("example") UserFriendExample example);
@@ -27,4 +31,6 @@ public interface UserFriendMapper {
     int updateByPrimaryKeySelective(UserFriend record);
 
     int updateByPrimaryKey(UserFriend record);
+
+    int updateFriendNickNameByUserIdAndUserFriendId(UserFriend userFriend);
 }

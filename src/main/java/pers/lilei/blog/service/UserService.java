@@ -32,6 +32,8 @@ public interface UserService {
 
     PageInfo<UserBaseInfoPojo> selectAllUserBaseInfo(int pageNow, int pageSize);
 
+    PageInfo<UserBaseInfoPojo> getAllByUserId(int pageNow, int pageSize, List<Long> userIdList);
+
     Integer addUserSelective(User user);
 
     Integer deleteUserByUserId(Long userId);

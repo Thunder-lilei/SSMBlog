@@ -136,6 +136,15 @@
     <include refid="Base_Column_List" />
     from tbl_user
   </select>
+  <select id="getAllByUserId" resultType="pers.lilei.blog.pojo.UserBaseInfoPojo">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_user
+    where user_id in
+    <foreach item="item" index="index" collection="userIdList" open="(" separator="," close=")">
+    #{item}
+    </foreach>
+  </select>
   <select id="selectByUserNameAndEmailAndTel" parameterType="pers.lilei.blog.po.User" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
