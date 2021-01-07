@@ -119,14 +119,14 @@ public class UserServiceTest extends BaseTest{
 		PageInfo<UserBaseInfoPojo> pageInfo = (PageInfo<UserBaseInfoPojo>) userService.selectAllUserBaseInfo(1, 10);
 		System.out.println(pageInfo);
 	}
-	@Test
-	public void getAllByUserId() {
-		List<Long> userIdList = new ArrayList<>();
-		userIdList.add(1L);
-		userIdList.add(3L);
-		PageInfo<UserBaseInfoPojo> pageInfo = userService.getAllByUserId(1, 10, userIdList);
-		System.out.println(pageInfo);
-	}
+//	@Test
+//	public void getAllByUserId() {
+//		List<Long> userIdList = new ArrayList<>();
+//		userIdList.add(1L);
+//		userIdList.add(3L);
+//		PageInfo<UserBaseInfoPojo> pageInfo = userService.getAllByUserId(1, 10, userIdList);
+//		System.out.println(pageInfo);
+//	}
 	@Test
 	public void selectUserBaseInfoByKeyWithoutMine() {
 		PageInfo<UserBaseInfoPojo> pageInfo = userService.selectUserBaseInfoByKeyWithoutMine(1, 10, "我", 3L);

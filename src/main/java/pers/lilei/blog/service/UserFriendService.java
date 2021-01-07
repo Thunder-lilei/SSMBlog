@@ -17,6 +17,8 @@ public interface UserFriendService {
 
     List<Long> getAllFriendIdByUserIdAndKey(Long userId, String key);
 
+    UserFriend getByUserIdAndUserFriendId(Long userId, Long userFriendId);
+
     Integer addFriend(UserFriend userFriend);
 
     Integer deleteFriend(Long userId, Long userFriendId);

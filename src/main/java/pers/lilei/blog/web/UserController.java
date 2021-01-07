@@ -275,7 +275,7 @@ public class UserController extends BaseController{
     /*
      * @Author 李雷
      * @Description
-     * 关键词搜索用户基本信息
+     * 关键词分页查询用户基本信息
      * 不包含登录用户
      * @CreateDate 21:02 2021/1/6
      * @UpdateDate 21:02 2021/1/6
@@ -290,6 +290,29 @@ public class UserController extends BaseController{
         if (user != null) {
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             modelMap.put("userPageInfo", userService.selectUserBaseInfoByKeyWithoutMine(pageNow, pageSize, key, user.getUserId()));
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 关键词搜索用户基本信息
+     * 不包含登录用户
+     * @CreateDate 14:21 2021/1/7
+     * @UpdateDate 14:21 2021/1/7
+     * @Param [key]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/selectUserBaseInfoByKeyWithoutMineList", method = RequestMethod.POST)
+    private Map<String,Object> selectUserBaseInfoByKeyWithoutMineList(@RequestParam String key) {
+        Map<String, Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("userList", userService.selectUserBaseInfoByKeyWithoutMineList(key, user.getUserId()));
         } else {
             modelMap.put(MessageConstant.MESSAGE, "未登录！");
         }

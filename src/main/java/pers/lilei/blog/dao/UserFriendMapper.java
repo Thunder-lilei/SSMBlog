@@ -26,6 +26,8 @@ public interface UserFriendMapper {
 
     List<Long> getAllFriendIdByUserIdAndKey(@Param("userId") Long userId, @Param("key") String key);
 
+    UserFriend getByUserIdAndUserFriendId(@Param("userId") Long userId, @Param("userFriendId") Long userFriendId);
+
     int updateByExampleSelective(@Param("record") UserFriend record, @Param("example") UserFriendExample example);
 
     int updateByExample(@Param("record") UserFriend record, @Param("example") UserFriendExample example);

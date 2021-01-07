@@ -34,7 +34,25 @@ public class UserFriendServiceImpl implements UserFriendService {
     }
 
     @Override
+    public UserFriend getByUserIdAndUserFriendId(Long userId, Long userFriendId) {
+        return userFriendMapper.getByUserIdAndUserFriendId(userId, userFriendId);
+    }
+
+    /*
+     * @Author 李雷
+     * @Description
+     * 添加好友 不允许重复添加
+     * 重复添加返回-1
+     * @CreateDate 13:48 2021/1/7
+     * @UpdateDate 13:48 2021/1/7
+     * @Param [userFriend]
+     * @return java.lang.Integer
+     **/
+    @Override
     public Integer addFriend(UserFriend userFriend) {
+        if (getByUserIdAndUserFriendId(userFriend.getUserId(), userFriend.getUserFriendId()) != null) {
+            return -1;
+        }
         return userFriendMapper.insertSelective(userFriend);
     }
 

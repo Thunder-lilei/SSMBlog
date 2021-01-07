@@ -11,6 +11,7 @@ import pers.lilei.blog.pojo.UserBaseInfoPojo;
 import pers.lilei.blog.service.UserFriendService;
 import pers.lilei.blog.service.UserService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +68,36 @@ public class UserFriendController extends BaseController{
     /*
      * @Author 李雷
      * @Description
+     * 查询登录用户的所有好友的基本信息
+     * @CreateDate 14:11 2021/1/7
+     * @UpdateDate 14:11 2021/1/7
+     * @Param []
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/getMyFriendList", method = RequestMethod.POST)
+    private Map<String,Object> getMyFriendList() {
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        List<UserBaseInfoPojo> userBaseInfoPojoList = new ArrayList<>();
+        if (user != null) {
+            //获取用户的所有好友的id
+            List<Long> friendIdList = userFriendService.getAllFriendIdByUserId(user.getUserId());
+            if (!friendIdList.isEmpty()) {
+                //获取好友信息
+                userBaseInfoPojoList = userService.getAllByUserIdList(friendIdList);
+                modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            }
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("userList", userBaseInfoPojoList);
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
      * 根据关键词分页查询登录用户的所有好友的基本信息
      * @CreateDate 18:53 2021/1/6
      * @UpdateDate 18:53 2021/1/6
@@ -97,7 +128,38 @@ public class UserFriendController extends BaseController{
     /*
      * @Author 李雷
      * @Description
+     * 根据关键词查询登录用户的所有好友的基本信息
+     * @CreateDate 14:13 2021/1/7
+     * @UpdateDate 14:13 2021/1/7
+     * @Param [key]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/getMyFriendByKeyList", method = RequestMethod.POST)
+    private Map<String,Object> getMyFriendByKeyList(@RequestParam String key) {
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        List<UserBaseInfoPojo> userBaseInfoPojoList = new ArrayList<>();
+        if (user != null) {
+            //通过关键词获取用户的所有好友的id
+            List<Long> friendIdList = userFriendService.getAllFriendIdByUserIdAndKey(user.getUserId(), key);
+            if (!friendIdList.isEmpty()) {
+                //获取好友信息
+                userBaseInfoPojoList = userService.getAllByUserIdList(friendIdList);
+                modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            }
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("userList", userBaseInfoPojoList);
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
      * 登录用户添加好友
+     * 不允许重复添加5
      * @CreateDate 13:24 2021/1/6
      * @UpdateDate 13:24 2021/1/6
      * @Param [userId]
@@ -112,8 +174,12 @@ public class UserFriendController extends BaseController{
             UserFriend userFriend = new UserFriend();
             userFriend.setUserId(user.getUserId());
             userFriend.setUserFriendId(userId);
-            if (!userFriendService.addFriend(userFriend).equals(0)) {
+            //结果判断
+            Integer result = userFriendService.addFriend(userFriend);
+            if (result.equals(1)) {
                 modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            } else if (result.equals(-1)) {
+                modelMap.put(MessageConstant.MESSAGE, "该用户已经是你的好友！");
             } else {
                 modelMap.put(MessageConstant.MESSAGE, "添加失败！");
             }

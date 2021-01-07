@@ -32,9 +32,13 @@ public interface UserService {
 
     PageInfo<UserBaseInfoPojo> selectUserBaseInfoByKeyWithoutMine(int pageNow, int pageSize, String key, Long userId);
 
+    List<UserBaseInfoPojo> selectUserBaseInfoByKeyWithoutMineList(String key, Long userId);
+
     PageInfo<UserBaseInfoPojo> selectAllUserBaseInfo(int pageNow, int pageSize);
 
     PageInfo<UserBaseInfoPojo> getAllByUserId(int pageNow, int pageSize, List<Long> userIdList);
+
+    List<UserBaseInfoPojo> getAllByUserIdList(List<Long> userIdList);
 
     Integer addUserSelective(User user);
 
