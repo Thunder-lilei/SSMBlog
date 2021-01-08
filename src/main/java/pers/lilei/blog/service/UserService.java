@@ -40,6 +40,8 @@ public interface UserService {
 
     List<UserBaseInfoPojo> getAllByUserIdList(List<Long> userIdList);
 
+    List<UserBaseInfoPojo> getAllByUserIdAndKeyList(List<Long> userIdList, String key);
+
     Integer addUserSelective(User user);
 
     Integer deleteUserByUserId(Long userId);

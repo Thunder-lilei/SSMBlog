@@ -101,6 +101,12 @@ public class UserServiceImpl implements UserService {
         return userBaseInfoPojoList;
     }
 
+    @Override
+    public List<UserBaseInfoPojo> getAllByUserIdAndKeyList(List<Long> userIdList, String key) {
+        List<UserBaseInfoPojo> userBaseInfoPojoList = userMapper.getAllByUserIdAndKey(userIdList, key);
+        return userBaseInfoPojoList;
+    }
+
     /*
      * @Author 李雷
      * @Description

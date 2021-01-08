@@ -43,6 +43,8 @@ public interface UserMapper {
 
     List<UserBaseInfoPojo> getAllByUserId(@Param("userIdList") List<Long> userIdList);
 
+    List<UserBaseInfoPojo> getAllByUserIdAndKey(@Param("userIdList") List<Long> userIdList, @Param("key") String key);
+
     int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
 
     int updateByExample(@Param("record") User record, @Param("example") UserExample example);

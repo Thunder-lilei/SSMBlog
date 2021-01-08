@@ -152,6 +152,16 @@
     #{item}
     </foreach>
   </select>
+  <select id="getAllByUserIdAndKey" resultType="pers.lilei.blog.pojo.UserBaseInfoPojo">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_user
+    where user_id in
+    <foreach item="item" index="index" collection="userIdList" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    AND CONCAT(user_name, user_nickname) LIKE "%"#{key,jdbcType=VARCHAR}"%"
+  </select>
   <select id="selectByUserNameAndEmailAndTel" parameterType="pers.lilei.blog.po.User" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

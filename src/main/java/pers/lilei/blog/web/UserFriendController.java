@@ -130,7 +130,7 @@ public class UserFriendController extends BaseController{
      * @Description
      * 根据关键词查询登录用户的所有好友的基本信息
      * @CreateDate 14:13 2021/1/7
-     * @UpdateDate 14:13 2021/1/7
+     * @UpdateDate 2021-1-8 12:38:12
      * @Param [key]
      * @return java.util.Map<java.lang.String,java.lang.Object>
      **/
@@ -142,10 +142,10 @@ public class UserFriendController extends BaseController{
         List<UserBaseInfoPojo> userBaseInfoPojoList = new ArrayList<>();
         if (user != null) {
             //通过关键词获取用户的所有好友的id
-            List<Long> friendIdList = userFriendService.getAllFriendIdByUserIdAndKey(user.getUserId(), key);
+            List<Long> friendIdList = userFriendService.getAllFriendIdByUserId(user.getUserId());
             if (!friendIdList.isEmpty()) {
                 //获取好友信息
-                userBaseInfoPojoList = userService.getAllByUserIdList(friendIdList);
+                userBaseInfoPojoList = userService.getAllByUserIdAndKeyList(friendIdList, key);
                 modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             }
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
