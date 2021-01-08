@@ -91,4 +91,24 @@ public class ArticleServiceImpl implements ArticleService {
     public ArticleWithBLOBs getArticleByArticleId(Long articleId) {
         return articleMapper.selectByPrimaryKey(articleId);
     }
+
+    /*
+     * @Author 李雷
+     * @Description
+     * 通过点赞数和评论总数获取排名靠前的一定数量的博文
+     * 获取博文关联的用户基本信息
+     * @CreateDate 13:55 2021/1/8
+     * @UpdateDate 13:55 2021/1/8
+     * @Param [size]
+     * @return java.util.List<pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo>
+     **/
+    @Override
+    public List<ArticleWithUserBaseInfoPojo> getRecommendArticle(int size) {
+        List<ArticleWithUserBaseInfoPojo> articleWithUserBaseInfoPojoList = articleMapper.getRecommendArticle(size);
+        //获取用户基本信息
+        for (ArticleWithUserBaseInfoPojo articleWithUserBaseInfoPojo : articleWithUserBaseInfoPojoList) {
+            articleWithUserBaseInfoPojo.setUserBaseInfoPojo(userMapper.selectUserBaseInfoByPrimaryKey(articleWithUserBaseInfoPojo.getUserId()));
+        }
+        return articleWithUserBaseInfoPojoList;
+    }
 }

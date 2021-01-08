@@ -150,13 +150,13 @@ public class ArticleController extends BaseController{
      * @return java.util.Map<java.lang.String,java.lang.Object>
      **/
     @ResponseBody
-    @RequestMapping(value = "/setArticle", method = RequestMethod.POST)
-    private Map<String,Object> setArticle(@RequestParam Long articleId){
+    @RequestMapping(value = "/setShowArticle", method = RequestMethod.POST)
+    private Map<String,Object> setShowArticle(@RequestParam Long articleId){
         Map<String,Object> modelMap = new HashMap<>();
         ArticleWithBLOBs articleWithBLOBs = articleService.getArticleByArticleId(articleId);
         if (articleWithBLOBs != null) {
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-            session.setAttribute("article", articleWithBLOBs);
+            session.setAttribute("showArticle", articleWithBLOBs);
         } else {
             modelMap.put(MessageConstant.MESSAGE, "获取失败！");
         }
@@ -172,17 +172,34 @@ public class ArticleController extends BaseController{
      * @return java.util.Map<java.lang.String,java.lang.Object>
      **/
     @ResponseBody
-    @RequestMapping(value = "/getArticle", method = RequestMethod.POST)
-    private Map<String,Object> getArticle(){
+    @RequestMapping(value = "/getShowArticle", method = RequestMethod.POST)
+    private Map<String,Object> getShowArticle(){
         Map<String,Object> modelMap = new HashMap<>();
-        ArticleWithBLOBs articleWithBLOBs = (ArticleWithBLOBs) session.getAttribute("article");
+        ArticleWithBLOBs articleWithBLOBs = (ArticleWithBLOBs) session.getAttribute("showArticle");
         if (articleWithBLOBs != null) {
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             modelMap.put("article", articleWithBLOBs);
-            session.setAttribute("article", null);
+            session.setAttribute("showArticle", null);
         } else {
             modelMap.put(MessageConstant.MESSAGE, "获取失败！");
         }
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 获取特定数量的点赞数和评论数多的博文
+     * @CreateDate 13:25 2021/1/8
+     * @UpdateDate 13:25 2021/1/8
+     * @Param [size]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/getRecommendArticle", method = RequestMethod.POST)
+    private Map<String,Object> getRecommendArticle(@RequestParam int size){
+        Map<String,Object> modelMap = new HashMap<>();
+        modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+        modelMap.put("recommendArticleList", articleService.getRecommendArticle(size));
         return modelMap;
     }
 }

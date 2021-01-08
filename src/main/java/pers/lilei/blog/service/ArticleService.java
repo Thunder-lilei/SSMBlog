@@ -25,4 +25,6 @@ public interface ArticleService {
     Integer updateArticle(ArticleWithBLOBs articleWithBLOBs);
 
     ArticleWithBLOBs getArticleByArticleId(Long articleId);
+
+    List<ArticleWithUserBaseInfoPojo> getRecommendArticle(int size);
 }

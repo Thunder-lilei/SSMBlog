@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pers.lilei.blog.constant.MessageConstant;
+import pers.lilei.blog.po.ArticleWithBLOBs;
 import pers.lilei.blog.po.User;
 import pers.lilei.blog.service.UserService;
 import pers.lilei.blog.util.BCrypt;
@@ -406,6 +407,51 @@ public class UserController extends BaseController{
             modelMap.put(MessageConstant.MESSAGE, true);
         } else {
             modelMap.put(MessageConstant.MESSAGE, false);
+        }
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 通过用户id获取用户
+     * @CreateDate 14:18 2021/1/8
+     * @UpdateDate 14:18 2021/1/8
+     * @Param [userId]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/setShowUser", method = RequestMethod.POST)
+    private Map<String,Object> setShowUser(@RequestParam Long userId){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = userService.selectByPrimaryKey(userId);
+        if (user != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            session.setAttribute("showUser", user);
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "获取失败！");
+        }
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 获取用户 返回给前端
+     * @CreateDate 14:20 2021/1/8
+     * @UpdateDate 14:20 2021/1/8
+     * @Param []
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/getShowUser", method = RequestMethod.POST)
+    private Map<String,Object> getShowUser(){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("showUser");
+        if (user != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("user", user);
+            session.setAttribute("showUser", null);
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "获取失败！");
         }
         return modelMap;
     }

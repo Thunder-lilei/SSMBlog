@@ -1,6 +1,7 @@
 import com.github.pagehelper.PageInfo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import pers.lilei.blog.po.ArticleWithBLOBs;
 import pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo;
 import pers.lilei.blog.service.ArticleService;
 
@@ -25,5 +26,10 @@ public class ArticleServiceTest extends BaseTest{
     public void selectByKey() {
         PageInfo<ArticleWithUserBaseInfoPojo> articleWithUserBaseInfoPojoPageInfo = articleService.selectArticleBaseInfoByKey(1, 10, 1L, "第");
         System.out.println(articleWithUserBaseInfoPojoPageInfo);
+    }
+    @Test
+    public void getCommendArticle() {
+        List<ArticleWithUserBaseInfoPojo> articleWithUserBaseInfoPojoList = articleService.getRecommendArticle(5);
+        articleWithUserBaseInfoPojoList.forEach(temp-> System.out.println(temp.getArticleTitle()));
     }
 }

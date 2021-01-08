@@ -30,6 +30,8 @@ public interface ArticleMapper {
 
     List<ArticleWithUserBaseInfoPojo> selectArticleBaseInfoByKey(@Param("userId") Long userId, @Param("key") String key);
 
+    List<ArticleWithUserBaseInfoPojo> getRecommendArticle(int size);
+
     int updateByExampleSelective(@Param("record") ArticleWithBLOBs record, @Param("example") ArticleExample example);
 
     int updateByExampleWithBLOBs(@Param("record") ArticleWithBLOBs record, @Param("example") ArticleExample example);
