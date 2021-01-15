@@ -29,11 +29,11 @@ public interface ArticleMapper {
 
     List<ArticleWithUserBaseInfoPojo> selectAllArticleWithUserBaseInfoByUserId(Long userId);
 
-    List<ArticleWithUserBaseInfoPojo> selectArticleWithUserBaseInfoByKey(@Param("userId") Long userId, @Param("key") String key);
+    List<ArticleWithUserBaseInfoPojo> selectArticleWithUserBaseInfoByUserIdAndKey(@Param("userId") Long userId, @Param("key") String key);
 
     List<ArticleBaseInfoPojo> selectAllArticleBaseInfoByUserId(Long userId);
 
-    List<ArticleBaseInfoPojo> selectArticleBaseInfoByKey(@Param("userId") Long userId, @Param("key") String key);
+    List<ArticleBaseInfoPojo> selectArticleBaseInfoByUserIdAndKey(@Param("userId") Long userId, @Param("key") String key);
 
     List<ArticleWithUserBaseInfoPojo> getRecommendArticle(int size);
 

@@ -65,7 +65,7 @@ public class ArticleController extends BaseController{
         User user = (User) session.getAttribute("user");
         if (user != null) {
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-            modelMap.put("articlePageInfo", articleService.selectArticleBaseInfoByKey(pageNow, pageSize, user.getUserId(), key));
+            modelMap.put("articlePageInfo", articleService.selectArticleBaseInfoByUserIdAndKey(pageNow, pageSize, user.getUserId(), key));
         } else {
             modelMap.put(MessageConstant.MESSAGE, "未登录！");
         }
@@ -202,12 +202,38 @@ public class ArticleController extends BaseController{
         modelMap.put("recommendArticleList", articleService.getRecommendArticle(size));
         return modelMap;
     }
+    /*
+     * @Author 李雷
+     * @Description
+     * 分页查询特定用户的所有博文
+     * @CreateDate 22:54 2021/1/15
+     * @UpdateDate 22:54 2021/1/15
+     * @Param [pageNow, pageSize, userId]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
     @ResponseBody
-    @RequestMapping(value = "/getUserAllArticle", method = RequestMethod.POST)
+    @RequestMapping(value = "/getArticleByUserId", method = RequestMethod.POST)
     private Map<String,Object> getUserAllArticle(@RequestParam int pageNow, @RequestParam int pageSize, @RequestParam Long userId){
         Map<String,Object> modelMap = new HashMap<>();
         modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-        modelMap.put("articlePageInfo", articleService.selectAllArticleWithUserBaseInfoByUserId(pageNow, pageSize, userId));
+        modelMap.put("articlePageInfo", articleService.selectAllArticleBaseInfoByUserId(pageNow, pageSize, userId));
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 分页查询特定用户的关键词匹配的所有博文
+     * @CreateDate 22:54 2021/1/15
+     * @UpdateDate 22:54 2021/1/15
+     * @Param [pageNow, pageSize, userId, key]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/getArticleByUserIdAndKey", method = RequestMethod.POST)
+    private Map<String,Object> getArticleByUserIdAndKey(@RequestParam int pageNow, @RequestParam int pageSize, @RequestParam Long userId, @RequestParam String key){
+        Map<String,Object> modelMap = new HashMap<>();
+        modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+        modelMap.put("articlePageInfo", articleService.selectArticleBaseInfoByUserIdAndKey(pageNow, pageSize, userId, key));
         return modelMap;
     }
 }

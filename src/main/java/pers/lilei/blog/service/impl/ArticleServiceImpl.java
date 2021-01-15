@@ -63,9 +63,9 @@ public class ArticleServiceImpl implements ArticleService {
      * @return com.github.pagehelper.PageInfo<pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo>
      **/
     @Override
-    public PageInfo<ArticleWithUserBaseInfoPojo> selectArticleWithUserBaseInfoByKey(int pageNow, int pageSize, Long userId, String key) {
+    public PageInfo<ArticleWithUserBaseInfoPojo> selectArticleWithUserBaseInfoByUserIdAndKey(int pageNow, int pageSize, Long userId, String key) {
         PageHelper.startPage(pageNow, pageSize);
-        List<ArticleWithUserBaseInfoPojo> articleWithUserBaseInfoPojoList = articleMapper.selectArticleWithUserBaseInfoByKey(userId, key);
+        List<ArticleWithUserBaseInfoPojo> articleWithUserBaseInfoPojoList = articleMapper.selectArticleWithUserBaseInfoByUserIdAndKey(userId, key);
         //获取用户基本信息
         for (ArticleWithUserBaseInfoPojo articleWithUserBaseInfoPojo : articleWithUserBaseInfoPojoList) {
             articleWithUserBaseInfoPojo.setUserBaseInfoPojo(userMapper.selectUserBaseInfoByPrimaryKey(articleWithUserBaseInfoPojo.getUserId()));
@@ -81,9 +81,9 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public PageInfo<ArticleBaseInfoPojo> selectArticleBaseInfoByKey(int pageNow, int pageSize, Long userId, String key) {
+    public PageInfo<ArticleBaseInfoPojo> selectArticleBaseInfoByUserIdAndKey(int pageNow, int pageSize, Long userId, String key) {
         PageHelper.startPage(pageNow, pageSize);
-        List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleMapper.selectArticleBaseInfoByKey(userId, key);
+        List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleMapper.selectArticleBaseInfoByUserIdAndKey(userId, key);
         return new PageInfo<>(articleBaseInfoPojoList);
     }
 

@@ -142,7 +142,7 @@
     from tbl_article
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
-  <select id="selectArticleBaseInfoByKey" resultType="pers.lilei.blog.pojo.ArticleBaseInfoPojo">
+  <select id="selectArticleBaseInfoByUserIdAndKey" resultType="pers.lilei.blog.pojo.ArticleBaseInfoPojo">
     select
     <include refid="Base_Column_List" />
     ,

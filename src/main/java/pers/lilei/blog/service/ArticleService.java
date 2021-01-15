@@ -17,12 +17,11 @@ import java.util.List;
 public interface ArticleService {
     PageInfo<ArticleWithUserBaseInfoPojo> selectAllArticleWithUserBaseInfoByUserId(int pageNow, int pageSize, Long userId);
 
-    PageInfo<ArticleWithUserBaseInfoPojo> selectArticleWithUserBaseInfoByKey(int pageNow, int pageSize, Long userId, String key);
+    PageInfo<ArticleWithUserBaseInfoPojo> selectArticleWithUserBaseInfoByUserIdAndKey(int pageNow, int pageSize, Long userId, String key);
 
     PageInfo<ArticleBaseInfoPojo> selectAllArticleBaseInfoByUserId(int pageNow, int pageSize, Long userId);
 
-    PageInfo<ArticleBaseInfoPojo> selectArticleBaseInfoByKey(int pageNow, int pageSize, Long userId, String key);
-
+    PageInfo<ArticleBaseInfoPojo> selectArticleBaseInfoByUserIdAndKey(int pageNow, int pageSize, Long userId, String key);
 
     Integer addArticle(ArticleWithBLOBs articleWithBLOBs);
 
