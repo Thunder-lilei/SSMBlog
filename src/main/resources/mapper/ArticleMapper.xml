@@ -126,7 +126,23 @@
     from tbl_article
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
-  <select id="selectArticleBaseInfoByKey" resultType="pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo">
+  <select id="selectArticleWithUserBaseInfoByKey" resultType="pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_article
+    where user_id = #{userId,jdbcType=BIGINT} AND CONCAT(article_title) LIKE "%"#{key,jdbcType=VARCHAR}"%"
+  </select>
+  <select id="selectAllArticleBaseInfoByUserId" parameterType="java.lang.Long" resultType="pers.lilei.blog.pojo.ArticleBaseInfoPojo">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_article
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <select id="selectArticleBaseInfoByKey" resultType="pers.lilei.blog.pojo.ArticleBaseInfoPojo">
     select
     <include refid="Base_Column_List" />
     ,

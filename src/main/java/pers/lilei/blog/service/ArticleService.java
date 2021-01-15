@@ -2,6 +2,7 @@ package pers.lilei.blog.service;
 
 import com.github.pagehelper.PageInfo;
 import pers.lilei.blog.po.ArticleWithBLOBs;
+import pers.lilei.blog.pojo.ArticleBaseInfoPojo;
 import pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo;
 
 import java.util.List;
@@ -16,7 +17,12 @@ import java.util.List;
 public interface ArticleService {
     PageInfo<ArticleWithUserBaseInfoPojo> selectAllArticleWithUserBaseInfoByUserId(int pageNow, int pageSize, Long userId);
 
-    PageInfo<ArticleWithUserBaseInfoPojo> selectArticleBaseInfoByKey(int pageNow, int pageSize, Long userId, String key);
+    PageInfo<ArticleWithUserBaseInfoPojo> selectArticleWithUserBaseInfoByKey(int pageNow, int pageSize, Long userId, String key);
+
+    PageInfo<ArticleBaseInfoPojo> selectAllArticleBaseInfoByUserId(int pageNow, int pageSize, Long userId);
+
+    PageInfo<ArticleBaseInfoPojo> selectArticleBaseInfoByKey(int pageNow, int pageSize, Long userId, String key);
+
 
     Integer addArticle(ArticleWithBLOBs articleWithBLOBs);
 

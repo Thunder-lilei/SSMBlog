@@ -22,11 +22,11 @@ public class ArticleServiceTest extends BaseTest{
         PageInfo<ArticleWithUserBaseInfoPojo> articleWithUserBaseInfoPojoPageInfo = articleService.selectAllArticleWithUserBaseInfoByUserId(1, 10, 1L);
         System.out.println(articleWithUserBaseInfoPojoPageInfo);
     }
-    @Test
-    public void selectByKey() {
-        PageInfo<ArticleWithUserBaseInfoPojo> articleWithUserBaseInfoPojoPageInfo = articleService.selectArticleBaseInfoByKey(1, 10, 1L, "第");
-        System.out.println(articleWithUserBaseInfoPojoPageInfo);
-    }
+//    @Test
+//    public void selectByKey() {
+//        PageInfo<ArticleWithUserBaseInfoPojo> articleWithUserBaseInfoPojoPageInfo = articleService.selectArticleBaseInfoByKey(1, 10, 1L, "第");
+//        System.out.println(articleWithUserBaseInfoPojoPageInfo);
+//    }
     @Test
     public void getCommendArticle() {
         List<ArticleWithUserBaseInfoPojo> articleWithUserBaseInfoPojoList = articleService.getRecommendArticle(5);

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import pers.lilei.blog.po.Article;
 import pers.lilei.blog.po.ArticleExample;
 import pers.lilei.blog.po.ArticleWithBLOBs;
+import pers.lilei.blog.pojo.ArticleBaseInfoPojo;
 import pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo;
 
 public interface ArticleMapper {
@@ -15,7 +16,6 @@ public interface ArticleMapper {
     int deleteByExample(ArticleExample example);
 
     int deleteByPrimaryKey(Long articleId);
-
 
     int insert(ArticleWithBLOBs record);
 
@@ -29,7 +29,11 @@ public interface ArticleMapper {
 
     List<ArticleWithUserBaseInfoPojo> selectAllArticleWithUserBaseInfoByUserId(Long userId);
 
-    List<ArticleWithUserBaseInfoPojo> selectArticleBaseInfoByKey(@Param("userId") Long userId, @Param("key") String key);
+    List<ArticleWithUserBaseInfoPojo> selectArticleWithUserBaseInfoByKey(@Param("userId") Long userId, @Param("key") String key);
+
+    List<ArticleBaseInfoPojo> selectAllArticleBaseInfoByUserId(Long userId);
+
+    List<ArticleBaseInfoPojo> selectArticleBaseInfoByKey(@Param("userId") Long userId, @Param("key") String key);
 
     List<ArticleWithUserBaseInfoPojo> getRecommendArticle(int size);
 

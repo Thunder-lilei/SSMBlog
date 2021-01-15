@@ -8,6 +8,7 @@ import pers.lilei.blog.dao.ArticleMapper;
 import pers.lilei.blog.dao.UserMapper;
 import pers.lilei.blog.po.ArticleWithBLOBs;
 import pers.lilei.blog.po.User;
+import pers.lilei.blog.pojo.ArticleBaseInfoPojo;
 import pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo;
 import pers.lilei.blog.service.ArticleService;
 
@@ -62,14 +63,28 @@ public class ArticleServiceImpl implements ArticleService {
      * @return com.github.pagehelper.PageInfo<pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo>
      **/
     @Override
-    public PageInfo<ArticleWithUserBaseInfoPojo> selectArticleBaseInfoByKey(int pageNow, int pageSize, Long userId, String key) {
+    public PageInfo<ArticleWithUserBaseInfoPojo> selectArticleWithUserBaseInfoByKey(int pageNow, int pageSize, Long userId, String key) {
         PageHelper.startPage(pageNow, pageSize);
-        List<ArticleWithUserBaseInfoPojo> articleWithUserBaseInfoPojoList = articleMapper.selectArticleBaseInfoByKey(userId, key);
+        List<ArticleWithUserBaseInfoPojo> articleWithUserBaseInfoPojoList = articleMapper.selectArticleWithUserBaseInfoByKey(userId, key);
         //获取用户基本信息
         for (ArticleWithUserBaseInfoPojo articleWithUserBaseInfoPojo : articleWithUserBaseInfoPojoList) {
             articleWithUserBaseInfoPojo.setUserBaseInfoPojo(userMapper.selectUserBaseInfoByPrimaryKey(articleWithUserBaseInfoPojo.getUserId()));
         }
         return new PageInfo<>(articleWithUserBaseInfoPojoList);
+    }
+
+    @Override
+    public PageInfo<ArticleBaseInfoPojo> selectAllArticleBaseInfoByUserId(int pageNow, int pageSize, Long userId) {
+        PageHelper.startPage(pageNow, pageSize);
+        List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleMapper.selectAllArticleBaseInfoByUserId(userId);
+        return new PageInfo<>(articleBaseInfoPojoList);
+    }
+
+    @Override
+    public PageInfo<ArticleBaseInfoPojo> selectArticleBaseInfoByKey(int pageNow, int pageSize, Long userId, String key) {
+        PageHelper.startPage(pageNow, pageSize);
+        List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleMapper.selectArticleBaseInfoByKey(userId, key);
+        return new PageInfo<>(articleBaseInfoPojoList);
     }
 
     @Override

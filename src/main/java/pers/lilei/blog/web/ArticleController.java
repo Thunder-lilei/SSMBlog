@@ -43,7 +43,7 @@ public class ArticleController extends BaseController{
         User user = (User) session.getAttribute("user");
         if (user != null) {
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-            modelMap.put("articleWithUserPageInfo", articleService.selectAllArticleWithUserBaseInfoByUserId(pageNow, pageSize, user.getUserId()));
+            modelMap.put("articlePageInfo", articleService.selectAllArticleBaseInfoByUserId(pageNow, pageSize, user.getUserId()));
         } else {
             modelMap.put(MessageConstant.MESSAGE, "未登录！");
         }
@@ -65,7 +65,7 @@ public class ArticleController extends BaseController{
         User user = (User) session.getAttribute("user");
         if (user != null) {
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-            modelMap.put("articleWithUserPageInfo", articleService.selectArticleBaseInfoByKey(pageNow, pageSize, user.getUserId(), key));
+            modelMap.put("articlePageInfo", articleService.selectArticleBaseInfoByKey(pageNow, pageSize, user.getUserId(), key));
         } else {
             modelMap.put(MessageConstant.MESSAGE, "未登录！");
         }
@@ -200,6 +200,14 @@ public class ArticleController extends BaseController{
         Map<String,Object> modelMap = new HashMap<>();
         modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
         modelMap.put("recommendArticleList", articleService.getRecommendArticle(size));
+        return modelMap;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getUserAllArticle", method = RequestMethod.POST)
+    private Map<String,Object> getUserAllArticle(@RequestParam int pageNow, @RequestParam int pageSize, @RequestParam Long userId){
+        Map<String,Object> modelMap = new HashMap<>();
+        modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+        modelMap.put("articlePageInfo", articleService.selectAllArticleWithUserBaseInfoByUserId(pageNow, pageSize, userId));
         return modelMap;
     }
 }
