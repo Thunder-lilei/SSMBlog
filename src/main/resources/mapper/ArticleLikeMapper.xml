@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="pers.lilei.blog.dao.LikeMapper">
-  <resultMap id="BaseResultMap" type="pers.lilei.blog.po.Like">
+<mapper namespace="pers.lilei.blog.dao.ArticleLikeMapper">
+  <resultMap id="BaseResultMap" type="pers.lilei.blog.po.ArticleLike">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="article_id" jdbcType="BIGINT" property="articleId" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
@@ -69,13 +69,13 @@
   <sql id="Base_Column_List">
     id, article_id, user_id, create_time, update_time
   </sql>
-  <select id="selectByExample" parameterType="pers.lilei.blog.po.LikeExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="pers.lilei.blog.po.ArticleLikeExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from tbl_like
+    from tbl_article_like
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -84,29 +84,39 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
-    from tbl_like
+    from tbl_article_like
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectByArticleIdAndUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_article_like
+    where user_id = #{userId,jdbcType=BIGINT} and article_id = #{articleId,jdbcType=BIGINT}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from tbl_like
+    delete from tbl_article_like
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="pers.lilei.blog.po.LikeExample">
-    delete from tbl_like
+  <delete id="deleteByArticleIdAndUserId">
+    delete from tbl_article_like
+    where user_id = #{userId,jdbcType=BIGINT} and article_id = #{articleId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="pers.lilei.blog.po.ArticleLikeExample">
+    delete from tbl_article_like
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="pers.lilei.blog.po.Like">
-    insert into tbl_like (id, article_id, user_id, 
+  <insert id="insert" parameterType="pers.lilei.blog.po.ArticleLike">
+    insert into tbl_article_like (id, article_id, user_id,
       create_time, update_time)
-    values (#{id,jdbcType=BIGINT}, #{articleId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+    values (#{id,jdbcType=BIGINT}, #{articleId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT},
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="pers.lilei.blog.po.Like">
-    insert into tbl_like
+  <insert id="insertSelective" parameterType="pers.lilei.blog.po.ArticleLike">
+    insert into tbl_article_like
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -142,14 +152,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="pers.lilei.blog.po.LikeExample" resultType="java.lang.Long">
-    select count(*) from tbl_like
+  <select id="countByExample" parameterType="pers.lilei.blog.po.ArticleLikeExample" resultType="java.lang.Long">
+    select count(*) from tbl_article_like
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update tbl_like
+    update tbl_article_like
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
@@ -172,7 +182,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update tbl_like
+    update tbl_article_like
     set id = #{record.id,jdbcType=BIGINT},
       article_id = #{record.articleId,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=BIGINT},
@@ -182,8 +192,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="pers.lilei.blog.po.Like">
-    update tbl_like
+  <update id="updateByPrimaryKeySelective" parameterType="pers.lilei.blog.po.ArticleLike">
+    update tbl_article_like
     <set>
       <if test="articleId != null">
         article_id = #{articleId,jdbcType=BIGINT},
@@ -200,8 +210,8 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="pers.lilei.blog.po.Like">
-    update tbl_like
+  <update id="updateByPrimaryKey" parameterType="pers.lilei.blog.po.ArticleLike">
+    update tbl_article_like
     set article_id = #{articleId,jdbcType=BIGINT},
       user_id = #{userId,jdbcType=BIGINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},

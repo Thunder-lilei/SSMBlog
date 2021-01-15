@@ -2,7 +2,7 @@ package pers.lilei.blog.po;
 
 import java.util.Date;
 
-public class Like {
+public class ArticleLike {
     private Long id;
 
     private Long articleId;
