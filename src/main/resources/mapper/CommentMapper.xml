@@ -73,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    comment_id, user_id, article_id, comment_like_count, comment_date, parent_comment_id, 
+    comment_id, user_id, article_id, comment_like_count, comment_date, parent_comment_id,
     create_time, update_time
   </sql>
   <sql id="Blob_Column_List">
@@ -110,12 +110,34 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from tbl_comment
     where comment_id = #{commentId,jdbcType=BIGINT}
+  </select>
+  <select id="selectUserIdByCommentId" parameterType="java.lang.Long" resultType="java.lang.Long">
+    select
+    user_id
+    from tbl_comment
+    where comment_id = #{commentId,jdbcType=BIGINT}
+  </select>
+  <select id="getRootCommentByArticleId" parameterType="java.lang.Long" resultType="pers.lilei.blog.pojo.CommentWithUserBaseInfoPojo">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_comment
+    where article_id = #{articleId,jdbcType=BIGINT} AND parent_comment_id = 0
+  </select>
+  <select id="getChildCommentByArticleIdAndParentCommentId" resultType="pers.lilei.blog.pojo.CommentWithUserBaseInfoPojo">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_comment
+    where article_id = #{articleId,jdbcType=BIGINT} AND parent_comment_id = #{parentCommentId,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from tbl_comment
@@ -128,12 +150,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="pers.lilei.blog.po.Comment">
-    insert into tbl_comment (comment_id, user_id, article_id, 
-      comment_like_count, comment_date, parent_comment_id, 
+    insert into tbl_comment (comment_id, user_id, article_id,
+      comment_like_count, comment_date, parent_comment_id,
       create_time, update_time, comment_content
       )
-    values (#{commentId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{articleId,jdbcType=BIGINT}, 
-      #{commentLikeCount,jdbcType=BIGINT}, #{commentDate,jdbcType=TIMESTAMP}, #{parentCommentId,jdbcType=BIGINT}, 
+    values (#{commentId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{articleId,jdbcType=BIGINT},
+      #{commentLikeCount,jdbcType=BIGINT}, #{commentDate,jdbcType=TIMESTAMP}, #{parentCommentId,jdbcType=BIGINT},
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{commentContent,jdbcType=LONGVARCHAR}
       )
   </insert>

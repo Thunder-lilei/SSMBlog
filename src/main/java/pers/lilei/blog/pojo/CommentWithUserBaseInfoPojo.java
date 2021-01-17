@@ -1,28 +1,36 @@
-package pers.lilei.blog.po;
+package pers.lilei.blog.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
+import pers.lilei.blog.po.User;
 
 import java.util.Date;
 
-public class Comment {
+/**
+ * <h3>SSMBlog</h3>
+ * <p>评论包含用户基本信息</p>
+ *
+ * @author : 李雷
+ * @date : 2021-01-17 19:48
+ **/
+public class CommentWithUserBaseInfoPojo {
     private Long commentId;
 
     private Long userId;
+
+    private UserBaseInfoPojo userBaseInfo;
 
     private Long articleId;
 
     private Long commentLikeCount;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd hh-mm-ss",timezone = "GMT+8")
     private Date commentDate;
 
     private Long parentCommentId;
 
-    private Date createTime;
-
-    private Date updateTime;
+    private UserBaseInfoPojo parentCommentUserBaseInfo;
 
     private String commentContent;
 
@@ -32,14 +40,6 @@ public class Comment {
 
     public void setCommentId(Long commentId) {
         this.commentId = commentId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public Long getArticleId() {
@@ -74,27 +74,35 @@ public class Comment {
         this.parentCommentId = parentCommentId;
     }
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
     public String getCommentContent() {
         return commentContent;
     }
 
     public void setCommentContent(String commentContent) {
-        this.commentContent = commentContent == null ? null : commentContent.trim();
+        this.commentContent = commentContent;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public UserBaseInfoPojo getUserBaseInfo() {
+        return userBaseInfo;
+    }
+
+    public void setUserBaseInfo(UserBaseInfoPojo userBaseInfo) {
+        this.userBaseInfo = userBaseInfo;
+    }
+
+    public UserBaseInfoPojo getParentCommentUserBaseInfo() {
+        return parentCommentUserBaseInfo;
+    }
+
+    public void setParentCommentUserBaseInfo(UserBaseInfoPojo parentCommentUserBaseInfo) {
+        this.parentCommentUserBaseInfo = parentCommentUserBaseInfo;
     }
 }
