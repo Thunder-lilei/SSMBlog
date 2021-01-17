@@ -13,6 +13,10 @@ import java.util.List;
  * @date : 2021-01-13 15:16
  **/
 public interface CommentService {
+    Integer addComment(Comment comment);
+
+    Integer deleteComment(Long commentId);
+
     List<CommentWithUserBaseInfoPojo> getCommentByArticleId(Long articleId);
 
     List<CommentWithUserBaseInfoPojo> getRootCommentByArticleId(Long articleId);

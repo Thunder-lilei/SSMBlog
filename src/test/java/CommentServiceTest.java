@@ -44,4 +44,13 @@ public class CommentServiceTest extends BaseTest{
             System.out.println("获取根评论失败！");
         }
     }
+    @Test
+    public void addComment() {
+        Comment comment = new Comment();
+        comment.setUserId(1L);
+        comment.setArticleId(5L);
+        comment.setParentCommentId(0L);
+        comment.setCommentContent("真的不错！");
+        commentService.addComment(comment);
+    }
 }

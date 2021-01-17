@@ -25,7 +25,7 @@ public class CommentWithUserBaseInfoPojo {
     private Long commentLikeCount;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
-    @JsonFormat(pattern="yyyy-MM-dd hh-mm-ss",timezone = "GMT+8")
+    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
     private Date commentDate;
 
     private Long parentCommentId;
