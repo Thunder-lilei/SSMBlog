@@ -166,6 +166,7 @@ public class ArticleController extends BaseController{
      * @Author 李雷
      * @Description
      * 获取博文 返回给前端
+     * 增加博文访问量
      * @CreateDate 13:51 2021/1/5
      * @UpdateDate 13:51 2021/1/5
      * @Param []
@@ -177,6 +178,8 @@ public class ArticleController extends BaseController{
         Map<String,Object> modelMap = new HashMap<>();
         ArticleWithBLOBs articleWithBLOBs = (ArticleWithBLOBs) session.getAttribute("showArticle");
         if (articleWithBLOBs != null) {
+            articleWithBLOBs.setArticleViews(articleWithBLOBs.getArticleViews() + 1);
+            articleService.updateArticle(articleWithBLOBs);
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             modelMap.put("article", articleWithBLOBs);
             session.setAttribute("showArticle", null);

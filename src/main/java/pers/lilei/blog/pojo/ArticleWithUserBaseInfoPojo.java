@@ -16,9 +16,19 @@ public class ArticleWithUserBaseInfoPojo {
 
     private Long articleLikeCount;
 
+    private Long articleViews;
+
     private Long userId;
 
     private UserBaseInfoPojo userBaseInfoPojo;
+
+    public Long getArticleViews() {
+        return articleViews;
+    }
+
+    public void setArticleViews(Long articleViews) {
+        this.articleViews = articleViews;
+    }
 
     public Long getUserId() {
         return userId;

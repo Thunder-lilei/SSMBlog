@@ -156,7 +156,7 @@
     ,
     <include refid="Blob_Column_List" />
     from tbl_article
-    order by (article_like_count + article_comment_count) DESC limit 0 , #{size,jdbcType=INTEGER}
+    order by (article_like_count + article_comment_count + article_views) DESC limit 0 , #{size,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from tbl_article
