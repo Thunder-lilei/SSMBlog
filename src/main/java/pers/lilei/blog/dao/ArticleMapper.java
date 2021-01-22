@@ -2,13 +2,13 @@ package pers.lilei.blog.dao;
 
 import java.util.List;
 
-import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
 import pers.lilei.blog.po.Article;
 import pers.lilei.blog.po.ArticleExample;
 import pers.lilei.blog.po.ArticleWithBLOBs;
 import pers.lilei.blog.pojo.ArticleBaseInfoPojo;
 import pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo;
+import pers.lilei.blog.pojo.RecommendUserPojo;
 
 public interface ArticleMapper {
     long countByExample(ArticleExample example);
@@ -36,6 +36,8 @@ public interface ArticleMapper {
     List<ArticleBaseInfoPojo> selectArticleBaseInfoByUserIdAndKey(@Param("userId") Long userId, @Param("key") String key);
 
     List<ArticleWithUserBaseInfoPojo> getRecommendArticle(int size);
+
+    List<RecommendUserPojo> getRecommendUser(int size);
 
     int updateByExampleSelective(@Param("record") ArticleWithBLOBs record, @Param("example") ArticleExample example);
 

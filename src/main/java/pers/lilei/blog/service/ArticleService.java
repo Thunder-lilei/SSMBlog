@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import pers.lilei.blog.po.ArticleWithBLOBs;
 import pers.lilei.blog.pojo.ArticleBaseInfoPojo;
 import pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo;
+import pers.lilei.blog.pojo.RecommendUserPojo;
 
 import java.util.List;
 
@@ -32,4 +33,6 @@ public interface ArticleService {
     ArticleWithBLOBs getArticleByArticleId(Long articleId);
 
     List<ArticleWithUserBaseInfoPojo> getRecommendArticle(int size);
+
+    List<RecommendUserPojo> getRecommendUser(int size);
 }

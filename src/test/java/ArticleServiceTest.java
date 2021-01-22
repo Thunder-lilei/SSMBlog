@@ -3,6 +3,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pers.lilei.blog.po.ArticleWithBLOBs;
 import pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo;
+import pers.lilei.blog.pojo.RecommendUserPojo;
 import pers.lilei.blog.service.ArticleService;
 
 import java.util.List;
@@ -31,5 +32,11 @@ public class ArticleServiceTest extends BaseTest{
     public void getCommendArticle() {
         List<ArticleWithUserBaseInfoPojo> articleWithUserBaseInfoPojoList = articleService.getRecommendArticle(5);
         articleWithUserBaseInfoPojoList.forEach(temp-> System.out.println(temp.getArticleTitle()));
+    }
+    @Test
+    public void getCommendUser() {
+        List<RecommendUserPojo> recommendUserPojoList = articleService.getRecommendUser(5);
+        recommendUserPojoList.forEach(temp-> System.out.println(temp.getUserBaseInfoPojo().getUserNickname()));
+        recommendUserPojoList.forEach(temp-> System.out.println(temp.getSumViews()));
     }
 }

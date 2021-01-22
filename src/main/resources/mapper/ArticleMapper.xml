@@ -158,6 +158,15 @@
     from tbl_article
     order by (article_like_count + article_comment_count + article_views) DESC limit 0 , #{size,jdbcType=INTEGER}
   </select>
+  <select id="getRecommendUser" parameterType="java.lang.Integer" resultType="pers.lilei.blog.pojo.RecommendUserPojo">
+    select user_id,sum(article_views + article_comment_count + article_like_count) sum,
+    sum(article_views) sum_views,
+    sum(article_comment_count) sum_comment_count,
+    sum(article_like_count) sum_like_count
+    from tbl_article
+    group by user_id
+    order by sum DESC limit 0, #{size,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from tbl_article
     where article_id = #{articleId,jdbcType=BIGINT}

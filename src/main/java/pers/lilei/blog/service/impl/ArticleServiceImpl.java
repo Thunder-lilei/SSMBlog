@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import pers.lilei.blog.dao.ArticleMapper;
 import pers.lilei.blog.dao.UserMapper;
 import pers.lilei.blog.po.ArticleWithBLOBs;
-import pers.lilei.blog.po.User;
 import pers.lilei.blog.pojo.ArticleBaseInfoPojo;
 import pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo;
+import pers.lilei.blog.pojo.RecommendUserPojo;
 import pers.lilei.blog.service.ArticleService;
 
 import java.util.List;
@@ -125,5 +125,15 @@ public class ArticleServiceImpl implements ArticleService {
             articleWithUserBaseInfoPojo.setUserBaseInfoPojo(userMapper.selectUserBaseInfoByPrimaryKey(articleWithUserBaseInfoPojo.getUserId()));
         }
         return articleWithUserBaseInfoPojoList;
+    }
+
+    @Override
+    public List<RecommendUserPojo> getRecommendUser(int size) {
+        List<RecommendUserPojo> recommendUserPojoList = articleMapper.getRecommendUser(size);
+        //获取用户基本信息
+        for (RecommendUserPojo recommendUserPojo : recommendUserPojoList) {
+            recommendUserPojo.setUserBaseInfoPojo(userMapper.selectUserBaseInfoByPrimaryKey(recommendUserPojo.getUserId()));
+        }
+        return recommendUserPojoList;
     }
 }

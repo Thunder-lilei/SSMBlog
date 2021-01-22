@@ -191,7 +191,7 @@ public class ArticleController extends BaseController{
     /*
      * @Author 李雷
      * @Description
-     * 获取特定数量的点赞数和评论数多的博文
+     * 获取特定数量的推荐的博文
      * @CreateDate 13:25 2021/1/8
      * @UpdateDate 13:25 2021/1/8
      * @Param [size]
@@ -203,6 +203,23 @@ public class ArticleController extends BaseController{
         Map<String,Object> modelMap = new HashMap<>();
         modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
         modelMap.put("recommendArticleList", articleService.getRecommendArticle(size));
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 获取特定数量的推荐的博主
+     * @CreateDate 22:34 2021/1/22
+     * @UpdateDate 22:34 2021/1/22
+     * @Param [size]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/getRecommendUser", method = RequestMethod.POST)
+    private Map<String,Object> getRecommendUser(@RequestParam int size){
+        Map<String,Object> modelMap = new HashMap<>();
+        modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+        modelMap.put("recommendUserList", articleService.getRecommendUser(size));
         return modelMap;
     }
     /*
