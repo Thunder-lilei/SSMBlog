@@ -85,10 +85,27 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from tbl_sort
     where sort_id = #{sortId,jdbcType=BIGINT}
+  </select>
+  <select id="selectBySortName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_sort
+    where sort_name = #{sortName,jdbcType=VARCHAR}
+  </select>
+  <select id="selectBySortNameWithoutSortId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_sort
+    where sort_name = #{sortName,jdbcType=VARCHAR} AND sort_id != #{sortId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAllSort" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_sort
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from tbl_sort
@@ -101,10 +118,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="pers.lilei.blog.po.Sort">
-    insert into tbl_sort (sort_id, sort_name, sort_description, 
+    insert into tbl_sort (sort_id, sort_name, sort_description,
       parent_sort_id, create_time, update_time
       )
-    values (#{sortId,jdbcType=BIGINT}, #{sortName,jdbcType=VARCHAR}, #{sortDescription,jdbcType=VARCHAR}, 
+    values (#{sortId,jdbcType=BIGINT}, #{sortName,jdbcType=VARCHAR}, #{sortDescription,jdbcType=VARCHAR},
       #{parentSortId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>

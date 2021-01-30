@@ -20,6 +20,12 @@ public interface SortMapper {
 
     Sort selectByPrimaryKey(Long sortId);
 
+    Sort selectBySortName(String sortName);
+
+    Sort selectBySortNameWithoutSortId(@Param("sortName") String sortName, @Param("sortId") Long sortId);
+
+    List<Sort> selectAllSort();
+
     int updateByExampleSelective(@Param("record") Sort record, @Param("example") SortExample example);
 
     int updateByExample(@Param("record") Sort record, @Param("example") SortExample example);
