@@ -105,12 +105,35 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from tbl_label
     where label_id = #{labelId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByLabelName" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_label
+    where label_name = #{labelName,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByLabelNameWithoutLabelId" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_label
+    where label_name = #{labelName,jdbcType=VARCHAR} AND label_id != #{labelId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAllLabel" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_label
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from tbl_label
@@ -123,9 +146,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="pers.lilei.blog.po.Label">
-    insert into tbl_label (label_id, label_name, create_time, 
+    insert into tbl_label (label_id, label_name, create_time,
       update_time, label_description)
-    values (#{labelId,jdbcType=BIGINT}, #{labelName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+    values (#{labelId,jdbcType=BIGINT}, #{labelName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP}, #{labelDescription,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="pers.lilei.blog.po.Label">

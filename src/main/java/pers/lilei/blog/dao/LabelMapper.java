@@ -22,6 +22,12 @@ public interface LabelMapper {
 
     Label selectByPrimaryKey(Long labelId);
 
+    Label selectByLabelName(String labelName);
+
+    List<Label> selectAllLabel();
+
+    Label selectByLabelNameWithoutLabelId(@Param("labelName") String labelName, @Param("labelId") Long labelId);
+
     int updateByExampleSelective(@Param("record") Label record, @Param("example") LabelExample example);
 
     int updateByExampleWithBLOBs(@Param("record") Label record, @Param("example") LabelExample example);
