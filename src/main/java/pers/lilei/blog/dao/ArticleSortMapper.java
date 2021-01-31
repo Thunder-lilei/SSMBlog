@@ -12,6 +12,8 @@ public interface ArticleSortMapper {
 
     int deleteByPrimaryKey(Long id);
 
+    int deleteByArticleIdAndSortId(@Param("articleId") Long articleId, @Param("sortId") Long sortId);
+
     int insert(ArticleSort record);
 
     int insertSelective(ArticleSort record);
@@ -19,6 +21,8 @@ public interface ArticleSortMapper {
     List<ArticleSort> selectByExample(ArticleSortExample example);
 
     ArticleSort selectByPrimaryKey(Long id);
+
+    ArticleSort selectByArticleIdAndSortId(@Param("articleId") Long articleId, @Param("sortId") Long sortId);
 
     int updateByExampleSelective(@Param("record") ArticleSort record, @Param("example") ArticleSortExample example);
 

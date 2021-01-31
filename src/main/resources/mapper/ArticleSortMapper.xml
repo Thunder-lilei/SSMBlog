@@ -84,14 +84,24 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from tbl_article_sort
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectByArticleIdAndSortId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_article_sort
+    where sort_id = #{sortId,jdbcType=BIGINT} AND article_id = #{articleId,jdbcType=BIGINT}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from tbl_article_sort
     where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByArticleIdAndSortId" parameterType="java.lang.Long">
+    delete from tbl_article_sort
+    where article_id = #{articleId,jdbcType=BIGINT} AND sort_id = #{sortId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="pers.lilei.blog.po.ArticleSortExample">
     delete from tbl_article_sort
@@ -100,9 +110,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="pers.lilei.blog.po.ArticleSort">
-    insert into tbl_article_sort (id, article_id, sort_id, 
+    insert into tbl_article_sort (id, article_id, sort_id,
       create_time, update_time)
-    values (#{id,jdbcType=BIGINT}, #{articleId,jdbcType=BIGINT}, #{sortId,jdbcType=BIGINT}, 
+    values (#{id,jdbcType=BIGINT}, #{articleId,jdbcType=BIGINT}, #{sortId,jdbcType=BIGINT},
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="pers.lilei.blog.po.ArticleSort">

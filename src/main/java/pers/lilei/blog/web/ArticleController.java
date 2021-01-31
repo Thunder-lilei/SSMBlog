@@ -5,11 +5,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pers.lilei.blog.constant.MessageConstant;
 import pers.lilei.blog.po.ArticleWithBLOBs;
+import pers.lilei.blog.po.Label;
+import pers.lilei.blog.po.Sort;
 import pers.lilei.blog.po.User;
-import pers.lilei.blog.service.ArticleService;
+import pers.lilei.blog.service.*;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,9 +26,13 @@ import java.util.Map;
 @RequestMapping(value = "/article")
 public class ArticleController extends BaseController{
     ArticleService articleService;
+    ArticleLabelService articleLabelService;
+    ArticleSortService articleSortService;
     @Autowired
-    public ArticleController(ArticleService articleService) {
+    public ArticleController(ArticleService articleService, ArticleLabelService articleLabelService, ArticleSortService articleSortService) {
         this.articleService = articleService;
+        this.articleLabelService = articleLabelService;
+        this.articleSortService = articleSortService;
     }
     /*
      * @Author 李雷
@@ -74,7 +81,6 @@ public class ArticleController extends BaseController{
     /*
      * @Author 李雷
      * @Description 添加博文
-     * 暂时不考虑重复标题问题
      * @CreateDate 18:37 2021/1/2
      * @UpdateDate 18:37 2021/1/2
      * @Param [articleWithBLOBs]
@@ -82,7 +88,7 @@ public class ArticleController extends BaseController{
      **/
     @ResponseBody
     @RequestMapping(value = "/addArticle", method = RequestMethod.POST)
-    private Map<String,Object> addArticle(@RequestBody ArticleWithBLOBs articleWithBLOBs){
+    private Map<String,Object> addArticle(@RequestBody ArticleWithBLOBs articleWithBLOBs, List<Sort> sortList, List<Label> labelList){
         Map<String,Object> modelMap = new HashMap<>();
         User user = (User) session.getAttribute("user");
         if (user != null) {
@@ -90,7 +96,7 @@ public class ArticleController extends BaseController{
             articleWithBLOBs.setUserId(user.getUserId());
             //获取本地时间设置创建时间
             articleWithBLOBs.setArticleDate(new Date());
-            if (!articleService.addArticle(articleWithBLOBs).equals(0)) {
+            if (articleService.addArticle(articleWithBLOBs).equals(1)) {
                 modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             } else {
                 modelMap.put(MessageConstant.MESSAGE, "添加失败");

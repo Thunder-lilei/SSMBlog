@@ -26,6 +26,8 @@ public interface SortMapper {
 
     List<Sort> selectAllSort();
 
+    List<Sort> selectSortByArticleId(Long articleId);
+
     int updateByExampleSelective(@Param("record") Sort record, @Param("example") SortExample example);
 
     int updateByExample(@Param("record") Sort record, @Param("example") SortExample example);
