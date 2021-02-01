@@ -1,5 +1,8 @@
 package pers.lilei.blog.web;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.beanutils.converters.StringArrayConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -10,10 +13,7 @@ import pers.lilei.blog.po.Sort;
 import pers.lilei.blog.po.User;
 import pers.lilei.blog.service.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <h3>SSMBlog</h3>
@@ -131,14 +131,17 @@ public class ArticleController extends BaseController{
      * @Description
      * 修改博文
      * @CreateDate 18:51 2021/1/2
-     * @UpdateDate 18:51 2021/1/2
+     * @UpdateDate 2021-2-1 17:51:24
      * @Param [articleWithBLOBs]
      * @return java.util.Map<java.lang.String,java.lang.Object>
      **/
     @ResponseBody
     @RequestMapping(value = "/updateArticle", method = RequestMethod.POST)
-    private Map<String,Object> updateArticle(@RequestBody ArticleWithBLOBs articleWithBLOBs){
+    private Map<String,Object> updateArticle(@RequestBody Map<String,Object> data){
         Map<String,Object> modelMap = new HashMap<>();
+        List<Label> labelList = JSON.parseArray((String) data.get("labelList"),Label.class);
+        List<Sort> sortList = JSON.parseArray((String) data.get("sortList"),Sort.class);
+        ArticleWithBLOBs articleWithBLOBs = JSON.parseObject((String) data.get("article"), ArticleWithBLOBs.class);
         if (!articleService.updateArticle(articleWithBLOBs).equals(0)) {
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
         } else {
