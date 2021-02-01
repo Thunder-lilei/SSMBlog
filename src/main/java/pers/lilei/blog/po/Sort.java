@@ -1,6 +1,7 @@
 package pers.lilei.blog.po;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Sort {
     private Long sortId;
@@ -61,5 +62,22 @@ public class Sort {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sort sort = (Sort) o;
+        return sortId.equals(sort.sortId) &&
+                Objects.equals(sortName, sort.sortName) &&
+                Objects.equals(sortDescription, sort.sortDescription) &&
+                Objects.equals(createTime, sort.createTime) &&
+                Objects.equals(updateTime, sort.updateTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sortId, sortDescription, sortName, createTime, updateTime);
     }
 }

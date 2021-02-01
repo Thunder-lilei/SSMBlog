@@ -49,4 +49,51 @@ public class ArticleSortServiceImpl implements ArticleSortService {
     public ArticleSort selectByArticleIdAndSortId(Long articleID, Long sortId) {
         return articleSortMapper.selectByArticleIdAndSortId(articleID, sortId);
     }
+
+    /*
+     * @Author 李雷
+     * @Description
+     * 替换掉原本的分类列表
+     * 需要优化算法
+     * @CreateDate 19:30 2021/2/1
+     * @UpdateDate 19:30 2021/2/1
+     * @Param [sortList, articleId]
+     * @return java.lang.Integer
+     **/
+    @Override
+    public Integer updateArticleSortList(List<Sort> sortList, Long articleId) {
+        //获取原本关联的分类列表
+        List<Sort> oldSortList = getAllArticleSort(articleId);
+        //添加新列表，不会重复添加
+        for (Sort sort : sortList) {
+            ArticleSort articleSort = new ArticleSort();
+            Sort newSort = sortMapper.selectBySortName(sort.getSortName());
+            //创建新分类
+            if (newSort == null) {
+                newSort = new Sort();
+                newSort.setSortName(sort.getSortName());
+                sortMapper.insertSelective(newSort);
+                //为分类添加序号
+                sort.setSortId(sortMapper.selectBySortName(sort.getSortName()).getSortId());
+            } else {
+                //为分类添加序号
+                sort.setSortId(newSort.getSortId());
+            }
+            articleSort.setArticleId(articleId);
+            articleSort.setSortId(sort.getSortId());
+            addArticleSort(articleSort);
+        }
+        System.out.println("看看oldsort");
+        System.out.println(oldSortList);
+        for (Sort oldSort : oldSortList) {
+            System.out.println(oldSort.getSortName());
+            System.out.println(sortList.contains(oldSort));
+            if (!sortList.contains(oldSort)) {
+                System.out.println("删除"+oldSort.getSortName());
+                //移除旧列表中多余的分类
+                deleteArticleSort(articleId, oldSort.getSortId());
+            }
+        }
+        return 1;
+    }
 }

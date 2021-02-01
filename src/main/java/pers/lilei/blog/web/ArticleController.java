@@ -139,9 +139,12 @@ public class ArticleController extends BaseController{
     @RequestMapping(value = "/updateArticle", method = RequestMethod.POST)
     private Map<String,Object> updateArticle(@RequestBody Map<String,Object> data){
         Map<String,Object> modelMap = new HashMap<>();
-        List<Label> labelList = JSON.parseArray((String) data.get("labelList"),Label.class);
-        List<Sort> sortList = JSON.parseArray((String) data.get("sortList"),Sort.class);
+        List<Label> checkedLabelList = JSON.parseArray((String) data.get("labelList"),Label.class);
+        List<Sort> checkedSortList = JSON.parseArray((String) data.get("sortList"),Sort.class);
         ArticleWithBLOBs articleWithBLOBs = JSON.parseObject((String) data.get("article"), ArticleWithBLOBs.class);
+        //更新标签、分类列表
+//        articleLabelService.updateArticleLabelList(checkedLabelList, articleWithBLOBs.getArticleId());
+        articleSortService.updateArticleSortList(checkedSortList, articleWithBLOBs.getArticleId());
         if (!articleService.updateArticle(articleWithBLOBs).equals(0)) {
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
         } else {

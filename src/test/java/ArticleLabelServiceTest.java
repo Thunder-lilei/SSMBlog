@@ -4,6 +4,7 @@ import pers.lilei.blog.po.ArticleLabel;
 import pers.lilei.blog.po.Label;
 import pers.lilei.blog.service.ArticleLabelService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,5 +26,12 @@ public class ArticleLabelServiceTest extends BaseTest{
     public void selectByArticleIdAndLabelId() {
         ArticleLabel articleLabel = articleLabelService.selectByArticleIdAndLabelId(5L, 18L);
         System.out.println(articleLabel.getLabelId());
+    }
+    @Test
+    public void containsTest() {
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        System.out.println(!list.contains(2));
     }
 }

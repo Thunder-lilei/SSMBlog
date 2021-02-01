@@ -20,4 +20,6 @@ public interface ArticleSortService {
     List<Sort> getAllArticleSort(Long articleId);
 
     ArticleSort selectByArticleIdAndSortId(Long articleID, Long sortId);
+
+    Integer updateArticleSortList(List<Sort> sortList, Long articleId);
 }

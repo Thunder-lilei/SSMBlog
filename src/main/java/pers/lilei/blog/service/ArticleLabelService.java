@@ -20,4 +20,6 @@ public interface ArticleLabelService {
     List<Label> getAllArticleLabel(Long articleId);
 
     ArticleLabel selectByArticleIdAndLabelId(Long articleId, Long labelId);
+
+    Integer updateArticleLabelList(List<Label> labelList, Long articleId);
 }
