@@ -2,6 +2,7 @@ package pers.lilei.blog.service;
 
 import pers.lilei.blog.po.ArticleLabel;
 import pers.lilei.blog.po.Label;
+import pers.lilei.blog.po.Sort;
 
 import java.util.List;
 
@@ -13,6 +14,8 @@ import java.util.List;
  * @date : 2021-01-30 16:11
  **/
 public interface ArticleLabelService {
+    Integer addArticleLabelList(List<Label> labelList, Long articleId);
+
     Integer addArticleLabel(ArticleLabel articleLabel);
 
     Integer deleteArticleLabel(Long articleId, Long labelId);

@@ -88,16 +88,25 @@ public class ArticleController extends BaseController{
      **/
     @ResponseBody
     @RequestMapping(value = "/addArticle", method = RequestMethod.POST)
-    private Map<String,Object> addArticle(@RequestBody ArticleWithBLOBs articleWithBLOBs, List<Sort> sortList, List<Label> labelList){
+    private Map<String,Object> addArticle(@RequestBody Map<String, Object> data){
         Map<String,Object> modelMap = new HashMap<>();
         User user = (User) session.getAttribute("user");
         if (user != null) {
+            List<Label> checkedLabelList = JSON.parseArray((String) data.get("labelList"),Label.class);
+            List<Sort> checkedSortList = JSON.parseArray((String) data.get("sortList"),Sort.class);
+            ArticleWithBLOBs articleWithBLOBs = JSON.parseObject((String) data.get("article"), ArticleWithBLOBs.class);
             //设置博文所有者
             articleWithBLOBs.setUserId(user.getUserId());
             //获取本地时间设置创建时间
             articleWithBLOBs.setArticleDate(new Date());
-            if (articleService.addArticle(articleWithBLOBs).equals(1)) {
+            Integer result = articleService.addArticle(articleWithBLOBs);
+            if (result.equals(1)) {
+                articleWithBLOBs = articleService.selectByArticleTitle(articleWithBLOBs.getArticleTitle());
+                articleSortService.addArticleSortList(checkedSortList, articleWithBLOBs.getArticleId());
+                articleLabelService.addArticleLabelList(checkedLabelList, articleWithBLOBs.getArticleId());
                 modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            } else if (result.equals(-1)) {
+                modelMap.put(MessageConstant.MESSAGE, "博文标题重复！");
             } else {
                 modelMap.put(MessageConstant.MESSAGE, "添加失败");
             }
@@ -143,7 +152,7 @@ public class ArticleController extends BaseController{
         List<Sort> checkedSortList = JSON.parseArray((String) data.get("sortList"),Sort.class);
         ArticleWithBLOBs articleWithBLOBs = JSON.parseObject((String) data.get("article"), ArticleWithBLOBs.class);
         //更新标签、分类列表
-//        articleLabelService.updateArticleLabelList(checkedLabelList, articleWithBLOBs.getArticleId());
+        articleLabelService.updateArticleLabelList(checkedLabelList, articleWithBLOBs.getArticleId());
         articleSortService.updateArticleSortList(checkedSortList, articleWithBLOBs.getArticleId());
         if (!articleService.updateArticle(articleWithBLOBs).equals(0)) {
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);

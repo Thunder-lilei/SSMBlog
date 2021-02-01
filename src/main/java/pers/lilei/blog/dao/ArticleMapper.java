@@ -27,6 +27,8 @@ public interface ArticleMapper {
 
     ArticleWithBLOBs selectByPrimaryKey(Long articleId);
 
+    ArticleWithBLOBs selectByArticleTitle(String title);
+
     List<ArticleWithUserBaseInfoPojo> selectAllArticleWithUserBaseInfoByUserId(Long userId);
 
     List<ArticleWithUserBaseInfoPojo> selectArticleWithUserBaseInfoByUserIdAndKey(@Param("userId") Long userId, @Param("key") String key);

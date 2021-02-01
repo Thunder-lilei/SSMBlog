@@ -24,6 +24,8 @@ public interface ArticleService {
 
     PageInfo<ArticleBaseInfoPojo> selectArticleBaseInfoByUserIdAndKey(int pageNow, int pageSize, Long userId, String key);
 
+    ArticleWithBLOBs selectByArticleTitle(String title);
+
     Integer addArticle(ArticleWithBLOBs articleWithBLOBs);
 
     Integer deleteArticleByArticleId(Long articleId);

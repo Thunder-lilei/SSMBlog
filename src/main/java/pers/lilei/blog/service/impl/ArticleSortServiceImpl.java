@@ -28,6 +28,28 @@ public class ArticleSortServiceImpl implements ArticleSortService {
     }
 
     @Override
+    public Integer addArticleSortList(List<Sort> sortList, Long articleId) {
+        ArticleSort articleSort = new ArticleSort();
+        Sort newSort;
+        for (Sort sort : sortList) {
+            newSort = sortMapper.selectBySortName(sort.getSortName());
+            //创建新分类
+            if (newSort == null) {
+                newSort = new Sort();
+                newSort.setSortName(sort.getSortName());
+                sortMapper.insertSelective(newSort);
+            }
+            //为分类添加序号
+            sort.setSortId(sortMapper.selectBySortName(sort.getSortName()).getSortId());
+
+            articleSort.setArticleId(articleId);
+            articleSort.setSortId(sort.getSortId());
+            addArticleSort(articleSort);
+        }
+        return 1;
+    }
+
+    @Override
     public Integer addArticleSort(ArticleSort articleSort) {
         if (selectByArticleIdAndSortId(articleSort.getArticleId(), articleSort.getSortId()) != null) {
             return -1;
@@ -65,26 +87,8 @@ public class ArticleSortServiceImpl implements ArticleSortService {
         //获取原本关联的分类列表
         List<Sort> oldSortList = getAllArticleSort(articleId);
         //添加新列表，不会重复添加
-        for (Sort sort : sortList) {
-            ArticleSort articleSort = new ArticleSort();
-            Sort newSort = sortMapper.selectBySortName(sort.getSortName());
-            //创建新分类
-            if (newSort == null) {
-                newSort = new Sort();
-                newSort.setSortName(sort.getSortName());
-                sortMapper.insertSelective(newSort);
-                //为分类添加序号
-                sort.setSortId(sortMapper.selectBySortName(sort.getSortName()).getSortId());
-            } else {
-                //为分类添加序号
-                sort.setSortId(newSort.getSortId());
-            }
-            articleSort.setArticleId(articleId);
-            articleSort.setSortId(sort.getSortId());
-            addArticleSort(articleSort);
-        }
-        System.out.println("看看oldsort");
-        System.out.println(oldSortList);
+        addArticleSortList(sortList, articleId);
+
         for (Sort oldSort : oldSortList) {
             System.out.println(oldSort.getSortName());
             System.out.println(sortList.contains(oldSort));

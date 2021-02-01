@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import pers.lilei.blog.dao.ArticleLabelMapper;
 import pers.lilei.blog.dao.LabelMapper;
 import pers.lilei.blog.po.ArticleLabel;
+import pers.lilei.blog.po.ArticleSort;
 import pers.lilei.blog.po.Label;
+import pers.lilei.blog.po.Sort;
 import pers.lilei.blog.service.ArticleLabelService;
 
 import java.awt.font.FontRenderContext;
@@ -26,6 +28,28 @@ public class ArticleLabelServiceImpl implements ArticleLabelService {
     public ArticleLabelServiceImpl(ArticleLabelMapper articleLabelMapper, LabelMapper labelMapper) {
         this.articleLabelMapper = articleLabelMapper;
         this.labelMapper = labelMapper;
+    }
+
+    @Override
+    public Integer addArticleLabelList(List<Label> labelList, Long articleId) {
+        ArticleLabel articleLabel = new ArticleLabel();
+        Label newLabel;
+        for (Label label : labelList) {
+            newLabel = labelMapper.selectByLabelName(label.getLabelName());
+            //创建新分类
+            if (newLabel == null) {
+                newLabel = new Label();
+                newLabel.setLabelName(label.getLabelName());
+                labelMapper.insertSelective(newLabel);
+            }
+            //为分类添加序号
+            label.setLabelId(labelMapper.selectByLabelName(label.getLabelName()).getLabelId());
+
+            articleLabel.setArticleId(articleId);
+            articleLabel.setLabelId(label.getLabelId());
+            addArticleLabel(articleLabel);
+        }
+        return 1;
     }
 
     @Override
@@ -66,24 +90,8 @@ public class ArticleLabelServiceImpl implements ArticleLabelService {
         //获取原本关联的标签列表
         List<Label> oldLabelList = getAllArticleLabel(articleId);
         //添加新列表，不会重复添加
-        for (Label label : labelList) {
-            ArticleLabel articleLabel = new ArticleLabel();
-            Label newLabel = labelMapper.selectByLabelName(label.getLabelName());
-            //创建新标签
-            if (newLabel == null) {
-                newLabel = new Label();
-                newLabel.setLabelName(label.getLabelName());
-                labelMapper.insertSelective(newLabel);
-                //为标签添加序号
-                label.setLabelId(labelMapper.selectByLabelName(label.getLabelName()).getLabelId());
-            } else {
-                //为标签添加序号
-                label.setLabelId(newLabel.getLabelId());
-            }
-            articleLabel.setArticleId(articleId);
-            articleLabel.setLabelId(label.getLabelId());
-            addArticleLabel(articleLabel);
-        }
+        addArticleLabelList(labelList, articleId);
+
         for (Label oldLabel : oldLabelList) {
             if (!labelList.contains(oldLabel)) {
                 System.out.println("删除"+oldLabel.getLabelName());

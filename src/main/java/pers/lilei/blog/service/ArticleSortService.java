@@ -13,6 +13,8 @@ import java.util.List;
  * @date : 2021-01-30 16:12
  **/
 public interface ArticleSortService {
+    Integer addArticleSortList(List<Sort> sortList, Long articleId);
+
     Integer addArticleSort(ArticleSort articleSort);
 
     Integer deleteArticleSort(Long articleId, Long sortId);

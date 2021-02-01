@@ -88,7 +88,24 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public ArticleWithBLOBs selectByArticleTitle(String title) {
+        return articleMapper.selectByArticleTitle(title);
+    }
+
+    /*
+     * @Author 李雷
+     * @Description
+     * 创建博文 标题不允许重复
+     * @CreateDate 21:41 2021/2/1
+     * @UpdateDate 21:41 2021/2/1
+     * @Param [articleWithBLOBs]
+     * @return java.lang.Integer
+     **/
+    @Override
     public Integer addArticle(ArticleWithBLOBs articleWithBLOBs) {
+        if (selectByArticleTitle(articleWithBLOBs.getArticleTitle()) != null) {
+            return -1;
+        }
         return articleMapper.insertSelective(articleWithBLOBs);
     }
 
