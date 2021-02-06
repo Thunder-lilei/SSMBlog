@@ -1,8 +1,6 @@
 package pers.lilei.blog.web;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import org.apache.commons.beanutils.converters.StringArrayConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -277,4 +275,173 @@ public class ArticleController extends BaseController{
         modelMap.put("articlePageInfo", articleService.selectArticleBaseInfoByUserIdAndKey(pageNow, pageSize, userId, key));
         return modelMap;
     }
+    /*
+     * @Author 李雷
+     * @Description
+     * 分页获取登录用户所选分类的所有博文基本信息
+     * @CreateDate 20:53 2021/2/6
+     * @UpdateDate 20:53 2021/2/6
+     * @Param [pageNow, pageSize, sortId]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/getSortAboutArticle", method = RequestMethod.POST)
+    private Map<String,Object> getSortAboutArticle(@RequestParam int pageNow, @RequestParam int pageSize, @RequestParam Long sortId){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("articlePageInfo", articleService.getSortAboutArticleWithUserId(pageNow, pageSize, sortId, user.getUserId()));
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 分页获取登录用户所选标签的所有博文基本信息
+     * @CreateDate 20:54 2021/2/6
+     * @UpdateDate 20:54 2021/2/6
+     * @Param [pageNow, pageSize, labelId]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/getLabelAboutArticle", method = RequestMethod.POST)
+    private Map<String,Object> getLabelAboutArticle(@RequestParam int pageNow, @RequestParam int pageSize, @RequestParam Long labelId){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("articlePageInfo", articleService.getLabelAboutArticleWithUserId(pageNow, pageSize, labelId, user.getUserId()));
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 分页获取登录用户所选分类以及关键词的所有博文基本信息
+     * @CreateDate 20:54 2021/2/6
+     * @UpdateDate 20:54 2021/2/6
+     * @Param [pageNow, pageSize, sortId, key]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/getSortAboutArticleAndKey", method = RequestMethod.POST)
+    private Map<String,Object> getSortAboutArticleAndKey(@RequestParam int pageNow, @RequestParam int pageSize, @RequestParam Long sortId, @RequestParam String key){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("articlePageInfo", articleService.getSortAboutArticleWithUserIdAndKey(pageNow, pageSize, sortId, user.getUserId(), key));
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 分页获取登录用户所选标签以及关键词的所有博文基本信息
+     * @CreateDate 20:55 2021/2/6
+     * @UpdateDate 20:55 2021/2/6
+     * @Param [pageNow, pageSize, labelId, key]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/getLabelAboutArticleAndKey", method = RequestMethod.POST)
+    private Map<String,Object> getLabelAboutArticleAndKey(@RequestParam int pageNow, @RequestParam int pageSize, @RequestParam Long labelId, @RequestParam String key){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("articlePageInfo", articleService.getLabelAboutArticleWithUserIdAndKey(pageNow, pageSize, labelId, user.getUserId(), key));
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 存储临时分类id
+     * @CreateDate 21:52 2021/2/6
+     * @UpdateDate 21:52 2021/2/6
+     * @Param [sortId]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/setSortId", method = RequestMethod.POST)
+    private Map<String,Object> setSortId(@RequestParam Long sortId){
+        Map<String,Object> modelMap = new HashMap<>();
+        modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+        session.setAttribute("sortId", sortId);
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 存储临时标签id
+     * @CreateDate 21:51 2021/2/6
+     * @UpdateDate 21:51 2021/2/6
+     * @Param
+     * @return
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/setLabelId", method = RequestMethod.POST)
+    private Map<String,Object> setLabelId(@RequestParam Long labelId){
+        Map<String,Object> modelMap = new HashMap<>();
+        modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+        session.setAttribute("labelId", labelId);
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 获取临时分类id
+     * @CreateDate 21:51 2021/2/6
+     * @UpdateDate 21:51 2021/2/6
+     * @Param []
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/getSortId", method = RequestMethod.POST)
+    private Map<String,Object> getSortId(){
+        Map<String,Object> modelMap = new HashMap<>();
+        Long sortId = (Long) session.getAttribute("sortId");
+        if (sortId != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("sortId", sortId);
+            session.setAttribute("sortId", null);
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "获取失败！");
+        }
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 获取临时标签id
+     * @CreateDate 21:51 2021/2/6
+     * @UpdateDate 21:51 2021/2/6
+     * @Param []
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/getLabelId", method = RequestMethod.POST)
+    private Map<String,Object> getLabelId(){
+        Map<String,Object> modelMap = new HashMap<>();
+        Long labelId = (Long) session.getAttribute("labelId");
+        if (labelId != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("labelId", labelId);
+            session.setAttribute("labelId", null);
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "获取失败！");
+        }
+        return modelMap;
+    }
+
 }

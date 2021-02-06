@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pers.lilei.blog.po.ArticleWithBLOBs;
 import pers.lilei.blog.po.Label;
+import pers.lilei.blog.pojo.ArticleBaseInfoPojo;
 import pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo;
 import pers.lilei.blog.pojo.RecommendUserPojo;
 import pers.lilei.blog.service.ArticleService;
@@ -59,5 +60,23 @@ public class ArticleServiceTest extends BaseTest{
         String jsonArticle = "{\"articleId\":5,\"userId\":1,\"articleViews\":122,\"articleCommentCount\":14,\"articleDate\":\"2021-01-05\",\"articleLikeCount\":6,\"createTime\":1609824412000,\"updateTime\":1610903417000,\"articleTitle\":\"第一篇博文\",\"articleContent\":\"#  这是第一篇博文\\n就随便写一点内容吧\\n再加一点内容\\n-  第一天\\n-  第二天\\n-  第三天\\n![image](https://img-blog.csdnimg.cn/20200708235625588.jpg)\"}\n";
         ArticleWithBLOBs articleWithBLOBs = JSON.parseObject(jsonArticle, ArticleWithBLOBs.class);
         System.out.println(articleWithBLOBs);
+    }
+    @Test
+    public void getSortAboutArticle() {
+        PageInfo<ArticleBaseInfoPojo> articleWithBLOBsPageInfo = articleService.getSortAboutArticleWithUserId(1, 10, 3L, 1L);
+        List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleWithBLOBsPageInfo.getList();
+        articleBaseInfoPojoList.forEach(temp-> System.out.println(temp.getArticleTitle()));
+    }
+    @Test
+    public void getLabelAboutArticle() {
+        PageInfo<ArticleBaseInfoPojo> articleWithBLOBsPageInfo = articleService.getLabelAboutArticleWithUserId(1, 10, 3L, 1L);
+        List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleWithBLOBsPageInfo.getList();
+        articleBaseInfoPojoList.forEach(temp-> System.out.println(temp.getArticleTitle()));
+    }
+    @Test
+    public void getSortAboutArticleAndKey() {
+        PageInfo<ArticleBaseInfoPojo> articleWithBLOBsPageInfo = articleService.getSortAboutArticleWithUserIdAndKey(1, 10, 3L, 1L, "一");
+        List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleWithBLOBsPageInfo.getList();
+        articleBaseInfoPojoList.forEach(temp-> System.out.println(temp.getArticleTitle()));
     }
 }

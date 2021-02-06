@@ -31,6 +31,14 @@ public interface ArticleMapper {
 
     List<ArticleWithUserBaseInfoPojo> selectAllArticleWithUserBaseInfoByUserId(Long userId);
 
+    List<ArticleBaseInfoPojo> selectSortAboutArticleWithUserId(@Param("sortId") Long sortId, @Param("userId") Long userId);
+
+    List<ArticleBaseInfoPojo> selectLabelAboutArticleWithUserId(@Param("labelId") Long labelId, @Param("userId") Long userId);
+
+    List<ArticleBaseInfoPojo> selectSortAboutArticleWithUserIdAndKey(@Param("sortId") Long sortId, @Param("userId") Long userId, @Param("key") String key);
+
+    List<ArticleBaseInfoPojo> selectLabelAboutArticleWithUserIdAndKey(@Param("labelId") Long labelId, @Param("userId") Long userId, @Param("key") String key);
+
     List<ArticleWithUserBaseInfoPojo> selectArticleWithUserBaseInfoByUserIdAndKey(@Param("userId") Long userId, @Param("key") String key);
 
     List<ArticleBaseInfoPojo> selectAllArticleBaseInfoByUserId(Long userId);

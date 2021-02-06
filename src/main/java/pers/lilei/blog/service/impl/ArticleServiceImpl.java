@@ -88,6 +88,34 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public PageInfo<ArticleBaseInfoPojo> getSortAboutArticleWithUserId(int pageNow, int pageSize, Long sortId, Long userId) {
+        PageHelper.startPage(pageNow, pageSize);
+        List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleMapper.selectSortAboutArticleWithUserId(sortId, userId);
+        return new PageInfo<>(articleBaseInfoPojoList);
+    }
+
+    @Override
+    public PageInfo<ArticleBaseInfoPojo> getLabelAboutArticleWithUserId(int pageNow, int pageSize, Long labelId, Long userId) {
+        PageHelper.startPage(pageNow, pageSize);
+        List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleMapper.selectLabelAboutArticleWithUserId(labelId, userId);
+        return new PageInfo<>(articleBaseInfoPojoList);
+    }
+
+    @Override
+    public PageInfo<ArticleBaseInfoPojo> getSortAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long sortId, Long userId, String key) {
+        PageHelper.startPage(pageNow, pageSize);
+        List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleMapper.selectSortAboutArticleWithUserIdAndKey(sortId, userId, key);
+        return new PageInfo<>(articleBaseInfoPojoList);
+    }
+
+    @Override
+    public PageInfo<ArticleBaseInfoPojo> getLabelAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long labelId, Long userId, String key) {
+        PageHelper.startPage(pageNow, pageSize);
+        List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleMapper.selectLabelAboutArticleWithUserIdAndKey(labelId, userId, key);
+        return new PageInfo<>(articleBaseInfoPojoList);
+    }
+
+    @Override
     public ArticleWithBLOBs selectByArticleTitle(String title) {
         return articleMapper.selectByArticleTitle(title);
     }

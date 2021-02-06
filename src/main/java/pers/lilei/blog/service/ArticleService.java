@@ -24,6 +24,14 @@ public interface ArticleService {
 
     PageInfo<ArticleBaseInfoPojo> selectArticleBaseInfoByUserIdAndKey(int pageNow, int pageSize, Long userId, String key);
 
+    PageInfo<ArticleBaseInfoPojo> getSortAboutArticleWithUserId(int pageNow, int pageSize, Long sortId, Long userId);
+
+    PageInfo<ArticleBaseInfoPojo> getLabelAboutArticleWithUserId(int pageNow, int pageSize, Long labelId, Long userId);
+
+    PageInfo<ArticleBaseInfoPojo> getSortAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long sortId, Long userId, String key);
+
+    PageInfo<ArticleBaseInfoPojo> getLabelAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long labelId, Long userId, String key);
+
     ArticleWithBLOBs selectByArticleTitle(String title);
 
     Integer addArticle(ArticleWithBLOBs articleWithBLOBs);
