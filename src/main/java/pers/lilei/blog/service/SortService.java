@@ -23,4 +23,6 @@ public interface SortService {
     Sort selectBySortNameWithoutSortId(String sortName, Long sortId);
 
     List<Sort> getAllSort();
+
+    List<Sort> getMySort(Long userId);
 }

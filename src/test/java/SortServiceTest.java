@@ -27,4 +27,9 @@ public class SortServiceTest extends BaseTest{
         List<Sort> sortList = sortService.getAllSort();
         sortList.forEach(temp-> System.out.println(temp.getSortName()));
     }
+    @Test
+    public void getMySort(){
+        List<Sort> sortList = sortService.getMySort(1L);
+        sortList.forEach(temp-> System.out.println(temp.getSortName()));
+    }
 }

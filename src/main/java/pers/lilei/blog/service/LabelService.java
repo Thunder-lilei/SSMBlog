@@ -23,4 +23,6 @@ public interface LabelService {
     Label selectByLabelNameWithoutLabelId(String labelName, Long labelId);
 
     List<Label> getAllLabel();
+
+    List<Label> getMyLabel(Long userId);
 }

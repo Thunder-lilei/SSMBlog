@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pers.lilei.blog.constant.MessageConstant;
 import pers.lilei.blog.po.Label;
+import pers.lilei.blog.po.User;
 import pers.lilei.blog.service.LabelService;
 
 import java.util.HashMap;
@@ -103,6 +104,28 @@ public class LabelController extends BaseController{
         Map<String,Object> modelMap = new HashMap<>();
         modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
         modelMap.put("labelList", labelService.getAllLabel());
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 获取登录用户使用的所有标签
+     * @CreateDate 12:07 2021/2/6
+     * @UpdateDate 12:07 2021/2/6
+     * @Param []
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/getMyLabel", method = RequestMethod.POST)
+    private Map<String,Object> getMyLabel(){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("labelList", labelService.getMyLabel(user.getUserId()));
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
         return modelMap;
     }
 }

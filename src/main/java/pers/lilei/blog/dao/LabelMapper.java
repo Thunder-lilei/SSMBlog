@@ -26,6 +26,8 @@ public interface LabelMapper {
 
     List<Label> selectAllLabel();
 
+    List<Label> selectLabelByUserId(Long userId);
+
     List<Label> selectLabelByArticleId(Long articleId);
 
     Label selectByLabelNameWithoutLabelId(@Param("labelName") String labelName, @Param("labelId") Long labelId);

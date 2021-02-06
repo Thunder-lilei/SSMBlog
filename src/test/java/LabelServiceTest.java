@@ -20,4 +20,9 @@ public class LabelServiceTest extends BaseTest{
         List<Label> labelList = labelService.getAllLabel();
         labelList.forEach(temp-> System.out.println(temp.getLabelName()));
     }
+    @Test
+    public void getMyLabel() {
+        List<Label> labelList = labelService.getMyLabel(1L);
+        labelList.forEach(temp-> System.out.println(temp.getLabelName()));
+    }
 }

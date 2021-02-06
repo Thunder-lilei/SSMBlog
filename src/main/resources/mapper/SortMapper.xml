@@ -113,6 +113,14 @@
     from tbl_sort
     where sort_id in (select sort_id from tbl_article_sort where article_id = #{articleId,jdbcType=BIGINT});
   </select>
+  <select id="selectSortByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_sort
+    where sort_id in
+    (select sort_id from tbl_article_sort where article_id in
+    (select article_id from tbl_article where user_id = #{userId,jdbcType=BIGINT}) group by sort_id)
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from tbl_sort
     where sort_id = #{sortId,jdbcType=BIGINT}

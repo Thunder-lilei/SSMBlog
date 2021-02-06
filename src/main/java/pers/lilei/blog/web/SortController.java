@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pers.lilei.blog.constant.MessageConstant;
 import pers.lilei.blog.po.Sort;
+import pers.lilei.blog.po.User;
 import pers.lilei.blog.service.SortService;
 
 import java.util.HashMap;
@@ -107,6 +108,28 @@ public class SortController extends BaseController{
         Map<String,Object> modelMap = new HashMap<>();
         modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
         modelMap.put("sortList", sortService.getAllSort());
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 获取登录用户使用的所有分类
+     * @CreateDate 12:15 2021/2/6
+     * @UpdateDate 12:15 2021/2/6
+     * @Param []
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/getMySort", method = RequestMethod.POST)
+    private Map<String,Object> getMySort(){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("sortList", sortService.getMySort(user.getUserId()));
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
         return modelMap;
     }
 }

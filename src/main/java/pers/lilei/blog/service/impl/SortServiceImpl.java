@@ -58,4 +58,9 @@ public class SortServiceImpl implements SortService {
     public List<Sort> getAllSort() {
         return sortMapper.selectAllSort();
     }
+
+    @Override
+    public List<Sort> getMySort(Long userId) {
+        return sortMapper.selectSortByUserId(userId);
+    }
 }
