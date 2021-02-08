@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pers.lilei.blog.constant.MessageConstant;
+import pers.lilei.blog.constant.RoleConstant;
 import pers.lilei.blog.po.User;
 import pers.lilei.blog.service.UserService;
 import pers.lilei.blog.util.BCrypt;
@@ -331,8 +332,13 @@ public class UserController extends BaseController{
     @RequestMapping(value = "/selectAllUserBaseInfo", method = RequestMethod.POST)
     private Map<String,Object> selectAllUserBaseInfo(@RequestParam Integer pageNow, @RequestParam Integer pageSize) {
         Map<String, Object> modelMap = new HashMap<>();
-        modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-        modelMap.put("allUserPageInfo", userService.selectAllUserBaseInfo(pageNow, pageSize));
+        User user = (User) session.getAttribute("user");
+        if (user != null && RoleConstant.adminIdList.contains(user.getUserId())) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("allUserPageInfo", userService.selectAllUserBaseInfo(pageNow, pageSize));
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "非管理员账号！");
+        }
         return modelMap;
     }
     /*
