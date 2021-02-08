@@ -460,4 +460,26 @@ public class UserController extends BaseController{
         }
         return modelMap;
     }
+    /*
+     * @Author 李雷
+     * @Description
+     * 判断登录用户是否是管理员
+     * @CreateDate 20:26 2021/2/8
+     * @UpdateDate 20:26 2021/2/8
+     * @Param []
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/ifAdmin", method = RequestMethod.POST)
+    private Map<String,Object> ifAdmin(){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("result", RoleConstant.adminIdList.contains(user.getUserId()));
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
 }
