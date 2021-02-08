@@ -116,6 +116,17 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public PageInfo<ArticleWithUserBaseInfoPojo> searchArticle(int pageNow, int pageSize, String key) {
+        PageHelper.startPage(pageNow, pageSize);
+        List<ArticleWithUserBaseInfoPojo> articleWithUserBaseInfoPojoList = articleMapper.selectArticleByKey(key);
+        //获取用户基本信息
+        for (ArticleWithUserBaseInfoPojo articleWithUserBaseInfoPojo : articleWithUserBaseInfoPojoList) {
+            articleWithUserBaseInfoPojo.setUserBaseInfoPojo(userMapper.selectUserBaseInfoByPrimaryKey(articleWithUserBaseInfoPojo.getUserId()));
+        }
+        return new PageInfo<>(articleWithUserBaseInfoPojoList);
+    }
+
+    @Override
     public ArticleWithBLOBs selectByArticleTitle(String title) {
         return articleMapper.selectByArticleTitle(title);
     }
@@ -180,5 +191,10 @@ public class ArticleServiceImpl implements ArticleService {
             recommendUserPojo.setUserBaseInfoPojo(userMapper.selectUserBaseInfoByPrimaryKey(recommendUserPojo.getUserId()));
         }
         return recommendUserPojoList;
+    }
+
+    @Override
+    public Long getUserIdByArticleId(Long articleId) {
+        return articleMapper.selectUserIdByArticleId(articleId);
     }
 }

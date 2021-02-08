@@ -443,5 +443,34 @@ public class ArticleController extends BaseController{
         }
         return modelMap;
     }
-
+    /*
+     * @Author 李雷
+     * @Description
+     * 根据关键词搜索博文
+     * @CreateDate 19:06 2021/2/8
+     * @UpdateDate 19:06 2021/2/8
+     * @Param [pageNow, pageSize, key]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/searchArticle", method = RequestMethod.POST)
+    private Map<String,Object> searchArticle(@RequestParam int pageNow, @RequestParam int pageSize, @RequestParam String key){
+        Map<String,Object> modelMap = new HashMap<>();
+        modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+        modelMap.put("articlePageInfo", articleService.searchArticle(pageNow, pageSize, key));
+        return modelMap;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/ifMyArticle", method = RequestMethod.POST)
+    private Map<String,Object> ifMyArticle(@RequestParam Long articleId){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("result", articleService.getUserIdByArticleId(articleId).equals(user.getUserId()));
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
 }

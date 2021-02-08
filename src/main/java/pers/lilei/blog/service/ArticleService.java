@@ -32,6 +32,8 @@ public interface ArticleService {
 
     PageInfo<ArticleBaseInfoPojo> getLabelAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long labelId, Long userId, String key);
 
+    PageInfo<ArticleWithUserBaseInfoPojo> searchArticle(int pageNow, int pageSize, String key);
+
     ArticleWithBLOBs selectByArticleTitle(String title);
 
     Integer addArticle(ArticleWithBLOBs articleWithBLOBs);
@@ -45,4 +47,7 @@ public interface ArticleService {
     List<ArticleWithUserBaseInfoPojo> getRecommendArticle(int size);
 
     List<RecommendUserPojo> getRecommendUser(int size);
+
+    Long getUserIdByArticleId(Long articleId);
+
 }

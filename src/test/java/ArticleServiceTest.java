@@ -79,4 +79,15 @@ public class ArticleServiceTest extends BaseTest{
         List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleWithBLOBsPageInfo.getList();
         articleBaseInfoPojoList.forEach(temp-> System.out.println(temp.getArticleTitle()));
     }
+    @Test
+    public void searchArticle() {
+        PageInfo<ArticleWithUserBaseInfoPojo> articleWithBLOBsPageInfo = articleService.searchArticle(1, 10, "一");
+        List<ArticleWithUserBaseInfoPojo> articleBaseInfoPojoList = articleWithBLOBsPageInfo.getList();
+        articleBaseInfoPojoList.forEach(temp-> System.out.println(temp.getArticleTitle()));
+        articleBaseInfoPojoList.forEach(temp-> System.out.println(temp.getUserBaseInfoPojo().getUserNickname()));
+    }
+    @Test
+    public void getUserIdByArticleId() {
+        System.out.println(articleService.getUserIdByArticleId(5L));
+    }
 }
