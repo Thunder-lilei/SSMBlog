@@ -11,6 +11,7 @@ import pers.lilei.blog.util.BCrypt;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 public class UserServiceTest extends BaseTest{
 	private UserService userService;
@@ -131,5 +132,12 @@ public class UserServiceTest extends BaseTest{
 	public void selectUserBaseInfoByKeyWithoutMine() {
 		PageInfo<UserBaseInfoPojo> pageInfo = userService.selectUserBaseInfoByKeyWithoutMine(1, 10, "我", 3L);
 		System.out.println(pageInfo);
+	}
+	@Test
+	public void setCode() {
+		for (int i=0;i<10;i++) {
+			Integer code = (int)((Math.random()*9+1)*100000);
+			System.out.println(code.toString());
+		}
 	}
 }

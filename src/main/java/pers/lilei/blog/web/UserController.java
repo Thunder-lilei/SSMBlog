@@ -8,6 +8,7 @@ import pers.lilei.blog.constant.RoleConstant;
 import pers.lilei.blog.po.User;
 import pers.lilei.blog.service.UserService;
 import pers.lilei.blog.util.BCrypt;
+import pers.lilei.blog.util.MailUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -480,6 +481,60 @@ public class UserController extends BaseController{
         } else {
             modelMap.put(MessageConstant.MESSAGE, "未登录！");
         }
+        return modelMap;
+    }
+
+    /*
+     * @Author 李雷
+     * @Description
+     * 设置邮箱登录验证码
+     * 检查是否注册
+     * @CreateDate 20:42 2021/2/13
+     * @UpdateDate 20:42 2021/2/13
+     * @Param [mail]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/setMailCode", method = RequestMethod.POST)
+    private Map<String,Object> setMailCode(@RequestParam String mail){
+        Map<String,Object> modelMap = new HashMap<>();
+        if (userService.selectByEmail(mail) == null) {
+            modelMap.put(MessageConstant.MESSAGE, "该邮箱未注册！");
+            return modelMap;
+        }
+        //生成随机验证码
+        Integer code = (int)((Math.random()*9+1)*100000);
+        MailUtils.SendMail(mail, code.toString(), "SSM个人博客系统给您发送的登录验证码为：");
+        modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+        //设置预登陆的邮箱和验证码
+        session.setAttribute("mailCode", code);
+        session.setAttribute("loginMail", mail);
+        return modelMap;
+    }
+    /*
+     * @Author 李雷
+     * @Description
+     * 邮箱验证码登录
+     * 邮箱匹配验证
+     * @CreateDate 20:54 2021/2/13
+     * @UpdateDate 20:54 2021/2/13
+     * @Param [mail, code]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/mailLogin", method = RequestMethod.POST)
+    private Map<String,Object> mailLogin(@RequestParam String mail, @RequestParam int code){
+        Map<String,Object> modelMap = new HashMap<>();
+        if (!mail.equals(session.getAttribute("loginMail"))) {
+            modelMap.put(MessageConstant.MESSAGE, "邮箱不匹配！");
+            return modelMap;
+        }
+        if (code != (int)session.getAttribute("mailCode")) {
+            modelMap.put(MessageConstant.MESSAGE, "验证码错误！");
+            return modelMap;
+        }
+        session.setAttribute("user", userService.selectByEmail(mail));
+        modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
         return modelMap;
     }
 }
