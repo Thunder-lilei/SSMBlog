@@ -84,6 +84,11 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="getNickNameByFriendId" parameterType="java.lang.Long" resultType="java.lang.String">
+    select user_nickname
+    from tbl_user_friend
+    where user_friend_id = #{userFriendId,jdbcType=BIGINT}
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

@@ -55,8 +55,7 @@ public class UserFriendController extends BaseController{
             List<Long> friendIdList = userFriendService.getAllFriendIdByUserId(user.getUserId());
             if (!friendIdList.isEmpty()) {
                 //获取好友信息
-                userBaseInfoPojoPageInfo = userService.getAllByUserId(pageNow, pageSize, friendIdList);
-                modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+                userBaseInfoPojoPageInfo = userService.getFriendByUserId(pageNow, pageSize, friendIdList);
             }
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             modelMap.put("userPageInfo", userBaseInfoPojoPageInfo);
@@ -85,7 +84,7 @@ public class UserFriendController extends BaseController{
             List<Long> friendIdList = userFriendService.getAllFriendIdByUserId(user.getUserId());
             if (!friendIdList.isEmpty()) {
                 //获取好友信息
-                userBaseInfoPojoList = userService.getAllByUserIdList(friendIdList);
+                userBaseInfoPojoList = userService.getFriendByUserIdList(friendIdList);
                 modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             }
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);

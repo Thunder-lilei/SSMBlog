@@ -1,7 +1,10 @@
+import com.github.pagehelper.PageInfo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pers.lilei.blog.po.UserFriend;
+import pers.lilei.blog.pojo.UserBaseInfoPojo;
 import pers.lilei.blog.service.UserFriendService;
+import pers.lilei.blog.service.UserService;
 
 import java.util.List;
 
@@ -15,6 +18,8 @@ import java.util.List;
 public class UserFriendServiceTest extends BaseTest{
     @Autowired
     UserFriendService userFriendService;
+    @Autowired
+    UserService userService;
     @Test
     public void getAllFriendIdByUserId() {
         List<Long> friendIdList = userFriendService.getAllFriendIdByUserId(1L);
@@ -31,5 +36,12 @@ public class UserFriendServiceTest extends BaseTest{
         userFriend.setUserFriendId(3L);
         userFriend.setUserNickname("小王");
         System.out.println(userFriendService.updateFriendNickNameByUserIdAndUserFriendId(userFriend));
+    }
+    @Test
+    public void getFriend() {
+        List<Long> friendIdList = userFriendService.getAllFriendIdByUserId(1L);
+        PageInfo<UserBaseInfoPojo> userBaseInfoPojoPageInfo = userService.getFriendByUserId(1, 10, friendIdList);
+        List<UserBaseInfoPojo> userBaseInfoPojoList = userBaseInfoPojoPageInfo.getList();
+        userBaseInfoPojoList.forEach(temp-> System.out.println(temp.getUserNickname()));
     }
 }

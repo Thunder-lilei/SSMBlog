@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pers.lilei.blog.dao.UserFriendMapper;
 import pers.lilei.blog.dao.UserMapper;
 import pers.lilei.blog.po.User;
 import pers.lilei.blog.pojo.UserBaseInfoPojo;
@@ -22,9 +23,11 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
+    private final UserFriendMapper userFriendMapper;
     @Autowired
-    public UserServiceImpl(UserMapper userMapper) {
+    public UserServiceImpl(UserMapper userMapper, UserFriendMapper userFriendMapper) {
         this.userMapper = userMapper;
+        this.userFriendMapper = userFriendMapper;
     }
     @Override
     public User selectByUserName(String userName) {
@@ -95,9 +98,52 @@ public class UserServiceImpl implements UserService {
         return new PageInfo<>(userBaseInfoPojoList);
     }
 
+    /*
+     * @Author 李雷
+     * @Description
+     * 获取好友列表 含备注的设置备注
+     * @CreateDate 15:16 2021/2/13
+     * @UpdateDate 15:16 2021/2/13
+     * @Param [pageNow, pageSize, userIdList]
+     * @return com.github.pagehelper.PageInfo<pers.lilei.blog.pojo.UserBaseInfoPojo>
+     **/
+    @Override
+    public PageInfo<UserBaseInfoPojo> getFriendByUserId(int pageNow, int pageSize, List<Long> userIdList) {
+        PageHelper.startPage(pageNow, pageSize);
+        List<UserBaseInfoPojo> userBaseInfoPojoList = userMapper.getAllByUserId(userIdList);
+        for (UserBaseInfoPojo userBaseInfoPojo : userBaseInfoPojoList) {
+            //设置备注
+            if (!userFriendMapper.getNickNameByFriendId(userBaseInfoPojo.getUserId()).isEmpty()) {
+                userBaseInfoPojo.setUserNickname(userFriendMapper.getNickNameByFriendId(userBaseInfoPojo.getUserId()));
+            }
+        }
+        return new PageInfo<>(userBaseInfoPojoList);
+    }
+
     @Override
     public List<UserBaseInfoPojo> getAllByUserIdList(List<Long> userIdList) {
         List<UserBaseInfoPojo> userBaseInfoPojoList = userMapper.getAllByUserId(userIdList);
+        return userBaseInfoPojoList;
+    }
+
+    /*
+     * @Author 李雷
+     * @Description
+     * 获取好友列表 设置备注
+     * @CreateDate 15:33 2021/2/13
+     * @UpdateDate 15:33 2021/2/13
+     * @Param [userIdList]
+     * @return java.util.List<pers.lilei.blog.pojo.UserBaseInfoPojo>
+     **/
+    @Override
+    public List<UserBaseInfoPojo> getFriendByUserIdList(List<Long> userIdList) {
+        List<UserBaseInfoPojo> userBaseInfoPojoList = userMapper.getAllByUserId(userIdList);
+        for (UserBaseInfoPojo userBaseInfoPojo : userBaseInfoPojoList) {
+            //设置备注
+            if (!userFriendMapper.getNickNameByFriendId(userBaseInfoPojo.getUserId()).isEmpty()) {
+                userBaseInfoPojo.setUserNickname(userFriendMapper.getNickNameByFriendId(userBaseInfoPojo.getUserId()));
+            }
+        }
         return userBaseInfoPojoList;
     }
 

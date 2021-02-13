@@ -38,7 +38,11 @@ public interface UserService {
 
     PageInfo<UserBaseInfoPojo> getAllByUserId(int pageNow, int pageSize, List<Long> userIdList);
 
+    PageInfo<UserBaseInfoPojo> getFriendByUserId(int pageNow, int pageSize, List<Long> userIdList);
+
     List<UserBaseInfoPojo> getAllByUserIdList(List<Long> userIdList);
+
+    List<UserBaseInfoPojo> getFriendByUserIdList(List<Long> userIdList);
 
     List<UserBaseInfoPojo> getAllByUserIdAndKeyList(List<Long> userIdList, String key);
 
