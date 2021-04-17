@@ -1,6 +1,9 @@
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import pers.lilei.blog.bean.Comment;
+import pers.lilei.blog.param.ArticleParam;
+import pers.lilei.blog.param.CommentParam;
 import pers.lilei.blog.param.CommentWithUserBaseInfoParam;
 import pers.lilei.blog.service.CommentService;
 
@@ -52,4 +55,12 @@ public class CommentServiceTest extends BaseTest{
         comment.setCommentContent("真的不错！");
         commentService.addComment(comment);
     }
+
+    @Test
+    public void deleteComment() {
+        CommentParam commentParam = new CommentParam();
+        commentParam.setCommentId(23L);
+        System.out.println(commentService.deleteComment(commentParam));
+    }
+
 }

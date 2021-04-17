@@ -4,6 +4,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import pers.lilei.blog.bean.Comment;
 import pers.lilei.blog.bean.CommentExample;
+import pers.lilei.blog.param.ArticleParam;
+import pers.lilei.blog.param.CommentParam;
 import pers.lilei.blog.param.CommentWithUserBaseInfoParam;
 
 public interface CommentMapper {
@@ -11,7 +13,7 @@ public interface CommentMapper {
 
     int deleteByExample(CommentExample example);
 
-    int deleteByPrimaryKey(Long commentId);
+    int deleteByPrimaryKey(@Param("param") CommentParam commentParam);
 
     int insert(Comment record);
 
@@ -40,4 +42,6 @@ public interface CommentMapper {
     int updateByPrimaryKeyWithBLOBs(Comment record);
 
     int updateByPrimaryKey(Comment record);
+
+    int selectArticleCommentNum(@Param("param")ArticleParam articleParam);
 }

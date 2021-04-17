@@ -9,6 +9,7 @@ import pers.lilei.blog.bean.ArticleWithBLOBs;
 import pers.lilei.blog.bean.Label;
 import pers.lilei.blog.bean.Sort;
 import pers.lilei.blog.bean.User;
+import pers.lilei.blog.param.ArticleParam;
 import pers.lilei.blog.service.*;
 
 import java.util.*;
@@ -470,6 +471,26 @@ public class ArticleController extends BaseController{
             modelMap.put("result", articleService.getUserIdByArticleId(articleId).equals(user.getUserId()));
         } else {
             modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
+    /**
+     * @Author 李雷
+     * @Description 获取博文评论总数
+     * @CreateDate 16:38 2021/4/17
+     * @UpdateDate 16:38 2021/4/17
+     * @Param [articleParam]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @ResponseBody
+    @RequestMapping(value = "/getArticleCommentNum", method = RequestMethod.POST)
+    private Map<String,Object> getArticleCommentNum(@RequestBody ArticleParam articleParam){
+        Map<String,Object> modelMap = new HashMap<>();
+        if (articleParam != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("articleCommentNum", articleService.getArticleCommentNum(articleParam));
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "错误的参数");
         }
         return modelMap;
     }

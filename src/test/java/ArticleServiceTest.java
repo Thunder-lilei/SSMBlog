@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pers.lilei.blog.bean.ArticleWithBLOBs;
 import pers.lilei.blog.bean.Label;
 import pers.lilei.blog.param.ArticleBaseInfoParam;
+import pers.lilei.blog.param.ArticleParam;
 import pers.lilei.blog.param.ArticleWithUserBaseInfoParam;
 import pers.lilei.blog.param.RecommendUserParam;
 import pers.lilei.blog.service.ArticleService;
@@ -89,5 +90,12 @@ public class ArticleServiceTest extends BaseTest{
     @Test
     public void getUserIdByArticleId() {
         System.out.println(articleService.getUserIdByArticleId(5L));
+    }
+
+    @Test
+    public void getArticleCommentNum() {
+        ArticleParam articleParam = new ArticleParam();
+        articleParam.setArticleId(5L);
+        System.out.println(articleService.getArticleCommentNum(articleParam));
     }
 }

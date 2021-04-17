@@ -5,9 +5,11 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.lilei.blog.dao.ArticleMapper;
+import pers.lilei.blog.dao.CommentMapper;
 import pers.lilei.blog.dao.UserMapper;
 import pers.lilei.blog.bean.ArticleWithBLOBs;
 import pers.lilei.blog.param.ArticleBaseInfoParam;
+import pers.lilei.blog.param.ArticleParam;
 import pers.lilei.blog.param.ArticleWithUserBaseInfoParam;
 import pers.lilei.blog.param.RecommendUserParam;
 import pers.lilei.blog.service.ArticleService;
@@ -25,10 +27,12 @@ import java.util.List;
 public class ArticleServiceImpl implements ArticleService {
     ArticleMapper articleMapper;
     UserMapper userMapper;
+    CommentMapper commentMapper;
     @Autowired
-    public ArticleServiceImpl(ArticleMapper articleMapper, UserMapper userMapper) {
+    public ArticleServiceImpl(ArticleMapper articleMapper, UserMapper userMapper, CommentMapper commentMapper) {
         this.articleMapper = articleMapper;
         this.userMapper = userMapper;
+        this.commentMapper = commentMapper;
     }
 
     /*
@@ -196,5 +200,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Long getUserIdByArticleId(Long articleId) {
         return articleMapper.selectUserIdByArticleId(articleId);
+    }
+
+    @Override
+    public int getArticleCommentNum(ArticleParam articleParam) {
+        return commentMapper.selectArticleCommentNum(articleParam);
     }
 }

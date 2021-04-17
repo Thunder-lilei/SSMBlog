@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import pers.lilei.blog.constant.MessageConstant;
 import pers.lilei.blog.bean.Comment;
 import pers.lilei.blog.bean.User;
+import pers.lilei.blog.param.CommentParam;
 import pers.lilei.blog.param.CommentWithUserBaseInfoParam;
 import pers.lilei.blog.service.CommentService;
 import pers.lilei.blog.service.UserService;
@@ -92,9 +93,9 @@ public class CommentController extends BaseController{
      **/
     @ResponseBody
     @RequestMapping(value = "/deleteComment", method = RequestMethod.POST)
-    private Map<String,Object> deleteComment(@RequestParam Long commentId){
+    private Map<String,Object> deleteComment(@RequestBody CommentParam commentParam){
         Map<String,Object> modelMap = new HashMap<>();
-        if (!commentService.deleteComment(commentId).equals(0)) {
+        if (!commentService.deleteComment(commentParam).equals(0)) {
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
         } else {
             modelMap.put(MessageConstant.MESSAGE, "移除失败！");

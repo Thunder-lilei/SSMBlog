@@ -7,6 +7,7 @@ import pers.lilei.blog.dao.CommentMapper;
 import pers.lilei.blog.dao.UserMapper;
 import pers.lilei.blog.bean.ArticleWithBLOBs;
 import pers.lilei.blog.bean.Comment;
+import pers.lilei.blog.param.CommentParam;
 import pers.lilei.blog.param.CommentWithUserBaseInfoParam;
 import pers.lilei.blog.service.CommentService;
 
@@ -56,8 +57,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Integer deleteComment(Long commentId) {
-        return commentMapper.deleteByPrimaryKey(commentId);
+    public Integer deleteComment(CommentParam commentParam) {
+        return commentMapper.deleteByPrimaryKey(commentParam);
     }
 
     @Override

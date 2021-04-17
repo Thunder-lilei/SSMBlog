@@ -3,6 +3,7 @@ package pers.lilei.blog.service;
 import com.github.pagehelper.PageInfo;
 import pers.lilei.blog.bean.ArticleWithBLOBs;
 import pers.lilei.blog.param.ArticleBaseInfoParam;
+import pers.lilei.blog.param.ArticleParam;
 import pers.lilei.blog.param.ArticleWithUserBaseInfoParam;
 import pers.lilei.blog.param.RecommendUserParam;
 
@@ -49,5 +50,7 @@ public interface ArticleService {
     List<RecommendUserParam> getRecommendUser(int size);
 
     Long getUserIdByArticleId(Long articleId);
+
+    int getArticleCommentNum(ArticleParam articleParam);
 
 }

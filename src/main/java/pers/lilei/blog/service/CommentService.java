@@ -1,6 +1,7 @@
 package pers.lilei.blog.service;
 
 import pers.lilei.blog.bean.Comment;
+import pers.lilei.blog.param.CommentParam;
 import pers.lilei.blog.param.CommentWithUserBaseInfoParam;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 public interface CommentService {
     Integer addComment(Comment comment);
 
-    Integer deleteComment(Long commentId);
+    Integer deleteComment(CommentParam commentParam);
 
     List<CommentWithUserBaseInfoParam> getCommentByArticleId(Long articleId);
 

@@ -129,7 +129,9 @@
     ,
     <include refid="Blob_Column_List" />
     from tbl_comment
-    where article_id = #{articleId,jdbcType=BIGINT} AND parent_comment_id = 0
+    where article_id = #{articleId,jdbcType=BIGINT}
+    AND parent_comment_id = 0
+    AND del_flag = 0
   </select>
   <select id="getChildCommentByArticleIdAndParentCommentId" resultType="pers.lilei.blog.param.CommentWithUserBaseInfoParam">
     select
@@ -137,12 +139,15 @@
     ,
     <include refid="Blob_Column_List" />
     from tbl_comment
-    where article_id = #{articleId,jdbcType=BIGINT} AND parent_comment_id = #{parentCommentId,jdbcType=BIGINT}
+    where article_id = #{articleId,jdbcType=BIGINT}
+    AND parent_comment_id = #{parentCommentId,jdbcType=BIGINT}
+    AND del_flag = 0
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from tbl_comment
-    where comment_id = #{commentId,jdbcType=BIGINT}
-  </delete>
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    update tbl_comment
+    set del_flag = 1
+    where comment_id = #{param.commentId,jdbcType=BIGINT}
+  </update>
   <delete id="deleteByExample" parameterType="pers.lilei.blog.bean.CommentExample">
     delete from tbl_comment
     <if test="_parameter != null">
@@ -343,4 +348,10 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where comment_id = #{commentId,jdbcType=BIGINT}
   </update>
+  <select id="selectArticleCommentNum" resultType="int">
+    select count(*)
+    from tbl_comment
+    where article_id = #{param.articleId,jdbcType=BIGINT}
+    and del_flag = 0
+  </select>
 </mapper>
