@@ -2,9 +2,8 @@ package pers.lilei.blog.dao;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import pers.lilei.blog.po.Article;
-import pers.lilei.blog.po.ArticleLike;
-import pers.lilei.blog.po.ArticleLikeExample;
+import pers.lilei.blog.bean.ArticleLike;
+import pers.lilei.blog.bean.ArticleLikeExample;
 
 public interface ArticleLikeMapper {
     long countByExample(ArticleLikeExample example);

@@ -1,7 +1,7 @@
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import pers.lilei.blog.po.ArticleLabel;
-import pers.lilei.blog.po.Label;
+import pers.lilei.blog.bean.ArticleLabel;
+import pers.lilei.blog.bean.Label;
 import pers.lilei.blog.service.ArticleLabelService;
 
 import java.util.ArrayList;

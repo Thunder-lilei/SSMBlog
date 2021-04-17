@@ -2,8 +2,8 @@ package pers.lilei.blog.dao;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import pers.lilei.blog.po.UserFriend;
-import pers.lilei.blog.po.UserFriendExample;
+import pers.lilei.blog.bean.UserFriend;
+import pers.lilei.blog.bean.UserFriendExample;
 
 public interface UserFriendMapper {
     long countByExample(UserFriendExample example);

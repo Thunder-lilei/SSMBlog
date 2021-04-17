@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pers.lilei.blog.dao.LabelMapper">
-  <resultMap id="BaseResultMap" type="pers.lilei.blog.po.Label">
+  <resultMap id="BaseResultMap" type="pers.lilei.blog.bean.Label">
     <id column="label_id" jdbcType="BIGINT" property="labelId" />
     <result column="label_name" jdbcType="VARCHAR" property="labelName" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="pers.lilei.blog.po.Label">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="pers.lilei.blog.bean.Label">
     <result column="label_description" jdbcType="LONGVARCHAR" property="labelDescription" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -74,7 +74,7 @@
   <sql id="Blob_Column_List">
     label_description
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="pers.lilei.blog.po.LabelExample" resultMap="ResultMapWithBLOBs">
+  <select id="selectByExampleWithBLOBs" parameterType="pers.lilei.blog.bean.LabelExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -90,7 +90,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="pers.lilei.blog.po.LabelExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="pers.lilei.blog.bean.LabelExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -157,19 +157,19 @@
     delete from tbl_label
     where label_id = #{labelId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="pers.lilei.blog.po.LabelExample">
+  <delete id="deleteByExample" parameterType="pers.lilei.blog.bean.LabelExample">
     delete from tbl_label
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="pers.lilei.blog.po.Label">
+  <insert id="insert" parameterType="pers.lilei.blog.bean.Label">
     insert into tbl_label (label_id, label_name, create_time,
       update_time, label_description)
     values (#{labelId,jdbcType=BIGINT}, #{labelName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP}, #{labelDescription,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="pers.lilei.blog.po.Label">
+  <insert id="insertSelective" parameterType="pers.lilei.blog.bean.Label">
     insert into tbl_label
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="labelId != null">
@@ -206,7 +206,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="pers.lilei.blog.po.LabelExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="pers.lilei.blog.bean.LabelExample" resultType="java.lang.Long">
     select count(*) from tbl_label
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -256,7 +256,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="pers.lilei.blog.po.Label">
+  <update id="updateByPrimaryKeySelective" parameterType="pers.lilei.blog.bean.Label">
     update tbl_label
     <set>
       <if test="labelName != null">
@@ -274,7 +274,7 @@
     </set>
     where label_id = #{labelId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="pers.lilei.blog.po.Label">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="pers.lilei.blog.bean.Label">
     update tbl_label
     set label_name = #{labelName,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -282,7 +282,7 @@
       label_description = #{labelDescription,jdbcType=LONGVARCHAR}
     where label_id = #{labelId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="pers.lilei.blog.po.Label">
+  <update id="updateByPrimaryKey" parameterType="pers.lilei.blog.bean.Label">
     update tbl_label
     set label_name = #{labelName,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},

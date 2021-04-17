@@ -1,7 +1,6 @@
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import pers.lilei.blog.po.ArticleLike;
-import pers.lilei.blog.service.ArticleService;
+import pers.lilei.blog.bean.ArticleLike;
 import pers.lilei.blog.service.LikeService;
 
 /**

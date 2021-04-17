@@ -1,4 +1,4 @@
-package pers.lilei.blog.pojo;
+package pers.lilei.blog.param;
 
 /**
  * <h3>SSMBlog</h3>
@@ -7,7 +7,7 @@ package pers.lilei.blog.pojo;
  * @author : 李雷
  * @date : 2020-12-27 15:45
  **/
-public class UserBaseInfoPojo {
+public class UserBaseInfoParam {
     private Long userId;
 
     private String userNickname;

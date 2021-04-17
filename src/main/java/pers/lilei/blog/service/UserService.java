@@ -1,8 +1,8 @@
 package pers.lilei.blog.service;
 
 import com.github.pagehelper.PageInfo;
-import pers.lilei.blog.po.User;
-import pers.lilei.blog.pojo.UserBaseInfoPojo;
+import pers.lilei.blog.bean.User;
+import pers.lilei.blog.param.UserBaseInfoParam;
 
 import java.util.List;
 
@@ -28,23 +28,23 @@ public interface UserService {
 
     User selectByUserNameAndEmailAndTelWithoutUserId(User user);
 
-    PageInfo<UserBaseInfoPojo> selectUserBaseInfoByKey(int pageNow, int pageSize, String key);
+    PageInfo<UserBaseInfoParam> selectUserBaseInfoByKey(int pageNow, int pageSize, String key);
 
-    PageInfo<UserBaseInfoPojo> selectUserBaseInfoByKeyWithoutMine(int pageNow, int pageSize, String key, Long userId);
+    PageInfo<UserBaseInfoParam> selectUserBaseInfoByKeyWithoutMine(int pageNow, int pageSize, String key, Long userId);
 
-    List<UserBaseInfoPojo> selectUserBaseInfoByKeyWithoutMineList(String key, Long userId);
+    List<UserBaseInfoParam> selectUserBaseInfoByKeyWithoutMineList(String key, Long userId);
 
-    PageInfo<UserBaseInfoPojo> selectAllUserBaseInfo(int pageNow, int pageSize);
+    PageInfo<UserBaseInfoParam> selectAllUserBaseInfo(int pageNow, int pageSize);
 
-    PageInfo<UserBaseInfoPojo> getAllByUserId(int pageNow, int pageSize, List<Long> userIdList);
+    PageInfo<UserBaseInfoParam> getAllByUserId(int pageNow, int pageSize, List<Long> userIdList);
 
-    PageInfo<UserBaseInfoPojo> getFriendByUserId(int pageNow, int pageSize, List<Long> userIdList);
+    PageInfo<UserBaseInfoParam> getFriendByUserId(int pageNow, int pageSize, List<Long> userIdList);
 
-    List<UserBaseInfoPojo> getAllByUserIdList(List<Long> userIdList);
+    List<UserBaseInfoParam> getAllByUserIdList(List<Long> userIdList);
 
-    List<UserBaseInfoPojo> getFriendByUserIdList(List<Long> userIdList);
+    List<UserBaseInfoParam> getFriendByUserIdList(List<Long> userIdList);
 
-    List<UserBaseInfoPojo> getAllByUserIdAndKeyList(List<Long> userIdList, String key);
+    List<UserBaseInfoParam> getAllByUserIdAndKeyList(List<Long> userIdList, String key);
 
     Integer addUserSelective(User user);
 

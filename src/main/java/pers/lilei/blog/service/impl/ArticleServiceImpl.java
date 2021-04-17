@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.lilei.blog.dao.ArticleMapper;
 import pers.lilei.blog.dao.UserMapper;
-import pers.lilei.blog.po.ArticleWithBLOBs;
-import pers.lilei.blog.pojo.ArticleBaseInfoPojo;
-import pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo;
-import pers.lilei.blog.pojo.RecommendUserPojo;
+import pers.lilei.blog.bean.ArticleWithBLOBs;
+import pers.lilei.blog.param.ArticleBaseInfoParam;
+import pers.lilei.blog.param.ArticleWithUserBaseInfoParam;
+import pers.lilei.blog.param.RecommendUserParam;
 import pers.lilei.blog.service.ArticleService;
 
 import java.util.List;
@@ -42,14 +42,14 @@ public class ArticleServiceImpl implements ArticleService {
      * @return java.util.List<pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo>
      **/
     @Override
-    public PageInfo<ArticleWithUserBaseInfoPojo> selectAllArticleWithUserBaseInfoByUserId(int pageNow, int pageSize, Long userId) {
+    public PageInfo<ArticleWithUserBaseInfoParam> selectAllArticleWithUserBaseInfoByUserId(int pageNow, int pageSize, Long userId) {
         PageHelper.startPage(pageNow, pageSize);
-        List<ArticleWithUserBaseInfoPojo> articleWithUserBaseInfoPojoList = articleMapper.selectAllArticleWithUserBaseInfoByUserId(userId);
+        List<ArticleWithUserBaseInfoParam> articleWithUserBaseInfoParamList = articleMapper.selectAllArticleWithUserBaseInfoByUserId(userId);
         //获取用户基本信息
-        for (ArticleWithUserBaseInfoPojo articleWithUserBaseInfoPojo : articleWithUserBaseInfoPojoList) {
-            articleWithUserBaseInfoPojo.setUserBaseInfoPojo(userMapper.selectUserBaseInfoByPrimaryKey(articleWithUserBaseInfoPojo.getUserId()));
+        for (ArticleWithUserBaseInfoParam articleWithUserBaseInfoParam : articleWithUserBaseInfoParamList) {
+            articleWithUserBaseInfoParam.setUserBaseInfoPojo(userMapper.selectUserBaseInfoByPrimaryKey(articleWithUserBaseInfoParam.getUserId()));
         }
-        return new PageInfo<>(articleWithUserBaseInfoPojoList);
+        return new PageInfo<>(articleWithUserBaseInfoParamList);
     }
 
     /*
@@ -63,67 +63,67 @@ public class ArticleServiceImpl implements ArticleService {
      * @return com.github.pagehelper.PageInfo<pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo>
      **/
     @Override
-    public PageInfo<ArticleWithUserBaseInfoPojo> selectArticleWithUserBaseInfoByUserIdAndKey(int pageNow, int pageSize, Long userId, String key) {
+    public PageInfo<ArticleWithUserBaseInfoParam> selectArticleWithUserBaseInfoByUserIdAndKey(int pageNow, int pageSize, Long userId, String key) {
         PageHelper.startPage(pageNow, pageSize);
-        List<ArticleWithUserBaseInfoPojo> articleWithUserBaseInfoPojoList = articleMapper.selectArticleWithUserBaseInfoByUserIdAndKey(userId, key);
+        List<ArticleWithUserBaseInfoParam> articleWithUserBaseInfoParamList = articleMapper.selectArticleWithUserBaseInfoByUserIdAndKey(userId, key);
         //获取用户基本信息
-        for (ArticleWithUserBaseInfoPojo articleWithUserBaseInfoPojo : articleWithUserBaseInfoPojoList) {
-            articleWithUserBaseInfoPojo.setUserBaseInfoPojo(userMapper.selectUserBaseInfoByPrimaryKey(articleWithUserBaseInfoPojo.getUserId()));
+        for (ArticleWithUserBaseInfoParam articleWithUserBaseInfoParam : articleWithUserBaseInfoParamList) {
+            articleWithUserBaseInfoParam.setUserBaseInfoPojo(userMapper.selectUserBaseInfoByPrimaryKey(articleWithUserBaseInfoParam.getUserId()));
         }
-        return new PageInfo<>(articleWithUserBaseInfoPojoList);
+        return new PageInfo<>(articleWithUserBaseInfoParamList);
     }
 
     @Override
-    public PageInfo<ArticleBaseInfoPojo> selectAllArticleBaseInfoByUserId(int pageNow, int pageSize, Long userId) {
+    public PageInfo<ArticleBaseInfoParam> selectAllArticleBaseInfoByUserId(int pageNow, int pageSize, Long userId) {
         PageHelper.startPage(pageNow, pageSize);
-        List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleMapper.selectAllArticleBaseInfoByUserId(userId);
-        return new PageInfo<>(articleBaseInfoPojoList);
+        List<ArticleBaseInfoParam> articleBaseInfoParamList = articleMapper.selectAllArticleBaseInfoByUserId(userId);
+        return new PageInfo<>(articleBaseInfoParamList);
     }
 
     @Override
-    public PageInfo<ArticleBaseInfoPojo> selectArticleBaseInfoByUserIdAndKey(int pageNow, int pageSize, Long userId, String key) {
+    public PageInfo<ArticleBaseInfoParam> selectArticleBaseInfoByUserIdAndKey(int pageNow, int pageSize, Long userId, String key) {
         PageHelper.startPage(pageNow, pageSize);
-        List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleMapper.selectArticleBaseInfoByUserIdAndKey(userId, key);
-        return new PageInfo<>(articleBaseInfoPojoList);
+        List<ArticleBaseInfoParam> articleBaseInfoParamList = articleMapper.selectArticleBaseInfoByUserIdAndKey(userId, key);
+        return new PageInfo<>(articleBaseInfoParamList);
     }
 
     @Override
-    public PageInfo<ArticleBaseInfoPojo> getSortAboutArticleWithUserId(int pageNow, int pageSize, Long sortId, Long userId) {
+    public PageInfo<ArticleBaseInfoParam> getSortAboutArticleWithUserId(int pageNow, int pageSize, Long sortId, Long userId) {
         PageHelper.startPage(pageNow, pageSize);
-        List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleMapper.selectSortAboutArticleWithUserId(sortId, userId);
-        return new PageInfo<>(articleBaseInfoPojoList);
+        List<ArticleBaseInfoParam> articleBaseInfoParamList = articleMapper.selectSortAboutArticleWithUserId(sortId, userId);
+        return new PageInfo<>(articleBaseInfoParamList);
     }
 
     @Override
-    public PageInfo<ArticleBaseInfoPojo> getLabelAboutArticleWithUserId(int pageNow, int pageSize, Long labelId, Long userId) {
+    public PageInfo<ArticleBaseInfoParam> getLabelAboutArticleWithUserId(int pageNow, int pageSize, Long labelId, Long userId) {
         PageHelper.startPage(pageNow, pageSize);
-        List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleMapper.selectLabelAboutArticleWithUserId(labelId, userId);
-        return new PageInfo<>(articleBaseInfoPojoList);
+        List<ArticleBaseInfoParam> articleBaseInfoParamList = articleMapper.selectLabelAboutArticleWithUserId(labelId, userId);
+        return new PageInfo<>(articleBaseInfoParamList);
     }
 
     @Override
-    public PageInfo<ArticleBaseInfoPojo> getSortAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long sortId, Long userId, String key) {
+    public PageInfo<ArticleBaseInfoParam> getSortAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long sortId, Long userId, String key) {
         PageHelper.startPage(pageNow, pageSize);
-        List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleMapper.selectSortAboutArticleWithUserIdAndKey(sortId, userId, key);
-        return new PageInfo<>(articleBaseInfoPojoList);
+        List<ArticleBaseInfoParam> articleBaseInfoParamList = articleMapper.selectSortAboutArticleWithUserIdAndKey(sortId, userId, key);
+        return new PageInfo<>(articleBaseInfoParamList);
     }
 
     @Override
-    public PageInfo<ArticleBaseInfoPojo> getLabelAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long labelId, Long userId, String key) {
+    public PageInfo<ArticleBaseInfoParam> getLabelAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long labelId, Long userId, String key) {
         PageHelper.startPage(pageNow, pageSize);
-        List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleMapper.selectLabelAboutArticleWithUserIdAndKey(labelId, userId, key);
-        return new PageInfo<>(articleBaseInfoPojoList);
+        List<ArticleBaseInfoParam> articleBaseInfoParamList = articleMapper.selectLabelAboutArticleWithUserIdAndKey(labelId, userId, key);
+        return new PageInfo<>(articleBaseInfoParamList);
     }
 
     @Override
-    public PageInfo<ArticleWithUserBaseInfoPojo> searchArticle(int pageNow, int pageSize, String key) {
+    public PageInfo<ArticleWithUserBaseInfoParam> searchArticle(int pageNow, int pageSize, String key) {
         PageHelper.startPage(pageNow, pageSize);
-        List<ArticleWithUserBaseInfoPojo> articleWithUserBaseInfoPojoList = articleMapper.selectArticleByKey(key);
+        List<ArticleWithUserBaseInfoParam> articleWithUserBaseInfoParamList = articleMapper.selectArticleByKey(key);
         //获取用户基本信息
-        for (ArticleWithUserBaseInfoPojo articleWithUserBaseInfoPojo : articleWithUserBaseInfoPojoList) {
-            articleWithUserBaseInfoPojo.setUserBaseInfoPojo(userMapper.selectUserBaseInfoByPrimaryKey(articleWithUserBaseInfoPojo.getUserId()));
+        for (ArticleWithUserBaseInfoParam articleWithUserBaseInfoParam : articleWithUserBaseInfoParamList) {
+            articleWithUserBaseInfoParam.setUserBaseInfoPojo(userMapper.selectUserBaseInfoByPrimaryKey(articleWithUserBaseInfoParam.getUserId()));
         }
-        return new PageInfo<>(articleWithUserBaseInfoPojoList);
+        return new PageInfo<>(articleWithUserBaseInfoParamList);
     }
 
     @Override
@@ -174,23 +174,23 @@ public class ArticleServiceImpl implements ArticleService {
      * @return java.util.List<pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo>
      **/
     @Override
-    public List<ArticleWithUserBaseInfoPojo> getRecommendArticle(int size) {
-        List<ArticleWithUserBaseInfoPojo> articleWithUserBaseInfoPojoList = articleMapper.getRecommendArticle(size);
+    public List<ArticleWithUserBaseInfoParam> getRecommendArticle(int size) {
+        List<ArticleWithUserBaseInfoParam> articleWithUserBaseInfoParamList = articleMapper.getRecommendArticle(size);
         //获取用户基本信息
-        for (ArticleWithUserBaseInfoPojo articleWithUserBaseInfoPojo : articleWithUserBaseInfoPojoList) {
-            articleWithUserBaseInfoPojo.setUserBaseInfoPojo(userMapper.selectUserBaseInfoByPrimaryKey(articleWithUserBaseInfoPojo.getUserId()));
+        for (ArticleWithUserBaseInfoParam articleWithUserBaseInfoParam : articleWithUserBaseInfoParamList) {
+            articleWithUserBaseInfoParam.setUserBaseInfoPojo(userMapper.selectUserBaseInfoByPrimaryKey(articleWithUserBaseInfoParam.getUserId()));
         }
-        return articleWithUserBaseInfoPojoList;
+        return articleWithUserBaseInfoParamList;
     }
 
     @Override
-    public List<RecommendUserPojo> getRecommendUser(int size) {
-        List<RecommendUserPojo> recommendUserPojoList = articleMapper.getRecommendUser(size);
+    public List<RecommendUserParam> getRecommendUser(int size) {
+        List<RecommendUserParam> recommendUserParamList = articleMapper.getRecommendUser(size);
         //获取用户基本信息
-        for (RecommendUserPojo recommendUserPojo : recommendUserPojoList) {
-            recommendUserPojo.setUserBaseInfoPojo(userMapper.selectUserBaseInfoByPrimaryKey(recommendUserPojo.getUserId()));
+        for (RecommendUserParam recommendUserParam : recommendUserParamList) {
+            recommendUserParam.setUserBaseInfoPojo(userMapper.selectUserBaseInfoByPrimaryKey(recommendUserParam.getUserId()));
         }
-        return recommendUserPojoList;
+        return recommendUserParamList;
     }
 
     @Override

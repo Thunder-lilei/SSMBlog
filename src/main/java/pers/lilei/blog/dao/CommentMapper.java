@@ -2,9 +2,9 @@ package pers.lilei.blog.dao;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import pers.lilei.blog.po.Comment;
-import pers.lilei.blog.po.CommentExample;
-import pers.lilei.blog.pojo.CommentWithUserBaseInfoPojo;
+import pers.lilei.blog.bean.Comment;
+import pers.lilei.blog.bean.CommentExample;
+import pers.lilei.blog.param.CommentWithUserBaseInfoParam;
 
 public interface CommentMapper {
     long countByExample(CommentExample example);
@@ -25,9 +25,9 @@ public interface CommentMapper {
 
     Long selectUserIdByCommentId(Long commentId);
 
-    List<CommentWithUserBaseInfoPojo> getRootCommentByArticleId(Long articleId);
+    List<CommentWithUserBaseInfoParam> getRootCommentByArticleId(Long articleId);
 
-    List<CommentWithUserBaseInfoPojo> getChildCommentByArticleIdAndParentCommentId(@Param("articleId") Long articleId, @Param("parentCommentId") Long parentCommentId);
+    List<CommentWithUserBaseInfoParam> getChildCommentByArticleIdAndParentCommentId(@Param("articleId") Long articleId, @Param("parentCommentId") Long parentCommentId);
 
     int updateByExampleSelective(@Param("record") Comment record, @Param("example") CommentExample example);
 

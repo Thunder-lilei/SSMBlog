@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pers.lilei.blog.constant.MessageConstant;
-import pers.lilei.blog.po.ArticleLabel;
-import pers.lilei.blog.po.Label;
+import pers.lilei.blog.bean.ArticleLabel;
+import pers.lilei.blog.bean.Label;
 import pers.lilei.blog.service.ArticleLabelService;
 import pers.lilei.blog.service.LabelService;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

@@ -5,10 +5,9 @@ import org.springframework.stereotype.Service;
 import pers.lilei.blog.dao.ArticleMapper;
 import pers.lilei.blog.dao.CommentMapper;
 import pers.lilei.blog.dao.UserMapper;
-import pers.lilei.blog.po.Article;
-import pers.lilei.blog.po.ArticleWithBLOBs;
-import pers.lilei.blog.po.Comment;
-import pers.lilei.blog.pojo.CommentWithUserBaseInfoPojo;
+import pers.lilei.blog.bean.ArticleWithBLOBs;
+import pers.lilei.blog.bean.Comment;
+import pers.lilei.blog.param.CommentWithUserBaseInfoParam;
 import pers.lilei.blog.service.CommentService;
 
 import java.util.ArrayList;
@@ -62,44 +61,44 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentWithUserBaseInfoPojo> getCommentByArticleId(Long articleId) {
-        List<CommentWithUserBaseInfoPojo> commentWithUserBaseInfoPojoList = new ArrayList<>();
+    public List<CommentWithUserBaseInfoParam> getCommentByArticleId(Long articleId) {
+        List<CommentWithUserBaseInfoParam> commentWithUserBaseInfoParamList = new ArrayList<>();
         //获取根节点
-        List<CommentWithUserBaseInfoPojo> rootCommentWithUserBaseInfoPojoList = getRootCommentByArticleId(articleId);
-        for (CommentWithUserBaseInfoPojo commentWithUserBaseInfoPojo : rootCommentWithUserBaseInfoPojoList) {
+        List<CommentWithUserBaseInfoParam> rootCommentWithUserBaseInfoParamList = getRootCommentByArticleId(articleId);
+        for (CommentWithUserBaseInfoParam commentWithUserBaseInfoParam : rootCommentWithUserBaseInfoParamList) {
             //添加根节点
-            commentWithUserBaseInfoPojoList.add(commentWithUserBaseInfoPojo);
+            commentWithUserBaseInfoParamList.add(commentWithUserBaseInfoParam);
             //获取子节点
-            getChildCommentByArticleIdAndParentCommentId(commentWithUserBaseInfoPojoList, articleId, commentWithUserBaseInfoPojo.getCommentId());
+            getChildCommentByArticleIdAndParentCommentId(commentWithUserBaseInfoParamList, articleId, commentWithUserBaseInfoParam.getCommentId());
         }
-        return commentWithUserBaseInfoPojoList;
+        return commentWithUserBaseInfoParamList;
     }
 
     @Override
-    public List<CommentWithUserBaseInfoPojo> getChildCommentByArticleIdAndParentCommentId(List<CommentWithUserBaseInfoPojo> parentCommentWithUserBaseInfoPojoList, Long articleId, Long parentCommentId) {
-        List<CommentWithUserBaseInfoPojo> commentWithUserBaseInfoPojoList = commentMapper.getChildCommentByArticleIdAndParentCommentId(articleId, parentCommentId);
+    public List<CommentWithUserBaseInfoParam> getChildCommentByArticleIdAndParentCommentId(List<CommentWithUserBaseInfoParam> parentCommentWithUserBaseInfoParamList, Long articleId, Long parentCommentId) {
+        List<CommentWithUserBaseInfoParam> commentWithUserBaseInfoParamList = commentMapper.getChildCommentByArticleIdAndParentCommentId(articleId, parentCommentId);
         //设置用户基本信息
-        commentWithUserBaseInfoPojoList.forEach(temp->temp.setUserBaseInfo(userMapper.selectUserBaseInfoByPrimaryKey(temp.getUserId())));
+        commentWithUserBaseInfoParamList.forEach(temp->temp.setUserBaseInfo(userMapper.selectUserBaseInfoByPrimaryKey(temp.getUserId())));
         //设置回复评论用户基本信息
-        commentWithUserBaseInfoPojoList.forEach(temp->temp.setParentCommentUserBaseInfo(userMapper.selectUserBaseInfoByPrimaryKey(commentMapper.selectUserIdByCommentId(temp.getParentCommentId()))));
+        commentWithUserBaseInfoParamList.forEach(temp->temp.setParentCommentUserBaseInfo(userMapper.selectUserBaseInfoByPrimaryKey(commentMapper.selectUserIdByCommentId(temp.getParentCommentId()))));
         //添加节点
-        for (CommentWithUserBaseInfoPojo commentWithUserBaseInfoPojo : commentWithUserBaseInfoPojoList) {
+        for (CommentWithUserBaseInfoParam commentWithUserBaseInfoParam : commentWithUserBaseInfoParamList) {
             //添加根节点
-            parentCommentWithUserBaseInfoPojoList.add(commentWithUserBaseInfoPojo);
+            parentCommentWithUserBaseInfoParamList.add(commentWithUserBaseInfoParam);
             //获取子节点
-            getChildCommentByArticleIdAndParentCommentId(parentCommentWithUserBaseInfoPojoList, articleId, commentWithUserBaseInfoPojo.getCommentId());
+            getChildCommentByArticleIdAndParentCommentId(parentCommentWithUserBaseInfoParamList, articleId, commentWithUserBaseInfoParam.getCommentId());
         }
-        return commentWithUserBaseInfoPojoList;
+        return commentWithUserBaseInfoParamList;
     }
 
     @Override
-    public List<CommentWithUserBaseInfoPojo> getRootCommentByArticleId(Long articleId) {
-        List<CommentWithUserBaseInfoPojo> commentWithUserBaseInfoPojoList = commentMapper.getRootCommentByArticleId(articleId);
+    public List<CommentWithUserBaseInfoParam> getRootCommentByArticleId(Long articleId) {
+        List<CommentWithUserBaseInfoParam> commentWithUserBaseInfoParamList = commentMapper.getRootCommentByArticleId(articleId);
         //设置用户基本信息
-        commentWithUserBaseInfoPojoList.forEach(temp->temp.setUserBaseInfo(userMapper.selectUserBaseInfoByPrimaryKey(temp.getUserId())));
+        commentWithUserBaseInfoParamList.forEach(temp->temp.setUserBaseInfo(userMapper.selectUserBaseInfoByPrimaryKey(temp.getUserId())));
         //设置回复评论用户基本信息
-        commentWithUserBaseInfoPojoList.forEach(temp->temp.setParentCommentUserBaseInfo(userMapper.selectUserBaseInfoByPrimaryKey(commentMapper.selectUserIdByCommentId(temp.getParentCommentId()))));
-        return commentWithUserBaseInfoPojoList;
+        commentWithUserBaseInfoParamList.forEach(temp->temp.setParentCommentUserBaseInfo(userMapper.selectUserBaseInfoByPrimaryKey(commentMapper.selectUserIdByCommentId(temp.getParentCommentId()))));
+        return commentWithUserBaseInfoParamList;
     }
 
 }

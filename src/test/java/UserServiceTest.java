@@ -1,17 +1,13 @@
 import com.github.pagehelper.PageInfo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestParam;
 import pers.lilei.blog.constant.MessageConstant;
-import pers.lilei.blog.po.User;
-import pers.lilei.blog.pojo.UserBaseInfoPojo;
+import pers.lilei.blog.bean.User;
+import pers.lilei.blog.param.UserBaseInfoParam;
 import pers.lilei.blog.service.UserService;
 import pers.lilei.blog.util.BCrypt;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Random;
 
 public class UserServiceTest extends BaseTest{
 	private UserService userService;
@@ -112,12 +108,12 @@ public class UserServiceTest extends BaseTest{
 	}
 	@Test
 		public void selectUserBaseInfoByKey() {
-		PageInfo<UserBaseInfoPojo> pageInfo = userService.selectUserBaseInfoByKey(1, 10, "l");
+		PageInfo<UserBaseInfoParam> pageInfo = userService.selectUserBaseInfoByKey(1, 10, "l");
 		System.out.println(pageInfo);
 	}
 	@Test
 	public void selectAllUserBaseInfo() {
-		PageInfo<UserBaseInfoPojo> pageInfo = (PageInfo<UserBaseInfoPojo>) userService.selectAllUserBaseInfo(1, 10);
+		PageInfo<UserBaseInfoParam> pageInfo = (PageInfo<UserBaseInfoParam>) userService.selectAllUserBaseInfo(1, 10);
 		System.out.println(pageInfo);
 	}
 //	@Test
@@ -130,7 +126,7 @@ public class UserServiceTest extends BaseTest{
 //	}
 	@Test
 	public void selectUserBaseInfoByKeyWithoutMine() {
-		PageInfo<UserBaseInfoPojo> pageInfo = userService.selectUserBaseInfoByKeyWithoutMine(1, 10, "我", 3L);
+		PageInfo<UserBaseInfoParam> pageInfo = userService.selectUserBaseInfoByKeyWithoutMine(1, 10, "我", 3L);
 		System.out.println(pageInfo);
 	}
 	@Test

@@ -4,13 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.lilei.blog.dao.ArticleLabelMapper;
 import pers.lilei.blog.dao.LabelMapper;
-import pers.lilei.blog.po.ArticleLabel;
-import pers.lilei.blog.po.ArticleSort;
-import pers.lilei.blog.po.Label;
-import pers.lilei.blog.po.Sort;
+import pers.lilei.blog.bean.ArticleLabel;
+import pers.lilei.blog.bean.Label;
 import pers.lilei.blog.service.ArticleLabelService;
 
-import java.awt.font.FontRenderContext;
 import java.util.List;
 
 /**

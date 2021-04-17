@@ -7,10 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pers.lilei.blog.constant.MessageConstant;
-import pers.lilei.blog.po.ArticleLabel;
-import pers.lilei.blog.po.ArticleSort;
-import pers.lilei.blog.po.Label;
-import pers.lilei.blog.po.Sort;
+import pers.lilei.blog.bean.ArticleSort;
+import pers.lilei.blog.bean.Sort;
 import pers.lilei.blog.service.ArticleSortService;
 import pers.lilei.blog.service.SortService;
 

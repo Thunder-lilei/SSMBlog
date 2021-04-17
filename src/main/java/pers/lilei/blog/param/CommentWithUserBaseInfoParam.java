@@ -1,8 +1,7 @@
-package pers.lilei.blog.pojo;
+package pers.lilei.blog.param;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
-import pers.lilei.blog.po.User;
 
 import java.util.Date;
 
@@ -13,12 +12,12 @@ import java.util.Date;
  * @author : 李雷
  * @date : 2021-01-17 19:48
  **/
-public class CommentWithUserBaseInfoPojo {
+public class CommentWithUserBaseInfoParam {
     private Long commentId;
 
     private Long userId;
 
-    private UserBaseInfoPojo userBaseInfo;
+    private UserBaseInfoParam userBaseInfo;
 
     private Long articleId;
 
@@ -30,7 +29,7 @@ public class CommentWithUserBaseInfoPojo {
 
     private Long parentCommentId;
 
-    private UserBaseInfoPojo parentCommentUserBaseInfo;
+    private UserBaseInfoParam parentCommentUserBaseInfo;
 
     private String commentContent;
 
@@ -90,19 +89,19 @@ public class CommentWithUserBaseInfoPojo {
         this.userId = userId;
     }
 
-    public UserBaseInfoPojo getUserBaseInfo() {
+    public UserBaseInfoParam getUserBaseInfo() {
         return userBaseInfo;
     }
 
-    public void setUserBaseInfo(UserBaseInfoPojo userBaseInfo) {
+    public void setUserBaseInfo(UserBaseInfoParam userBaseInfo) {
         this.userBaseInfo = userBaseInfo;
     }
 
-    public UserBaseInfoPojo getParentCommentUserBaseInfo() {
+    public UserBaseInfoParam getParentCommentUserBaseInfo() {
         return parentCommentUserBaseInfo;
     }
 
-    public void setParentCommentUserBaseInfo(UserBaseInfoPojo parentCommentUserBaseInfo) {
+    public void setParentCommentUserBaseInfo(UserBaseInfoParam parentCommentUserBaseInfo) {
         this.parentCommentUserBaseInfo = parentCommentUserBaseInfo;
     }
 }

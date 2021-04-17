@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pers.lilei.blog.constant.MessageConstant;
-import pers.lilei.blog.po.ArticleLike;
-import pers.lilei.blog.po.User;
+import pers.lilei.blog.bean.ArticleLike;
+import pers.lilei.blog.bean.User;
 import pers.lilei.blog.service.LikeService;
 
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package pers.lilei.blog.po;
+package pers.lilei.blog.bean;
 
 public class ArticleWithBLOBs extends Article {
     private String articleTitle;

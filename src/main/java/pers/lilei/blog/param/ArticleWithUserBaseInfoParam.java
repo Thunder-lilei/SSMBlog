@@ -1,13 +1,13 @@
-package pers.lilei.blog.pojo;
+package pers.lilei.blog.param;
 
 /**
  * <h3>SSMBlog</h3>
  * <p>博文基本信息</p>
  *
  * @author : 李雷
- * @date : 2021-01-15 22:31
+ * @date : 2021-01-02 12:31
  **/
-public class ArticleBaseInfoPojo {
+public class ArticleWithUserBaseInfoParam {
     private Long articleId;
 
     private String articleTitle;
@@ -18,12 +18,32 @@ public class ArticleBaseInfoPojo {
 
     private Long articleViews;
 
+    private Long userId;
+
+    private UserBaseInfoParam userBaseInfoParam;
+
     public Long getArticleViews() {
         return articleViews;
     }
 
     public void setArticleViews(Long articleViews) {
         this.articleViews = articleViews;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public UserBaseInfoParam getUserBaseInfoPojo() {
+        return userBaseInfoParam;
+    }
+
+    public void setUserBaseInfoPojo(UserBaseInfoParam userBaseInfoParam) {
+        this.userBaseInfoParam = userBaseInfoParam;
     }
 
     public Long getArticleId() {
@@ -57,4 +77,5 @@ public class ArticleBaseInfoPojo {
     public void setArticleLikeCount(Long articleLikeCount) {
         this.articleLikeCount = articleLikeCount;
     }
+
 }

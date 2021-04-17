@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.lilei.blog.dao.ArticleLikeMapper;
 import pers.lilei.blog.dao.ArticleMapper;
-import pers.lilei.blog.po.ArticleLike;
-import pers.lilei.blog.po.ArticleWithBLOBs;
+import pers.lilei.blog.bean.ArticleLike;
+import pers.lilei.blog.bean.ArticleWithBLOBs;
 import pers.lilei.blog.service.LikeService;
 
 /**

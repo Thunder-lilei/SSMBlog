@@ -1,10 +1,10 @@
 package pers.lilei.blog.service;
 
 import com.github.pagehelper.PageInfo;
-import pers.lilei.blog.po.ArticleWithBLOBs;
-import pers.lilei.blog.pojo.ArticleBaseInfoPojo;
-import pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo;
-import pers.lilei.blog.pojo.RecommendUserPojo;
+import pers.lilei.blog.bean.ArticleWithBLOBs;
+import pers.lilei.blog.param.ArticleBaseInfoParam;
+import pers.lilei.blog.param.ArticleWithUserBaseInfoParam;
+import pers.lilei.blog.param.RecommendUserParam;
 
 import java.util.List;
 
@@ -16,23 +16,23 @@ import java.util.List;
  * @date : 2021-01-02 12:17
  **/
 public interface ArticleService {
-    PageInfo<ArticleWithUserBaseInfoPojo> selectAllArticleWithUserBaseInfoByUserId(int pageNow, int pageSize, Long userId);
+    PageInfo<ArticleWithUserBaseInfoParam> selectAllArticleWithUserBaseInfoByUserId(int pageNow, int pageSize, Long userId);
 
-    PageInfo<ArticleWithUserBaseInfoPojo> selectArticleWithUserBaseInfoByUserIdAndKey(int pageNow, int pageSize, Long userId, String key);
+    PageInfo<ArticleWithUserBaseInfoParam> selectArticleWithUserBaseInfoByUserIdAndKey(int pageNow, int pageSize, Long userId, String key);
 
-    PageInfo<ArticleBaseInfoPojo> selectAllArticleBaseInfoByUserId(int pageNow, int pageSize, Long userId);
+    PageInfo<ArticleBaseInfoParam> selectAllArticleBaseInfoByUserId(int pageNow, int pageSize, Long userId);
 
-    PageInfo<ArticleBaseInfoPojo> selectArticleBaseInfoByUserIdAndKey(int pageNow, int pageSize, Long userId, String key);
+    PageInfo<ArticleBaseInfoParam> selectArticleBaseInfoByUserIdAndKey(int pageNow, int pageSize, Long userId, String key);
 
-    PageInfo<ArticleBaseInfoPojo> getSortAboutArticleWithUserId(int pageNow, int pageSize, Long sortId, Long userId);
+    PageInfo<ArticleBaseInfoParam> getSortAboutArticleWithUserId(int pageNow, int pageSize, Long sortId, Long userId);
 
-    PageInfo<ArticleBaseInfoPojo> getLabelAboutArticleWithUserId(int pageNow, int pageSize, Long labelId, Long userId);
+    PageInfo<ArticleBaseInfoParam> getLabelAboutArticleWithUserId(int pageNow, int pageSize, Long labelId, Long userId);
 
-    PageInfo<ArticleBaseInfoPojo> getSortAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long sortId, Long userId, String key);
+    PageInfo<ArticleBaseInfoParam> getSortAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long sortId, Long userId, String key);
 
-    PageInfo<ArticleBaseInfoPojo> getLabelAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long labelId, Long userId, String key);
+    PageInfo<ArticleBaseInfoParam> getLabelAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long labelId, Long userId, String key);
 
-    PageInfo<ArticleWithUserBaseInfoPojo> searchArticle(int pageNow, int pageSize, String key);
+    PageInfo<ArticleWithUserBaseInfoParam> searchArticle(int pageNow, int pageSize, String key);
 
     ArticleWithBLOBs selectByArticleTitle(String title);
 
@@ -44,9 +44,9 @@ public interface ArticleService {
 
     ArticleWithBLOBs getArticleByArticleId(Long articleId);
 
-    List<ArticleWithUserBaseInfoPojo> getRecommendArticle(int size);
+    List<ArticleWithUserBaseInfoParam> getRecommendArticle(int size);
 
-    List<RecommendUserPojo> getRecommendUser(int size);
+    List<RecommendUserParam> getRecommendUser(int size);
 
     Long getUserIdByArticleId(Long articleId);
 

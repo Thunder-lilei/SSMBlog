@@ -1,4 +1,4 @@
-package pers.lilei.blog.po;
+package pers.lilei.blog.bean;
 
 import java.util.ArrayList;
 import java.util.Date;

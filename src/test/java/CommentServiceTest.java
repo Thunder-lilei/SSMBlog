@@ -1,8 +1,7 @@
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import pers.lilei.blog.constant.MessageConstant;
-import pers.lilei.blog.po.Comment;
-import pers.lilei.blog.pojo.CommentWithUserBaseInfoPojo;
+import pers.lilei.blog.bean.Comment;
+import pers.lilei.blog.param.CommentWithUserBaseInfoParam;
 import pers.lilei.blog.service.CommentService;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public class CommentServiceTest extends BaseTest{
     CommentService commentService;
     @Test
     public void getRootCommentByArticleId() {
-        List<CommentWithUserBaseInfoPojo> commentList = commentService.getRootCommentByArticleId(5L);
+        List<CommentWithUserBaseInfoParam> commentList = commentService.getRootCommentByArticleId(5L);
         if (!commentList.isEmpty()) {
             commentList.forEach(temp-> System.out.println(temp.getCommentContent()));
         } else {
@@ -37,7 +36,7 @@ public class CommentServiceTest extends BaseTest{
 //    }
     @Test
     public void getCommentByArticleId() {
-        List<CommentWithUserBaseInfoPojo> commentList = commentService.getCommentByArticleId(5L);
+        List<CommentWithUserBaseInfoParam> commentList = commentService.getCommentByArticleId(5L);
         if (!commentList.isEmpty()) {
             commentList.forEach(temp-> System.out.println(temp.getCommentContent()));
         } else {

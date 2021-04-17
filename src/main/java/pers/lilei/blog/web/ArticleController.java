@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pers.lilei.blog.constant.MessageConstant;
-import pers.lilei.blog.po.ArticleWithBLOBs;
-import pers.lilei.blog.po.Label;
-import pers.lilei.blog.po.Sort;
-import pers.lilei.blog.po.User;
+import pers.lilei.blog.bean.ArticleWithBLOBs;
+import pers.lilei.blog.bean.Label;
+import pers.lilei.blog.bean.Sort;
+import pers.lilei.blog.bean.User;
 import pers.lilei.blog.service.*;
 
 import java.util.*;

@@ -3,12 +3,12 @@ package pers.lilei.blog.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import pers.lilei.blog.po.Article;
-import pers.lilei.blog.po.ArticleExample;
-import pers.lilei.blog.po.ArticleWithBLOBs;
-import pers.lilei.blog.pojo.ArticleBaseInfoPojo;
-import pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo;
-import pers.lilei.blog.pojo.RecommendUserPojo;
+import pers.lilei.blog.bean.Article;
+import pers.lilei.blog.bean.ArticleExample;
+import pers.lilei.blog.bean.ArticleWithBLOBs;
+import pers.lilei.blog.param.ArticleBaseInfoParam;
+import pers.lilei.blog.param.ArticleWithUserBaseInfoParam;
+import pers.lilei.blog.param.RecommendUserParam;
 
 public interface ArticleMapper {
     long countByExample(ArticleExample example);
@@ -29,27 +29,27 @@ public interface ArticleMapper {
 
     ArticleWithBLOBs selectByArticleTitle(String title);
 
-    List<ArticleWithUserBaseInfoPojo> selectAllArticleWithUserBaseInfoByUserId(Long userId);
+    List<ArticleWithUserBaseInfoParam> selectAllArticleWithUserBaseInfoByUserId(Long userId);
 
-    List<ArticleBaseInfoPojo> selectSortAboutArticleWithUserId(@Param("sortId") Long sortId, @Param("userId") Long userId);
+    List<ArticleBaseInfoParam> selectSortAboutArticleWithUserId(@Param("sortId") Long sortId, @Param("userId") Long userId);
 
-    List<ArticleBaseInfoPojo> selectLabelAboutArticleWithUserId(@Param("labelId") Long labelId, @Param("userId") Long userId);
+    List<ArticleBaseInfoParam> selectLabelAboutArticleWithUserId(@Param("labelId") Long labelId, @Param("userId") Long userId);
 
-    List<ArticleBaseInfoPojo> selectSortAboutArticleWithUserIdAndKey(@Param("sortId") Long sortId, @Param("userId") Long userId, @Param("key") String key);
+    List<ArticleBaseInfoParam> selectSortAboutArticleWithUserIdAndKey(@Param("sortId") Long sortId, @Param("userId") Long userId, @Param("key") String key);
 
-    List<ArticleBaseInfoPojo> selectLabelAboutArticleWithUserIdAndKey(@Param("labelId") Long labelId, @Param("userId") Long userId, @Param("key") String key);
+    List<ArticleBaseInfoParam> selectLabelAboutArticleWithUserIdAndKey(@Param("labelId") Long labelId, @Param("userId") Long userId, @Param("key") String key);
 
-    List<ArticleWithUserBaseInfoPojo> selectArticleWithUserBaseInfoByUserIdAndKey(@Param("userId") Long userId, @Param("key") String key);
+    List<ArticleWithUserBaseInfoParam> selectArticleWithUserBaseInfoByUserIdAndKey(@Param("userId") Long userId, @Param("key") String key);
 
-    List<ArticleBaseInfoPojo> selectAllArticleBaseInfoByUserId(Long userId);
+    List<ArticleBaseInfoParam> selectAllArticleBaseInfoByUserId(Long userId);
 
-    List<ArticleWithUserBaseInfoPojo> selectArticleByKey(String key);
+    List<ArticleWithUserBaseInfoParam> selectArticleByKey(String key);
 
-    List<ArticleBaseInfoPojo> selectArticleBaseInfoByUserIdAndKey(@Param("userId") Long userId, @Param("key") String key);
+    List<ArticleBaseInfoParam> selectArticleBaseInfoByUserIdAndKey(@Param("userId") Long userId, @Param("key") String key);
 
-    List<ArticleWithUserBaseInfoPojo> getRecommendArticle(int size);
+    List<ArticleWithUserBaseInfoParam> getRecommendArticle(int size);
 
-    List<RecommendUserPojo> getRecommendUser(int size);
+    List<RecommendUserParam> getRecommendUser(int size);
 
     Long selectUserIdByArticleId(Long articleId);
 

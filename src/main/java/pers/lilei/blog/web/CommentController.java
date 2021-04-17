@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pers.lilei.blog.constant.MessageConstant;
-import pers.lilei.blog.po.Comment;
-import pers.lilei.blog.po.User;
-import pers.lilei.blog.pojo.CommentWithUserBaseInfoPojo;
+import pers.lilei.blog.bean.Comment;
+import pers.lilei.blog.bean.User;
+import pers.lilei.blog.param.CommentWithUserBaseInfoParam;
 import pers.lilei.blog.service.CommentService;
 import pers.lilei.blog.service.UserService;
 
@@ -45,10 +45,10 @@ public class CommentController extends BaseController{
     @RequestMapping(value = "/getComment", method = RequestMethod.POST)
     private Map<String,Object> getComment(@RequestParam Long articleId){
         Map<String,Object> modelMap = new HashMap<>();
-        List<CommentWithUserBaseInfoPojo> commentWithUserBaseInfoPojoList = commentService.getCommentByArticleId(articleId);
-        if (!commentWithUserBaseInfoPojoList.isEmpty()) {
+        List<CommentWithUserBaseInfoParam> commentWithUserBaseInfoParamList = commentService.getCommentByArticleId(articleId);
+        if (!commentWithUserBaseInfoParamList.isEmpty()) {
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-            modelMap.put("commentList", commentWithUserBaseInfoPojoList);
+            modelMap.put("commentList", commentWithUserBaseInfoParamList);
         } else {
             modelMap.put(MessageConstant.MESSAGE, "获取评论失败！");
         }

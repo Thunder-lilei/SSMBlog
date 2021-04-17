@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pers.lilei.blog.dao.ArticleMapper">
-  <resultMap id="BaseResultMap" type="pers.lilei.blog.po.Article">
+  <resultMap id="BaseResultMap" type="pers.lilei.blog.bean.Article">
     <id column="article_id" jdbcType="BIGINT" property="articleId" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="article_views" jdbcType="BIGINT" property="articleViews" />
@@ -11,7 +11,7 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="pers.lilei.blog.po.ArticleWithBLOBs">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="pers.lilei.blog.bean.ArticleWithBLOBs">
     <result column="article_title" jdbcType="LONGVARCHAR" property="articleTitle" />
     <result column="article_content" jdbcType="LONGVARCHAR" property="articleContent" />
   </resultMap>
@@ -80,7 +80,7 @@
   <sql id="Blob_Column_List">
     article_title, article_content
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="pers.lilei.blog.po.ArticleExample" resultMap="ResultMapWithBLOBs">
+  <select id="selectByExampleWithBLOBs" parameterType="pers.lilei.blog.bean.ArticleExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -96,7 +96,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="pers.lilei.blog.po.ArticleExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="pers.lilei.blog.bean.ArticleExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -126,7 +126,7 @@
     from tbl_article
     where article_title = #{articleTitle,jdbcType=VARCHAR}
   </select>
-  <select id="selectAllArticleWithUserBaseInfoByUserId" parameterType="java.lang.Long" resultType="pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo">
+  <select id="selectAllArticleWithUserBaseInfoByUserId" parameterType="java.lang.Long" resultType="pers.lilei.blog.param.ArticleWithUserBaseInfoParam">
     select
     <include refid="Base_Column_List" />
     ,
@@ -134,7 +134,7 @@
     from tbl_article
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
-  <select id="selectArticleWithUserBaseInfoByKey" resultType="pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo">
+  <select id="selectArticleWithUserBaseInfoByKey" resultType="pers.lilei.blog.param.ArticleWithUserBaseInfoParam">
     select
     <include refid="Base_Column_List" />
     ,
@@ -142,7 +142,7 @@
     from tbl_article
     where user_id = #{userId,jdbcType=BIGINT} AND CONCAT(article_title) LIKE "%"#{key,jdbcType=VARCHAR}"%"
   </select>
-  <select id="selectAllArticleBaseInfoByUserId" parameterType="java.lang.Long" resultType="pers.lilei.blog.pojo.ArticleBaseInfoPojo">
+  <select id="selectAllArticleBaseInfoByUserId" parameterType="java.lang.Long" resultType="pers.lilei.blog.param.ArticleBaseInfoParam">
     select
     <include refid="Base_Column_List" />
     ,
@@ -150,7 +150,7 @@
     from tbl_article
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
-  <select id="selectArticleByKey" parameterType="java.lang.String" resultType="pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo">
+  <select id="selectArticleByKey" parameterType="java.lang.String" resultType="pers.lilei.blog.param.ArticleWithUserBaseInfoParam">
     select
     <include refid="Base_Column_List" />
     ,
@@ -163,7 +163,7 @@
     from tbl_article
     where article_id = #{articleId,jdbcType=BIGINT}
   </select>
-  <select id="selectSortAboutArticleWithUserId" resultType="pers.lilei.blog.pojo.ArticleBaseInfoPojo">
+  <select id="selectSortAboutArticleWithUserId" resultType="pers.lilei.blog.param.ArticleBaseInfoParam">
     select
     <include refid="Base_Column_List" />
     ,
@@ -173,7 +173,7 @@
     (select article_id from tbl_article_sort where sort_id = #{sortId,jdbcType=BIGINT})
     AND user_id = #{userId,jdbcType=BIGINT}
   </select>
-  <select id="selectSortAboutArticleWithUserIdAndKey" resultType="pers.lilei.blog.pojo.ArticleBaseInfoPojo">
+  <select id="selectSortAboutArticleWithUserIdAndKey" resultType="pers.lilei.blog.param.ArticleBaseInfoParam">
     select
     <include refid="Base_Column_List" />
     ,
@@ -184,7 +184,7 @@
     AND user_id = #{userId,jdbcType=BIGINT}
     AND CONCAT(article_title) LIKE "%"#{key,jdbcType=VARCHAR}"%"
   </select>
-  <select id="selectLabelAboutArticleWithUserId" resultType="pers.lilei.blog.pojo.ArticleBaseInfoPojo">
+  <select id="selectLabelAboutArticleWithUserId" resultType="pers.lilei.blog.param.ArticleBaseInfoParam">
     select
     <include refid="Base_Column_List" />
     ,
@@ -194,7 +194,7 @@
     (select article_id from tbl_article_label where label_id = #{labelId,jdbcType=BIGINT})
     AND user_id = #{userId,jdbcType=BIGINT}
   </select>
-  <select id="selectLabelAboutArticleWithUserIdAndKey" resultType="pers.lilei.blog.pojo.ArticleBaseInfoPojo">
+  <select id="selectLabelAboutArticleWithUserIdAndKey" resultType="pers.lilei.blog.param.ArticleBaseInfoParam">
     select
     <include refid="Base_Column_List" />
     ,
@@ -205,7 +205,7 @@
     AND user_id = #{userId,jdbcType=BIGINT}
     AND CONCAT(article_title) LIKE "%"#{key,jdbcType=VARCHAR}"%"
   </select>
-  <select id="selectArticleBaseInfoByUserIdAndKey" resultType="pers.lilei.blog.pojo.ArticleBaseInfoPojo">
+  <select id="selectArticleBaseInfoByUserIdAndKey" resultType="pers.lilei.blog.param.ArticleBaseInfoParam">
     select
     <include refid="Base_Column_List" />
     ,
@@ -213,7 +213,7 @@
     from tbl_article
     where user_id = #{userId,jdbcType=BIGINT} AND CONCAT(article_title) LIKE "%"#{key,jdbcType=VARCHAR}"%"
   </select>
-  <select id="getRecommendArticle" parameterType="java.lang.Integer" resultType="pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo">
+  <select id="getRecommendArticle" parameterType="java.lang.Integer" resultType="pers.lilei.blog.param.ArticleWithUserBaseInfoParam">
     select
     <include refid="Base_Column_List" />
     ,
@@ -221,7 +221,7 @@
     from tbl_article
     order by (article_like_count + article_comment_count + article_views) DESC limit 0 , #{size,jdbcType=INTEGER}
   </select>
-  <select id="getRecommendUser" parameterType="java.lang.Integer" resultType="pers.lilei.blog.pojo.RecommendUserPojo">
+  <select id="getRecommendUser" parameterType="java.lang.Integer" resultType="pers.lilei.blog.param.RecommendUserParam">
     select user_id,sum(article_views + article_comment_count + article_like_count) sum,
     sum(article_views) sum_views,
     sum(article_comment_count) sum_comment_count,
@@ -234,13 +234,13 @@
     delete from tbl_article
     where article_id = #{articleId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="pers.lilei.blog.po.ArticleExample">
+  <delete id="deleteByExample" parameterType="pers.lilei.blog.bean.ArticleExample">
     delete from tbl_article
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="pers.lilei.blog.po.ArticleWithBLOBs">
+  <insert id="insert" parameterType="pers.lilei.blog.bean.ArticleWithBLOBs">
     insert into tbl_article (article_id, user_id, article_views,
       article_comment_count, article_date, article_like_count,
       create_time, update_time, article_title,
@@ -250,7 +250,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{articleTitle,jdbcType=LONGVARCHAR},
       #{articleContent,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="pers.lilei.blog.po.ArticleWithBLOBs">
+  <insert id="insertSelective" parameterType="pers.lilei.blog.bean.ArticleWithBLOBs">
     insert into tbl_article
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="articleId != null">
@@ -317,7 +317,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="pers.lilei.blog.po.ArticleExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="pers.lilei.blog.bean.ArticleExample" resultType="java.lang.Long">
     select count(*) from tbl_article
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -391,7 +391,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="pers.lilei.blog.po.ArticleWithBLOBs">
+  <update id="updateByPrimaryKeySelective" parameterType="pers.lilei.blog.bean.ArticleWithBLOBs">
     update tbl_article
     <set>
       <if test="userId != null">
@@ -424,7 +424,7 @@
     </set>
     where article_id = #{articleId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="pers.lilei.blog.po.ArticleWithBLOBs">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="pers.lilei.blog.bean.ArticleWithBLOBs">
     update tbl_article
     set user_id = #{userId,jdbcType=BIGINT},
       article_views = #{articleViews,jdbcType=BIGINT},
@@ -437,7 +437,7 @@
       article_content = #{articleContent,jdbcType=LONGVARCHAR}
     where article_id = #{articleId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="pers.lilei.blog.po.Article">
+  <update id="updateByPrimaryKey" parameterType="pers.lilei.blog.bean.Article">
     update tbl_article
     set user_id = #{userId,jdbcType=BIGINT},
       article_views = #{articleViews,jdbcType=BIGINT},

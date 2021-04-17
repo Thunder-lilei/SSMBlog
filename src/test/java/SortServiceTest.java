@@ -1,6 +1,6 @@
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import pers.lilei.blog.po.Sort;
+import pers.lilei.blog.bean.Sort;
 import pers.lilei.blog.service.SortService;
 
 import java.util.List;

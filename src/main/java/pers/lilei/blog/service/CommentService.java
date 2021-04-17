@@ -1,7 +1,7 @@
 package pers.lilei.blog.service;
 
-import pers.lilei.blog.po.Comment;
-import pers.lilei.blog.pojo.CommentWithUserBaseInfoPojo;
+import pers.lilei.blog.bean.Comment;
+import pers.lilei.blog.param.CommentWithUserBaseInfoParam;
 
 import java.util.List;
 
@@ -17,9 +17,9 @@ public interface CommentService {
 
     Integer deleteComment(Long commentId);
 
-    List<CommentWithUserBaseInfoPojo> getCommentByArticleId(Long articleId);
+    List<CommentWithUserBaseInfoParam> getCommentByArticleId(Long articleId);
 
-    List<CommentWithUserBaseInfoPojo> getRootCommentByArticleId(Long articleId);
+    List<CommentWithUserBaseInfoParam> getRootCommentByArticleId(Long articleId);
 
-    List<CommentWithUserBaseInfoPojo> getChildCommentByArticleIdAndParentCommentId(List<CommentWithUserBaseInfoPojo> parentCommentWithUserBaseInfoPojoList, Long articleId, Long parentCommentId);
+    List<CommentWithUserBaseInfoParam> getChildCommentByArticleIdAndParentCommentId(List<CommentWithUserBaseInfoParam> parentCommentWithUserBaseInfoParamList, Long articleId, Long parentCommentId);
 }

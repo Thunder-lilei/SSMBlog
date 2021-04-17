@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.lilei.blog.dao.UserFriendMapper;
 import pers.lilei.blog.dao.UserMapper;
-import pers.lilei.blog.po.User;
-import pers.lilei.blog.pojo.UserBaseInfoPojo;
+import pers.lilei.blog.bean.User;
+import pers.lilei.blog.param.UserBaseInfoParam;
 import pers.lilei.blog.service.UserService;
 import pers.lilei.blog.util.BCrypt;
 
@@ -65,37 +65,37 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageInfo<UserBaseInfoPojo> selectUserBaseInfoByKey(int pageNow, int pageSize, String key) {
+    public PageInfo<UserBaseInfoParam> selectUserBaseInfoByKey(int pageNow, int pageSize, String key) {
         PageHelper.startPage(pageNow, pageSize);
-        List<UserBaseInfoPojo> userBaseInfoPojoList = userMapper.selectUserBaseInfoByKey(key);
-        return new PageInfo<>(userBaseInfoPojoList);
+        List<UserBaseInfoParam> userBaseInfoParamList = userMapper.selectUserBaseInfoByKey(key);
+        return new PageInfo<>(userBaseInfoParamList);
     }
 
     @Override
-    public PageInfo<UserBaseInfoPojo> selectUserBaseInfoByKeyWithoutMine(int pageNow, int pageSize, String key, Long userId) {
+    public PageInfo<UserBaseInfoParam> selectUserBaseInfoByKeyWithoutMine(int pageNow, int pageSize, String key, Long userId) {
         PageHelper.startPage(pageNow, pageSize);
-        List<UserBaseInfoPojo> userBaseInfoPojoList = userMapper.selectUserBaseInfoByKeyWithoutMine(key, userId);
-        return new PageInfo<>(userBaseInfoPojoList);
+        List<UserBaseInfoParam> userBaseInfoParamList = userMapper.selectUserBaseInfoByKeyWithoutMine(key, userId);
+        return new PageInfo<>(userBaseInfoParamList);
     }
 
     @Override
-    public List<UserBaseInfoPojo> selectUserBaseInfoByKeyWithoutMineList(String key, Long userId) {
-        List<UserBaseInfoPojo> userBaseInfoPojoList = userMapper.selectUserBaseInfoByKeyWithoutMine(key, userId);
-        return userBaseInfoPojoList;
+    public List<UserBaseInfoParam> selectUserBaseInfoByKeyWithoutMineList(String key, Long userId) {
+        List<UserBaseInfoParam> userBaseInfoParamList = userMapper.selectUserBaseInfoByKeyWithoutMine(key, userId);
+        return userBaseInfoParamList;
     }
 
     @Override
-    public PageInfo<UserBaseInfoPojo> selectAllUserBaseInfo(int pageNow, int pageSize) {
+    public PageInfo<UserBaseInfoParam> selectAllUserBaseInfo(int pageNow, int pageSize) {
         PageHelper.startPage(pageNow, pageSize);
-        List<UserBaseInfoPojo> userBaseInfoPojoList = userMapper.selectAllUserBaseInfo();
-        return new PageInfo<>(userBaseInfoPojoList);
+        List<UserBaseInfoParam> userBaseInfoParamList = userMapper.selectAllUserBaseInfo();
+        return new PageInfo<>(userBaseInfoParamList);
     }
 
     @Override
-    public PageInfo<UserBaseInfoPojo> getAllByUserId(int pageNow, int pageSize, List<Long> userIdList) {
+    public PageInfo<UserBaseInfoParam> getAllByUserId(int pageNow, int pageSize, List<Long> userIdList) {
         PageHelper.startPage(pageNow, pageSize);
-        List<UserBaseInfoPojo> userBaseInfoPojoList = userMapper.getAllByUserId(userIdList);
-        return new PageInfo<>(userBaseInfoPojoList);
+        List<UserBaseInfoParam> userBaseInfoParamList = userMapper.getAllByUserId(userIdList);
+        return new PageInfo<>(userBaseInfoParamList);
     }
 
     /*
@@ -108,22 +108,22 @@ public class UserServiceImpl implements UserService {
      * @return com.github.pagehelper.PageInfo<pers.lilei.blog.pojo.UserBaseInfoPojo>
      **/
     @Override
-    public PageInfo<UserBaseInfoPojo> getFriendByUserId(int pageNow, int pageSize, List<Long> userIdList) {
+    public PageInfo<UserBaseInfoParam> getFriendByUserId(int pageNow, int pageSize, List<Long> userIdList) {
         PageHelper.startPage(pageNow, pageSize);
-        List<UserBaseInfoPojo> userBaseInfoPojoList = userMapper.getAllByUserId(userIdList);
-        for (UserBaseInfoPojo userBaseInfoPojo : userBaseInfoPojoList) {
+        List<UserBaseInfoParam> userBaseInfoParamList = userMapper.getAllByUserId(userIdList);
+        for (UserBaseInfoParam userBaseInfoParam : userBaseInfoParamList) {
             //设置备注
-            if (!userFriendMapper.getNickNameByFriendId(userBaseInfoPojo.getUserId()).isEmpty()) {
-                userBaseInfoPojo.setUserNickname(userFriendMapper.getNickNameByFriendId(userBaseInfoPojo.getUserId()));
+            if (!userFriendMapper.getNickNameByFriendId(userBaseInfoParam.getUserId()).isEmpty()) {
+                userBaseInfoParam.setUserNickname(userFriendMapper.getNickNameByFriendId(userBaseInfoParam.getUserId()));
             }
         }
-        return new PageInfo<>(userBaseInfoPojoList);
+        return new PageInfo<>(userBaseInfoParamList);
     }
 
     @Override
-    public List<UserBaseInfoPojo> getAllByUserIdList(List<Long> userIdList) {
-        List<UserBaseInfoPojo> userBaseInfoPojoList = userMapper.getAllByUserId(userIdList);
-        return userBaseInfoPojoList;
+    public List<UserBaseInfoParam> getAllByUserIdList(List<Long> userIdList) {
+        List<UserBaseInfoParam> userBaseInfoParamList = userMapper.getAllByUserId(userIdList);
+        return userBaseInfoParamList;
     }
 
     /*
@@ -136,21 +136,21 @@ public class UserServiceImpl implements UserService {
      * @return java.util.List<pers.lilei.blog.pojo.UserBaseInfoPojo>
      **/
     @Override
-    public List<UserBaseInfoPojo> getFriendByUserIdList(List<Long> userIdList) {
-        List<UserBaseInfoPojo> userBaseInfoPojoList = userMapper.getAllByUserId(userIdList);
-        for (UserBaseInfoPojo userBaseInfoPojo : userBaseInfoPojoList) {
+    public List<UserBaseInfoParam> getFriendByUserIdList(List<Long> userIdList) {
+        List<UserBaseInfoParam> userBaseInfoParamList = userMapper.getAllByUserId(userIdList);
+        for (UserBaseInfoParam userBaseInfoParam : userBaseInfoParamList) {
             //设置备注
-            if (!userFriendMapper.getNickNameByFriendId(userBaseInfoPojo.getUserId()).isEmpty()) {
-                userBaseInfoPojo.setUserNickname(userFriendMapper.getNickNameByFriendId(userBaseInfoPojo.getUserId()));
+            if (!userFriendMapper.getNickNameByFriendId(userBaseInfoParam.getUserId()).isEmpty()) {
+                userBaseInfoParam.setUserNickname(userFriendMapper.getNickNameByFriendId(userBaseInfoParam.getUserId()));
             }
         }
-        return userBaseInfoPojoList;
+        return userBaseInfoParamList;
     }
 
     @Override
-    public List<UserBaseInfoPojo> getAllByUserIdAndKeyList(List<Long> userIdList, String key) {
-        List<UserBaseInfoPojo> userBaseInfoPojoList = userMapper.getAllByUserIdAndKey(userIdList, key);
-        return userBaseInfoPojoList;
+    public List<UserBaseInfoParam> getAllByUserIdAndKeyList(List<Long> userIdList, String key) {
+        List<UserBaseInfoParam> userBaseInfoParamList = userMapper.getAllByUserIdAndKey(userIdList, key);
+        return userBaseInfoParamList;
     }
 
     /*

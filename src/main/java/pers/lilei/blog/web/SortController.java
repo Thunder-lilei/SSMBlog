@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pers.lilei.blog.constant.MessageConstant;
-import pers.lilei.blog.po.Sort;
-import pers.lilei.blog.po.User;
+import pers.lilei.blog.bean.Sort;
+import pers.lilei.blog.bean.User;
 import pers.lilei.blog.service.SortService;
 
 import java.util.HashMap;

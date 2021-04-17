@@ -3,11 +3,11 @@ import com.alibaba.fastjson.TypeReference;
 import com.github.pagehelper.PageInfo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import pers.lilei.blog.po.ArticleWithBLOBs;
-import pers.lilei.blog.po.Label;
-import pers.lilei.blog.pojo.ArticleBaseInfoPojo;
-import pers.lilei.blog.pojo.ArticleWithUserBaseInfoPojo;
-import pers.lilei.blog.pojo.RecommendUserPojo;
+import pers.lilei.blog.bean.ArticleWithBLOBs;
+import pers.lilei.blog.bean.Label;
+import pers.lilei.blog.param.ArticleBaseInfoParam;
+import pers.lilei.blog.param.ArticleWithUserBaseInfoParam;
+import pers.lilei.blog.param.RecommendUserParam;
 import pers.lilei.blog.service.ArticleService;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class ArticleServiceTest extends BaseTest{
     ArticleService articleService;
     @Test
     public void selectAllArticleWithUserBaseInfo() {
-        PageInfo<ArticleWithUserBaseInfoPojo> articleWithUserBaseInfoPojoPageInfo = articleService.selectAllArticleWithUserBaseInfoByUserId(1, 10, 1L);
+        PageInfo<ArticleWithUserBaseInfoParam> articleWithUserBaseInfoPojoPageInfo = articleService.selectAllArticleWithUserBaseInfoByUserId(1, 10, 1L);
         System.out.println(articleWithUserBaseInfoPojoPageInfo);
     }
 //    @Test
@@ -34,14 +34,14 @@ public class ArticleServiceTest extends BaseTest{
 //    }
     @Test
     public void getCommendArticle() {
-        List<ArticleWithUserBaseInfoPojo> articleWithUserBaseInfoPojoList = articleService.getRecommendArticle(5);
-        articleWithUserBaseInfoPojoList.forEach(temp-> System.out.println(temp.getArticleTitle()));
+        List<ArticleWithUserBaseInfoParam> articleWithUserBaseInfoParamList = articleService.getRecommendArticle(5);
+        articleWithUserBaseInfoParamList.forEach(temp-> System.out.println(temp.getArticleTitle()));
     }
     @Test
     public void getCommendUser() {
-        List<RecommendUserPojo> recommendUserPojoList = articleService.getRecommendUser(5);
-        recommendUserPojoList.forEach(temp-> System.out.println(temp.getUserBaseInfoPojo().getUserNickname()));
-        recommendUserPojoList.forEach(temp-> System.out.println(temp.getSumViews()));
+        List<RecommendUserParam> recommendUserParamList = articleService.getRecommendUser(5);
+        recommendUserParamList.forEach(temp-> System.out.println(temp.getUserBaseInfoPojo().getUserNickname()));
+        recommendUserParamList.forEach(temp-> System.out.println(temp.getSumViews()));
     }
     @Test
     public void jsonTest() {
@@ -63,26 +63,26 @@ public class ArticleServiceTest extends BaseTest{
     }
     @Test
     public void getSortAboutArticle() {
-        PageInfo<ArticleBaseInfoPojo> articleWithBLOBsPageInfo = articleService.getSortAboutArticleWithUserId(1, 10, 3L, 1L);
-        List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleWithBLOBsPageInfo.getList();
-        articleBaseInfoPojoList.forEach(temp-> System.out.println(temp.getArticleTitle()));
+        PageInfo<ArticleBaseInfoParam> articleWithBLOBsPageInfo = articleService.getSortAboutArticleWithUserId(1, 10, 3L, 1L);
+        List<ArticleBaseInfoParam> articleBaseInfoParamList = articleWithBLOBsPageInfo.getList();
+        articleBaseInfoParamList.forEach(temp-> System.out.println(temp.getArticleTitle()));
     }
     @Test
     public void getLabelAboutArticle() {
-        PageInfo<ArticleBaseInfoPojo> articleWithBLOBsPageInfo = articleService.getLabelAboutArticleWithUserId(1, 10, 3L, 1L);
-        List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleWithBLOBsPageInfo.getList();
-        articleBaseInfoPojoList.forEach(temp-> System.out.println(temp.getArticleTitle()));
+        PageInfo<ArticleBaseInfoParam> articleWithBLOBsPageInfo = articleService.getLabelAboutArticleWithUserId(1, 10, 3L, 1L);
+        List<ArticleBaseInfoParam> articleBaseInfoParamList = articleWithBLOBsPageInfo.getList();
+        articleBaseInfoParamList.forEach(temp-> System.out.println(temp.getArticleTitle()));
     }
     @Test
     public void getSortAboutArticleAndKey() {
-        PageInfo<ArticleBaseInfoPojo> articleWithBLOBsPageInfo = articleService.getSortAboutArticleWithUserIdAndKey(1, 10, 3L, 1L, "一");
-        List<ArticleBaseInfoPojo> articleBaseInfoPojoList = articleWithBLOBsPageInfo.getList();
-        articleBaseInfoPojoList.forEach(temp-> System.out.println(temp.getArticleTitle()));
+        PageInfo<ArticleBaseInfoParam> articleWithBLOBsPageInfo = articleService.getSortAboutArticleWithUserIdAndKey(1, 10, 3L, 1L, "一");
+        List<ArticleBaseInfoParam> articleBaseInfoParamList = articleWithBLOBsPageInfo.getList();
+        articleBaseInfoParamList.forEach(temp-> System.out.println(temp.getArticleTitle()));
     }
     @Test
     public void searchArticle() {
-        PageInfo<ArticleWithUserBaseInfoPojo> articleWithBLOBsPageInfo = articleService.searchArticle(1, 10, "一");
-        List<ArticleWithUserBaseInfoPojo> articleBaseInfoPojoList = articleWithBLOBsPageInfo.getList();
+        PageInfo<ArticleWithUserBaseInfoParam> articleWithBLOBsPageInfo = articleService.searchArticle(1, 10, "一");
+        List<ArticleWithUserBaseInfoParam> articleBaseInfoPojoList = articleWithBLOBsPageInfo.getList();
         articleBaseInfoPojoList.forEach(temp-> System.out.println(temp.getArticleTitle()));
         articleBaseInfoPojoList.forEach(temp-> System.out.println(temp.getUserBaseInfoPojo().getUserNickname()));
     }

@@ -1,7 +1,6 @@
 package pers.lilei.blog.service;
 
-import pers.lilei.blog.po.UserFriend;
-import pers.lilei.blog.pojo.UserBaseInfoPojo;
+import pers.lilei.blog.bean.UserFriend;
 
 import java.util.List;
 

@@ -1,13 +1,13 @@
-package pers.lilei.blog.po;
+package pers.lilei.blog.bean;
 
 import java.util.Date;
 
-public class ArticleSort {
+public class ArticleLike {
     private Long id;
 
     private Long articleId;
 
-    private Long sortId;
+    private Long userId;
 
     private Date createTime;
 
@@ -29,12 +29,12 @@ public class ArticleSort {
         this.articleId = articleId;
     }
 
-    public Long getSortId() {
-        return sortId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setSortId(Long sortId) {
-        this.sortId = sortId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Date getCreateTime() {

@@ -1,6 +1,6 @@
 package pers.lilei.blog.service;
 
-import pers.lilei.blog.po.ArticleLike;
+import pers.lilei.blog.bean.ArticleLike;
 
 /**
  * <h3>SSMBlog</h3>

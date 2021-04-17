@@ -3,7 +3,7 @@ package pers.lilei.blog.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.lilei.blog.dao.LabelMapper;
-import pers.lilei.blog.po.Label;
+import pers.lilei.blog.bean.Label;
 import pers.lilei.blog.service.LabelService;
 
 import java.util.List;

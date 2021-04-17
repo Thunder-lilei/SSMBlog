@@ -2,9 +2,9 @@ package pers.lilei.blog.dao;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import pers.lilei.blog.po.User;
-import pers.lilei.blog.po.UserExample;
-import pers.lilei.blog.pojo.UserBaseInfoPojo;
+import pers.lilei.blog.bean.User;
+import pers.lilei.blog.bean.UserExample;
+import pers.lilei.blog.param.UserBaseInfoParam;
 
 public interface UserMapper {
     long countByExample(UserExample example);
@@ -21,7 +21,7 @@ public interface UserMapper {
 
     User selectByPrimaryKey(Long userId);
 
-    UserBaseInfoPojo selectUserBaseInfoByPrimaryKey(Long userId);
+    UserBaseInfoParam selectUserBaseInfoByPrimaryKey(Long userId);
 
     String selectUserPasswordByPrimaryKey(Long userId);
 
@@ -35,15 +35,15 @@ public interface UserMapper {
 
     User selectByUserNameAndEmailAndTelWithoutUserId(User user);
 
-    List<UserBaseInfoPojo> selectUserBaseInfoByKey(String key);
+    List<UserBaseInfoParam> selectUserBaseInfoByKey(String key);
 
-    List<UserBaseInfoPojo> selectUserBaseInfoByKeyWithoutMine(@Param("key") String key, @Param("userId") Long userId);
+    List<UserBaseInfoParam> selectUserBaseInfoByKeyWithoutMine(@Param("key") String key, @Param("userId") Long userId);
 
-    List<UserBaseInfoPojo> selectAllUserBaseInfo();
+    List<UserBaseInfoParam> selectAllUserBaseInfo();
 
-    List<UserBaseInfoPojo> getAllByUserId(@Param("userIdList") List<Long> userIdList);
+    List<UserBaseInfoParam> getAllByUserId(@Param("userIdList") List<Long> userIdList);
 
-    List<UserBaseInfoPojo> getAllByUserIdAndKey(@Param("userIdList") List<Long> userIdList, @Param("key") String key);
+    List<UserBaseInfoParam> getAllByUserIdAndKey(@Param("userIdList") List<Long> userIdList, @Param("key") String key);
 
     int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
 

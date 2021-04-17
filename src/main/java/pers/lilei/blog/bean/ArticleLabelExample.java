@@ -1,17 +1,17 @@
-package pers.lilei.blog.po;
+package pers.lilei.blog.bean;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ArticleSortExample {
+public class ArticleLabelExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public ArticleSortExample() {
+    public ArticleLabelExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -225,63 +225,63 @@ public class ArticleSortExample {
             return (Criteria) this;
         }
 
-        public Criteria andSortIdIsNull() {
-            addCriterion("sort_id is null");
+        public Criteria andLabelIdIsNull() {
+            addCriterion("label_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdIsNotNull() {
-            addCriterion("sort_id is not null");
+        public Criteria andLabelIdIsNotNull() {
+            addCriterion("label_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdEqualTo(Long value) {
-            addCriterion("sort_id =", value, "sortId");
+        public Criteria andLabelIdEqualTo(Long value) {
+            addCriterion("label_id =", value, "labelId");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdNotEqualTo(Long value) {
-            addCriterion("sort_id <>", value, "sortId");
+        public Criteria andLabelIdNotEqualTo(Long value) {
+            addCriterion("label_id <>", value, "labelId");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdGreaterThan(Long value) {
-            addCriterion("sort_id >", value, "sortId");
+        public Criteria andLabelIdGreaterThan(Long value) {
+            addCriterion("label_id >", value, "labelId");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("sort_id >=", value, "sortId");
+        public Criteria andLabelIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("label_id >=", value, "labelId");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdLessThan(Long value) {
-            addCriterion("sort_id <", value, "sortId");
+        public Criteria andLabelIdLessThan(Long value) {
+            addCriterion("label_id <", value, "labelId");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdLessThanOrEqualTo(Long value) {
-            addCriterion("sort_id <=", value, "sortId");
+        public Criteria andLabelIdLessThanOrEqualTo(Long value) {
+            addCriterion("label_id <=", value, "labelId");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdIn(List<Long> values) {
-            addCriterion("sort_id in", values, "sortId");
+        public Criteria andLabelIdIn(List<Long> values) {
+            addCriterion("label_id in", values, "labelId");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdNotIn(List<Long> values) {
-            addCriterion("sort_id not in", values, "sortId");
+        public Criteria andLabelIdNotIn(List<Long> values) {
+            addCriterion("label_id not in", values, "labelId");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdBetween(Long value1, Long value2) {
-            addCriterion("sort_id between", value1, value2, "sortId");
+        public Criteria andLabelIdBetween(Long value1, Long value2) {
+            addCriterion("label_id between", value1, value2, "labelId");
             return (Criteria) this;
         }
 
-        public Criteria andSortIdNotBetween(Long value1, Long value2) {
-            addCriterion("sort_id not between", value1, value2, "sortId");
+        public Criteria andLabelIdNotBetween(Long value1, Long value2) {
+            addCriterion("label_id not between", value1, value2, "labelId");
             return (Criteria) this;
         }
 

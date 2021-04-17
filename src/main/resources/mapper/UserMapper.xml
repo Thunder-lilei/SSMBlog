@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pers.lilei.blog.dao.UserMapper">
-  <resultMap id="BaseResultMap" type="pers.lilei.blog.po.User">
+  <resultMap id="BaseResultMap" type="pers.lilei.blog.bean.User">
     <id column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
@@ -76,7 +76,7 @@
     user_id, user_name, user_password, user_email, user_profile_photo, user_birthday,
     user_age, user_telephone_number, user_nickname, create_time, update_time
   </sql>
-  <select id="selectByExample" parameterType="pers.lilei.blog.po.UserExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="pers.lilei.blog.bean.UserExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -96,7 +96,7 @@
     from tbl_user
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
-  <select id="selectUserBaseInfoByPrimaryKey" parameterType="java.lang.Long" resultType="pers.lilei.blog.pojo.UserBaseInfoPojo">
+  <select id="selectUserBaseInfoByPrimaryKey" parameterType="java.lang.Long" resultType="pers.lilei.blog.param.UserBaseInfoParam">
     select
     <include refid="Base_Column_List" />
     from tbl_user
@@ -125,25 +125,25 @@
     from tbl_user
     where user_telephone_number = #{userTelephoneNumber,jdbcType=BIGINT}
   </select>
-  <select id="selectUserBaseInfoByKey" parameterType="java.lang.String" resultType="pers.lilei.blog.pojo.UserBaseInfoPojo">
+  <select id="selectUserBaseInfoByKey" parameterType="java.lang.String" resultType="pers.lilei.blog.param.UserBaseInfoParam">
     select
     <include refid="Base_Column_List" />
     from tbl_user
     where CONCAT(user_name, user_nickname) LIKE "%"#{key,jdbcType=VARCHAR}"%"
   </select>
-  <select id="selectUserBaseInfoByKeyWithoutMine" resultType="pers.lilei.blog.pojo.UserBaseInfoPojo">
+  <select id="selectUserBaseInfoByKeyWithoutMine" resultType="pers.lilei.blog.param.UserBaseInfoParam">
     select
     <include refid="Base_Column_List" />
     from tbl_user
     where CONCAT(user_name, user_nickname) LIKE "%"#{key,jdbcType=VARCHAR}"%"
     AND user_id != #{userId,jdbcType=BIGINT}
   </select>
-  <select id="selectAllUserBaseInfo" resultType="pers.lilei.blog.pojo.UserBaseInfoPojo">
+  <select id="selectAllUserBaseInfo" resultType="pers.lilei.blog.param.UserBaseInfoParam">
     select
     <include refid="Base_Column_List" />
     from tbl_user
   </select>
-  <select id="getAllByUserId" resultType="pers.lilei.blog.pojo.UserBaseInfoPojo">
+  <select id="getAllByUserId" resultType="pers.lilei.blog.param.UserBaseInfoParam">
     select
     <include refid="Base_Column_List" />
     from tbl_user
@@ -152,7 +152,7 @@
     #{item}
     </foreach>
   </select>
-  <select id="getAllByUserIdAndKey" resultType="pers.lilei.blog.pojo.UserBaseInfoPojo">
+  <select id="getAllByUserIdAndKey" resultType="pers.lilei.blog.param.UserBaseInfoParam">
     select
     <include refid="Base_Column_List" />
     from tbl_user
@@ -162,7 +162,7 @@
     </foreach>
     AND CONCAT(user_name, user_nickname) LIKE "%"#{key,jdbcType=VARCHAR}"%"
   </select>
-  <select id="selectByUserNameAndEmailAndTel" parameterType="pers.lilei.blog.po.User" resultMap="BaseResultMap">
+  <select id="selectByUserNameAndEmailAndTel" parameterType="pers.lilei.blog.bean.User" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from tbl_user
@@ -170,7 +170,7 @@
     OR (user_telephone_number = #{userTelephoneNumber,jdbcType=BIGINT} AND user_telephone_number != "")
     OR (user_email = #{userEmail,jdbcType=VARCHAR} AND user_email != "")
   </select>
-  <select id="selectByUserNameAndEmailAndTelWithoutUserId" parameterType="pers.lilei.blog.po.User" resultMap="BaseResultMap">
+  <select id="selectByUserNameAndEmailAndTelWithoutUserId" parameterType="pers.lilei.blog.bean.User" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from tbl_user
@@ -183,13 +183,13 @@
     delete from tbl_user
     where user_id = #{userId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="pers.lilei.blog.po.UserExample">
+  <delete id="deleteByExample" parameterType="pers.lilei.blog.bean.UserExample">
     delete from tbl_user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="pers.lilei.blog.po.User">
+  <insert id="insert" parameterType="pers.lilei.blog.bean.User">
     insert into tbl_user (user_id, user_name, user_password,
       user_email, user_profile_photo, user_birthday,
       user_age, user_telephone_number, user_nickname,
@@ -199,7 +199,7 @@
       #{userAge,jdbcType=TINYINT}, #{userTelephoneNumber,jdbcType=BIGINT}, #{userNickname,jdbcType=VARCHAR},
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="pers.lilei.blog.po.User">
+  <insert id="insertSelective" parameterType="pers.lilei.blog.bean.User">
     insert into tbl_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -272,7 +272,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="pers.lilei.blog.po.UserExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="pers.lilei.blog.bean.UserExample" resultType="java.lang.Long">
     select count(*) from tbl_user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -336,7 +336,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="pers.lilei.blog.po.User">
+  <update id="updateByPrimaryKeySelective" parameterType="pers.lilei.blog.bean.User">
     update tbl_user
     <set>
       <if test="userName != null">
@@ -372,21 +372,21 @@
     </set>
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
-  <update id="updatePasswordByEmail" parameterType="pers.lilei.blog.po.User">
+  <update id="updatePasswordByEmail" parameterType="pers.lilei.blog.bean.User">
     update tbl_user
     <set>
         user_password = #{userPassword,jdbcType=VARCHAR},
     </set>
     where user_email = #{userEmail,jdbcType=VARCHAR}
   </update>
-  <update id="updatePasswordByTel" parameterType="pers.lilei.blog.po.User">
+  <update id="updatePasswordByTel" parameterType="pers.lilei.blog.bean.User">
     update tbl_user
     <set>
         user_password = #{userPassword,jdbcType=VARCHAR},
     </set>
     where user_telephone_number = #{userTelephoneNumber,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="pers.lilei.blog.po.User">
+  <update id="updateByPrimaryKey" parameterType="pers.lilei.blog.bean.User">
     update tbl_user
     set user_name = #{userName,jdbcType=VARCHAR},
       user_password = #{userPassword,jdbcType=VARCHAR},

@@ -1,4 +1,4 @@
-package pers.lilei.blog.pojo;
+package pers.lilei.blog.param;
 
 /**
  * <h3>SSMBlog</h3>
@@ -7,7 +7,7 @@ package pers.lilei.blog.pojo;
  * @author : 李雷
  * @date : 2021-01-22 22:27
  **/
-public class RecommendUserPojo {
+public class RecommendUserParam {
     private Long sumCommentCount;
 
     private Long sumLikeCount;
@@ -16,7 +16,7 @@ public class RecommendUserPojo {
 
     private Long userId;
 
-    private UserBaseInfoPojo userBaseInfoPojo;
+    private UserBaseInfoParam userBaseInfoParam;
 
     public Long getSumCommentCount() {
         return sumCommentCount;
@@ -50,11 +50,11 @@ public class RecommendUserPojo {
         this.userId = userId;
     }
 
-    public UserBaseInfoPojo getUserBaseInfoPojo() {
-        return userBaseInfoPojo;
+    public UserBaseInfoParam getUserBaseInfoPojo() {
+        return userBaseInfoParam;
     }
 
-    public void setUserBaseInfoPojo(UserBaseInfoPojo userBaseInfoPojo) {
-        this.userBaseInfoPojo = userBaseInfoPojo;
+    public void setUserBaseInfoPojo(UserBaseInfoParam userBaseInfoParam) {
+        this.userBaseInfoParam = userBaseInfoParam;
     }
 }

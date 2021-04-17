@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pers.lilei.blog.constant.MessageConstant;
-import pers.lilei.blog.po.User;
-import pers.lilei.blog.po.UserFriend;
-import pers.lilei.blog.pojo.UserBaseInfoPojo;
+import pers.lilei.blog.bean.User;
+import pers.lilei.blog.bean.UserFriend;
+import pers.lilei.blog.param.UserBaseInfoParam;
 import pers.lilei.blog.service.UserFriendService;
 import pers.lilei.blog.service.UserService;
 
@@ -49,7 +49,7 @@ public class UserFriendController extends BaseController{
     private Map<String,Object> getMyFriend(@RequestParam int pageNow, @RequestParam int pageSize) {
         Map<String,Object> modelMap = new HashMap<>();
         User user = (User) session.getAttribute("user");
-        PageInfo<UserBaseInfoPojo> userBaseInfoPojoPageInfo = new PageInfo<>();
+        PageInfo<UserBaseInfoParam> userBaseInfoPojoPageInfo = new PageInfo<>();
         if (user != null) {
             //获取用户的所有好友的id
             List<Long> friendIdList = userFriendService.getAllFriendIdByUserId(user.getUserId());
@@ -78,17 +78,17 @@ public class UserFriendController extends BaseController{
     private Map<String,Object> getMyFriendList() {
         Map<String,Object> modelMap = new HashMap<>();
         User user = (User) session.getAttribute("user");
-        List<UserBaseInfoPojo> userBaseInfoPojoList = new ArrayList<>();
+        List<UserBaseInfoParam> userBaseInfoParamList = new ArrayList<>();
         if (user != null) {
             //获取用户的所有好友的id
             List<Long> friendIdList = userFriendService.getAllFriendIdByUserId(user.getUserId());
             if (!friendIdList.isEmpty()) {
                 //获取好友信息
-                userBaseInfoPojoList = userService.getFriendByUserIdList(friendIdList);
+                userBaseInfoParamList = userService.getFriendByUserIdList(friendIdList);
                 modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             }
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-            modelMap.put("userList", userBaseInfoPojoList);
+            modelMap.put("userList", userBaseInfoParamList);
         } else {
             modelMap.put(MessageConstant.MESSAGE, "未登录！");
         }
@@ -108,7 +108,7 @@ public class UserFriendController extends BaseController{
     private Map<String,Object> getMyFriendByKey(@RequestParam int pageNow, @RequestParam int pageSize, @RequestParam String key) {
         Map<String,Object> modelMap = new HashMap<>();
         User user = (User) session.getAttribute("user");
-        PageInfo<UserBaseInfoPojo> userBaseInfoPojoPageInfo = new PageInfo<>();
+        PageInfo<UserBaseInfoParam> userBaseInfoPojoPageInfo = new PageInfo<>();
         if (user != null) {
             //通过关键词获取用户的所有好友的id
             List<Long> friendIdList = userFriendService.getAllFriendIdByUserIdAndKey(user.getUserId(), key);
@@ -138,17 +138,17 @@ public class UserFriendController extends BaseController{
     private Map<String,Object> getMyFriendByKeyList(@RequestParam String key) {
         Map<String,Object> modelMap = new HashMap<>();
         User user = (User) session.getAttribute("user");
-        List<UserBaseInfoPojo> userBaseInfoPojoList = new ArrayList<>();
+        List<UserBaseInfoParam> userBaseInfoParamList = new ArrayList<>();
         if (user != null) {
             //通过关键词获取用户的所有好友的id
             List<Long> friendIdList = userFriendService.getAllFriendIdByUserId(user.getUserId());
             if (!friendIdList.isEmpty()) {
                 //获取好友信息
-                userBaseInfoPojoList = userService.getAllByUserIdAndKeyList(friendIdList, key);
+                userBaseInfoParamList = userService.getAllByUserIdAndKeyList(friendIdList, key);
                 modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             }
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-            modelMap.put("userList", userBaseInfoPojoList);
+            modelMap.put("userList", userBaseInfoParamList);
         } else {
             modelMap.put(MessageConstant.MESSAGE, "未登录！");
         }

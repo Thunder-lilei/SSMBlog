@@ -1,7 +1,7 @@
 package pers.lilei.blog.service;
 
-import pers.lilei.blog.po.ArticleSort;
-import pers.lilei.blog.po.Sort;
+import pers.lilei.blog.bean.ArticleSort;
+import pers.lilei.blog.bean.Sort;
 
 import java.util.List;
 

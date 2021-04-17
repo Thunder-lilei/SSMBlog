@@ -2,8 +2,8 @@ package pers.lilei.blog.dao;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import pers.lilei.blog.po.Label;
-import pers.lilei.blog.po.LabelExample;
+import pers.lilei.blog.bean.Label;
+import pers.lilei.blog.bean.LabelExample;
 
 public interface LabelMapper {
     long countByExample(LabelExample example);

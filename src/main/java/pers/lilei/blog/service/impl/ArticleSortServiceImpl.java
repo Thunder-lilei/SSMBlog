@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.lilei.blog.dao.ArticleSortMapper;
 import pers.lilei.blog.dao.SortMapper;
-import pers.lilei.blog.po.ArticleSort;
-import pers.lilei.blog.po.Sort;
+import pers.lilei.blog.bean.ArticleSort;
+import pers.lilei.blog.bean.Sort;
 import pers.lilei.blog.service.ArticleSortService;
 
 import java.util.List;

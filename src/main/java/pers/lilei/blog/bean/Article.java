@@ -1,4 +1,4 @@
-package pers.lilei.blog.po;
+package pers.lilei.blog.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;

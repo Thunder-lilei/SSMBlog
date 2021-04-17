@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pers.lilei.blog.dao.ArticleLabelMapper">
-  <resultMap id="BaseResultMap" type="pers.lilei.blog.po.ArticleLabel">
+  <resultMap id="BaseResultMap" type="pers.lilei.blog.bean.ArticleLabel">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="article_id" jdbcType="BIGINT" property="articleId" />
     <result column="label_id" jdbcType="BIGINT" property="labelId" />
@@ -69,7 +69,7 @@
   <sql id="Base_Column_List">
     id, article_id, label_id, create_time, update_time
   </sql>
-  <select id="selectByExample" parameterType="pers.lilei.blog.po.ArticleLabelExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="pers.lilei.blog.bean.ArticleLabelExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -103,19 +103,19 @@
     delete from tbl_article_label
     where article_id = #{articleId,jdbcType=BIGINT} AND label_id = #{labelId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="pers.lilei.blog.po.ArticleLabelExample">
+  <delete id="deleteByExample" parameterType="pers.lilei.blog.bean.ArticleLabelExample">
     delete from tbl_article_label
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="pers.lilei.blog.po.ArticleLabel">
+  <insert id="insert" parameterType="pers.lilei.blog.bean.ArticleLabel">
     insert into tbl_article_label (id, article_id, label_id,
       create_time, update_time)
     values (#{id,jdbcType=BIGINT}, #{articleId,jdbcType=BIGINT}, #{labelId,jdbcType=BIGINT},
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="pers.lilei.blog.po.ArticleLabel">
+  <insert id="insertSelective" parameterType="pers.lilei.blog.bean.ArticleLabel">
     insert into tbl_article_label
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -152,7 +152,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="pers.lilei.blog.po.ArticleLabelExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="pers.lilei.blog.bean.ArticleLabelExample" resultType="java.lang.Long">
     select count(*) from tbl_article_label
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -192,7 +192,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="pers.lilei.blog.po.ArticleLabel">
+  <update id="updateByPrimaryKeySelective" parameterType="pers.lilei.blog.bean.ArticleLabel">
     update tbl_article_label
     <set>
       <if test="articleId != null">
@@ -210,7 +210,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="pers.lilei.blog.po.ArticleLabel">
+  <update id="updateByPrimaryKey" parameterType="pers.lilei.blog.bean.ArticleLabel">
     update tbl_article_label
     set article_id = #{articleId,jdbcType=BIGINT},
       label_id = #{labelId,jdbcType=BIGINT},

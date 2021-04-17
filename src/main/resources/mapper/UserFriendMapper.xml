@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pers.lilei.blog.dao.UserFriendMapper">
-  <resultMap id="BaseResultMap" type="pers.lilei.blog.po.UserFriend">
+  <resultMap id="BaseResultMap" type="pers.lilei.blog.bean.UserFriend">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="user_friend_id" jdbcType="BIGINT" property="userFriendId" />
@@ -70,7 +70,7 @@
   <sql id="Base_Column_List">
     id, user_id, user_friend_id, user_nickname, create_time, update_time
   </sql>
-  <select id="selectByExample" parameterType="pers.lilei.blog.po.UserFriendExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="pers.lilei.blog.bean.UserFriendExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -119,13 +119,13 @@
     delete from tbl_user_friend
     where user_id = #{userId,jdbcType=BIGINT} AND user_friend_id = #{userFriendId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="pers.lilei.blog.po.UserFriendExample">
+  <delete id="deleteByExample" parameterType="pers.lilei.blog.bean.UserFriendExample">
     delete from tbl_user_friend
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="pers.lilei.blog.po.UserFriend">
+  <insert id="insert" parameterType="pers.lilei.blog.bean.UserFriend">
     insert into tbl_user_friend (id, user_id, user_friend_id,
       user_nickname, create_time, update_time
       )
@@ -133,7 +133,7 @@
       #{userNickname,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="pers.lilei.blog.po.UserFriend">
+  <insert id="insertSelective" parameterType="pers.lilei.blog.bean.UserFriend">
     insert into tbl_user_friend
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -176,7 +176,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="pers.lilei.blog.po.UserFriendExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="pers.lilei.blog.bean.UserFriendExample" resultType="java.lang.Long">
     select count(*) from tbl_user_friend
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -220,7 +220,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="pers.lilei.blog.po.UserFriend">
+  <update id="updateByPrimaryKeySelective" parameterType="pers.lilei.blog.bean.UserFriend">
     update tbl_user_friend
     <set>
       <if test="userId != null">
@@ -241,7 +241,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="pers.lilei.blog.po.UserFriend">
+  <update id="updateByPrimaryKey" parameterType="pers.lilei.blog.bean.UserFriend">
     update tbl_user_friend
     set user_id = #{userId,jdbcType=BIGINT},
       user_friend_id = #{userFriendId,jdbcType=BIGINT},
@@ -250,7 +250,7 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateFriendNickNameByUserIdAndUserFriendId" parameterType="pers.lilei.blog.po.UserFriend">
+  <update id="updateFriendNickNameByUserIdAndUserFriendId" parameterType="pers.lilei.blog.bean.UserFriend">
     update tbl_user_friend
     set user_nickname = #{userNickname,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=BIGINT} AND user_friend_id = #{userFriendId,jdbcType=BIGINT}

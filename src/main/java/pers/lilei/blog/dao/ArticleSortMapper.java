@@ -2,8 +2,8 @@ package pers.lilei.blog.dao;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import pers.lilei.blog.po.ArticleSort;
-import pers.lilei.blog.po.ArticleSortExample;
+import pers.lilei.blog.bean.ArticleSort;
+import pers.lilei.blog.bean.ArticleSortExample;
 
 public interface ArticleSortMapper {
     long countByExample(ArticleSortExample example);

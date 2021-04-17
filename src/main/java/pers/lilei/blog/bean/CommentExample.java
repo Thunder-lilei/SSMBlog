@@ -1,17 +1,17 @@
-package pers.lilei.blog.po;
+package pers.lilei.blog.bean;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ArticleExample {
+public class CommentExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public ArticleExample() {
+    public CommentExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -105,63 +105,63 @@ public class ArticleExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andArticleIdIsNull() {
-            addCriterion("article_id is null");
+        public Criteria andCommentIdIsNull() {
+            addCriterion("comment_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdIsNotNull() {
-            addCriterion("article_id is not null");
+        public Criteria andCommentIdIsNotNull() {
+            addCriterion("comment_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdEqualTo(Long value) {
-            addCriterion("article_id =", value, "articleId");
+        public Criteria andCommentIdEqualTo(Long value) {
+            addCriterion("comment_id =", value, "commentId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdNotEqualTo(Long value) {
-            addCriterion("article_id <>", value, "articleId");
+        public Criteria andCommentIdNotEqualTo(Long value) {
+            addCriterion("comment_id <>", value, "commentId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdGreaterThan(Long value) {
-            addCriterion("article_id >", value, "articleId");
+        public Criteria andCommentIdGreaterThan(Long value) {
+            addCriterion("comment_id >", value, "commentId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("article_id >=", value, "articleId");
+        public Criteria andCommentIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("comment_id >=", value, "commentId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdLessThan(Long value) {
-            addCriterion("article_id <", value, "articleId");
+        public Criteria andCommentIdLessThan(Long value) {
+            addCriterion("comment_id <", value, "commentId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdLessThanOrEqualTo(Long value) {
-            addCriterion("article_id <=", value, "articleId");
+        public Criteria andCommentIdLessThanOrEqualTo(Long value) {
+            addCriterion("comment_id <=", value, "commentId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdIn(List<Long> values) {
-            addCriterion("article_id in", values, "articleId");
+        public Criteria andCommentIdIn(List<Long> values) {
+            addCriterion("comment_id in", values, "commentId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdNotIn(List<Long> values) {
-            addCriterion("article_id not in", values, "articleId");
+        public Criteria andCommentIdNotIn(List<Long> values) {
+            addCriterion("comment_id not in", values, "commentId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdBetween(Long value1, Long value2) {
-            addCriterion("article_id between", value1, value2, "articleId");
+        public Criteria andCommentIdBetween(Long value1, Long value2) {
+            addCriterion("comment_id between", value1, value2, "commentId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdNotBetween(Long value1, Long value2) {
-            addCriterion("article_id not between", value1, value2, "articleId");
+        public Criteria andCommentIdNotBetween(Long value1, Long value2) {
+            addCriterion("comment_id not between", value1, value2, "commentId");
             return (Criteria) this;
         }
 
@@ -225,243 +225,243 @@ public class ArticleExample {
             return (Criteria) this;
         }
 
-        public Criteria andArticleViewsIsNull() {
-            addCriterion("article_views is null");
+        public Criteria andArticleIdIsNull() {
+            addCriterion("article_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andArticleViewsIsNotNull() {
-            addCriterion("article_views is not null");
+        public Criteria andArticleIdIsNotNull() {
+            addCriterion("article_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andArticleViewsEqualTo(Long value) {
-            addCriterion("article_views =", value, "articleViews");
+        public Criteria andArticleIdEqualTo(Long value) {
+            addCriterion("article_id =", value, "articleId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleViewsNotEqualTo(Long value) {
-            addCriterion("article_views <>", value, "articleViews");
+        public Criteria andArticleIdNotEqualTo(Long value) {
+            addCriterion("article_id <>", value, "articleId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleViewsGreaterThan(Long value) {
-            addCriterion("article_views >", value, "articleViews");
+        public Criteria andArticleIdGreaterThan(Long value) {
+            addCriterion("article_id >", value, "articleId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleViewsGreaterThanOrEqualTo(Long value) {
-            addCriterion("article_views >=", value, "articleViews");
+        public Criteria andArticleIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("article_id >=", value, "articleId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleViewsLessThan(Long value) {
-            addCriterion("article_views <", value, "articleViews");
+        public Criteria andArticleIdLessThan(Long value) {
+            addCriterion("article_id <", value, "articleId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleViewsLessThanOrEqualTo(Long value) {
-            addCriterion("article_views <=", value, "articleViews");
+        public Criteria andArticleIdLessThanOrEqualTo(Long value) {
+            addCriterion("article_id <=", value, "articleId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleViewsIn(List<Long> values) {
-            addCriterion("article_views in", values, "articleViews");
+        public Criteria andArticleIdIn(List<Long> values) {
+            addCriterion("article_id in", values, "articleId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleViewsNotIn(List<Long> values) {
-            addCriterion("article_views not in", values, "articleViews");
+        public Criteria andArticleIdNotIn(List<Long> values) {
+            addCriterion("article_id not in", values, "articleId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleViewsBetween(Long value1, Long value2) {
-            addCriterion("article_views between", value1, value2, "articleViews");
+        public Criteria andArticleIdBetween(Long value1, Long value2) {
+            addCriterion("article_id between", value1, value2, "articleId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleViewsNotBetween(Long value1, Long value2) {
-            addCriterion("article_views not between", value1, value2, "articleViews");
+        public Criteria andArticleIdNotBetween(Long value1, Long value2) {
+            addCriterion("article_id not between", value1, value2, "articleId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleCommentCountIsNull() {
-            addCriterion("article_comment_count is null");
+        public Criteria andCommentLikeCountIsNull() {
+            addCriterion("comment_like_count is null");
             return (Criteria) this;
         }
 
-        public Criteria andArticleCommentCountIsNotNull() {
-            addCriterion("article_comment_count is not null");
+        public Criteria andCommentLikeCountIsNotNull() {
+            addCriterion("comment_like_count is not null");
             return (Criteria) this;
         }
 
-        public Criteria andArticleCommentCountEqualTo(Long value) {
-            addCriterion("article_comment_count =", value, "articleCommentCount");
+        public Criteria andCommentLikeCountEqualTo(Long value) {
+            addCriterion("comment_like_count =", value, "commentLikeCount");
             return (Criteria) this;
         }
 
-        public Criteria andArticleCommentCountNotEqualTo(Long value) {
-            addCriterion("article_comment_count <>", value, "articleCommentCount");
+        public Criteria andCommentLikeCountNotEqualTo(Long value) {
+            addCriterion("comment_like_count <>", value, "commentLikeCount");
             return (Criteria) this;
         }
 
-        public Criteria andArticleCommentCountGreaterThan(Long value) {
-            addCriterion("article_comment_count >", value, "articleCommentCount");
+        public Criteria andCommentLikeCountGreaterThan(Long value) {
+            addCriterion("comment_like_count >", value, "commentLikeCount");
             return (Criteria) this;
         }
 
-        public Criteria andArticleCommentCountGreaterThanOrEqualTo(Long value) {
-            addCriterion("article_comment_count >=", value, "articleCommentCount");
+        public Criteria andCommentLikeCountGreaterThanOrEqualTo(Long value) {
+            addCriterion("comment_like_count >=", value, "commentLikeCount");
             return (Criteria) this;
         }
 
-        public Criteria andArticleCommentCountLessThan(Long value) {
-            addCriterion("article_comment_count <", value, "articleCommentCount");
+        public Criteria andCommentLikeCountLessThan(Long value) {
+            addCriterion("comment_like_count <", value, "commentLikeCount");
             return (Criteria) this;
         }
 
-        public Criteria andArticleCommentCountLessThanOrEqualTo(Long value) {
-            addCriterion("article_comment_count <=", value, "articleCommentCount");
+        public Criteria andCommentLikeCountLessThanOrEqualTo(Long value) {
+            addCriterion("comment_like_count <=", value, "commentLikeCount");
             return (Criteria) this;
         }
 
-        public Criteria andArticleCommentCountIn(List<Long> values) {
-            addCriterion("article_comment_count in", values, "articleCommentCount");
+        public Criteria andCommentLikeCountIn(List<Long> values) {
+            addCriterion("comment_like_count in", values, "commentLikeCount");
             return (Criteria) this;
         }
 
-        public Criteria andArticleCommentCountNotIn(List<Long> values) {
-            addCriterion("article_comment_count not in", values, "articleCommentCount");
+        public Criteria andCommentLikeCountNotIn(List<Long> values) {
+            addCriterion("comment_like_count not in", values, "commentLikeCount");
             return (Criteria) this;
         }
 
-        public Criteria andArticleCommentCountBetween(Long value1, Long value2) {
-            addCriterion("article_comment_count between", value1, value2, "articleCommentCount");
+        public Criteria andCommentLikeCountBetween(Long value1, Long value2) {
+            addCriterion("comment_like_count between", value1, value2, "commentLikeCount");
             return (Criteria) this;
         }
 
-        public Criteria andArticleCommentCountNotBetween(Long value1, Long value2) {
-            addCriterion("article_comment_count not between", value1, value2, "articleCommentCount");
+        public Criteria andCommentLikeCountNotBetween(Long value1, Long value2) {
+            addCriterion("comment_like_count not between", value1, value2, "commentLikeCount");
             return (Criteria) this;
         }
 
-        public Criteria andArticleDateIsNull() {
-            addCriterion("article_date is null");
+        public Criteria andCommentDateIsNull() {
+            addCriterion("comment_date is null");
             return (Criteria) this;
         }
 
-        public Criteria andArticleDateIsNotNull() {
-            addCriterion("article_date is not null");
+        public Criteria andCommentDateIsNotNull() {
+            addCriterion("comment_date is not null");
             return (Criteria) this;
         }
 
-        public Criteria andArticleDateEqualTo(Date value) {
-            addCriterion("article_date =", value, "articleDate");
+        public Criteria andCommentDateEqualTo(Date value) {
+            addCriterion("comment_date =", value, "commentDate");
             return (Criteria) this;
         }
 
-        public Criteria andArticleDateNotEqualTo(Date value) {
-            addCriterion("article_date <>", value, "articleDate");
+        public Criteria andCommentDateNotEqualTo(Date value) {
+            addCriterion("comment_date <>", value, "commentDate");
             return (Criteria) this;
         }
 
-        public Criteria andArticleDateGreaterThan(Date value) {
-            addCriterion("article_date >", value, "articleDate");
+        public Criteria andCommentDateGreaterThan(Date value) {
+            addCriterion("comment_date >", value, "commentDate");
             return (Criteria) this;
         }
 
-        public Criteria andArticleDateGreaterThanOrEqualTo(Date value) {
-            addCriterion("article_date >=", value, "articleDate");
+        public Criteria andCommentDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("comment_date >=", value, "commentDate");
             return (Criteria) this;
         }
 
-        public Criteria andArticleDateLessThan(Date value) {
-            addCriterion("article_date <", value, "articleDate");
+        public Criteria andCommentDateLessThan(Date value) {
+            addCriterion("comment_date <", value, "commentDate");
             return (Criteria) this;
         }
 
-        public Criteria andArticleDateLessThanOrEqualTo(Date value) {
-            addCriterion("article_date <=", value, "articleDate");
+        public Criteria andCommentDateLessThanOrEqualTo(Date value) {
+            addCriterion("comment_date <=", value, "commentDate");
             return (Criteria) this;
         }
 
-        public Criteria andArticleDateIn(List<Date> values) {
-            addCriterion("article_date in", values, "articleDate");
+        public Criteria andCommentDateIn(List<Date> values) {
+            addCriterion("comment_date in", values, "commentDate");
             return (Criteria) this;
         }
 
-        public Criteria andArticleDateNotIn(List<Date> values) {
-            addCriterion("article_date not in", values, "articleDate");
+        public Criteria andCommentDateNotIn(List<Date> values) {
+            addCriterion("comment_date not in", values, "commentDate");
             return (Criteria) this;
         }
 
-        public Criteria andArticleDateBetween(Date value1, Date value2) {
-            addCriterion("article_date between", value1, value2, "articleDate");
+        public Criteria andCommentDateBetween(Date value1, Date value2) {
+            addCriterion("comment_date between", value1, value2, "commentDate");
             return (Criteria) this;
         }
 
-        public Criteria andArticleDateNotBetween(Date value1, Date value2) {
-            addCriterion("article_date not between", value1, value2, "articleDate");
+        public Criteria andCommentDateNotBetween(Date value1, Date value2) {
+            addCriterion("comment_date not between", value1, value2, "commentDate");
             return (Criteria) this;
         }
 
-        public Criteria andArticleLikeCountIsNull() {
-            addCriterion("article_like_count is null");
+        public Criteria andParentCommentIdIsNull() {
+            addCriterion("parent_comment_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andArticleLikeCountIsNotNull() {
-            addCriterion("article_like_count is not null");
+        public Criteria andParentCommentIdIsNotNull() {
+            addCriterion("parent_comment_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andArticleLikeCountEqualTo(Long value) {
-            addCriterion("article_like_count =", value, "articleLikeCount");
+        public Criteria andParentCommentIdEqualTo(Long value) {
+            addCriterion("parent_comment_id =", value, "parentCommentId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleLikeCountNotEqualTo(Long value) {
-            addCriterion("article_like_count <>", value, "articleLikeCount");
+        public Criteria andParentCommentIdNotEqualTo(Long value) {
+            addCriterion("parent_comment_id <>", value, "parentCommentId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleLikeCountGreaterThan(Long value) {
-            addCriterion("article_like_count >", value, "articleLikeCount");
+        public Criteria andParentCommentIdGreaterThan(Long value) {
+            addCriterion("parent_comment_id >", value, "parentCommentId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleLikeCountGreaterThanOrEqualTo(Long value) {
-            addCriterion("article_like_count >=", value, "articleLikeCount");
+        public Criteria andParentCommentIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("parent_comment_id >=", value, "parentCommentId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleLikeCountLessThan(Long value) {
-            addCriterion("article_like_count <", value, "articleLikeCount");
+        public Criteria andParentCommentIdLessThan(Long value) {
+            addCriterion("parent_comment_id <", value, "parentCommentId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleLikeCountLessThanOrEqualTo(Long value) {
-            addCriterion("article_like_count <=", value, "articleLikeCount");
+        public Criteria andParentCommentIdLessThanOrEqualTo(Long value) {
+            addCriterion("parent_comment_id <=", value, "parentCommentId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleLikeCountIn(List<Long> values) {
-            addCriterion("article_like_count in", values, "articleLikeCount");
+        public Criteria andParentCommentIdIn(List<Long> values) {
+            addCriterion("parent_comment_id in", values, "parentCommentId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleLikeCountNotIn(List<Long> values) {
-            addCriterion("article_like_count not in", values, "articleLikeCount");
+        public Criteria andParentCommentIdNotIn(List<Long> values) {
+            addCriterion("parent_comment_id not in", values, "parentCommentId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleLikeCountBetween(Long value1, Long value2) {
-            addCriterion("article_like_count between", value1, value2, "articleLikeCount");
+        public Criteria andParentCommentIdBetween(Long value1, Long value2) {
+            addCriterion("parent_comment_id between", value1, value2, "parentCommentId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleLikeCountNotBetween(Long value1, Long value2) {
-            addCriterion("article_like_count not between", value1, value2, "articleLikeCount");
+        public Criteria andParentCommentIdNotBetween(Long value1, Long value2) {
+            addCriterion("parent_comment_id not between", value1, value2, "parentCommentId");
             return (Criteria) this;
         }
 

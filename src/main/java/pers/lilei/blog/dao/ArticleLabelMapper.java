@@ -2,9 +2,8 @@ package pers.lilei.blog.dao;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import pers.lilei.blog.po.ArticleLabel;
-import pers.lilei.blog.po.ArticleLabelExample;
-import pers.lilei.blog.po.Label;
+import pers.lilei.blog.bean.ArticleLabel;
+import pers.lilei.blog.bean.ArticleLabelExample;
 
 public interface ArticleLabelMapper {
     long countByExample(ArticleLabelExample example);

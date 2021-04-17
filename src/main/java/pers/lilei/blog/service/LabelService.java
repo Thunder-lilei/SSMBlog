@@ -1,6 +1,6 @@
 package pers.lilei.blog.service;
 
-import pers.lilei.blog.po.Label;
+import pers.lilei.blog.bean.Label;
 
 import java.util.List;
 
