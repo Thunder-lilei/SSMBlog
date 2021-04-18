@@ -4,6 +4,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import pers.lilei.blog.bean.Sort;
 import pers.lilei.blog.bean.SortExample;
+import pers.lilei.blog.bean.resultBean.SortResultBean;
+import pers.lilei.blog.param.UserParam;
 
 public interface SortMapper {
     long countByExample(SortExample example);
@@ -28,7 +30,7 @@ public interface SortMapper {
 
     List<Sort> selectSortByArticleId(Long articleId);
 
-    List<Sort> selectSortByUserId(Long userId);
+    List<SortResultBean> selectSortByUserId(@Param("param")UserParam userParam);
 
     int updateByExampleSelective(@Param("record") Sort record, @Param("example") SortExample example);
 

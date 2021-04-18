@@ -1,6 +1,7 @@
 package pers.lilei.blog.service;
 
 import pers.lilei.blog.bean.Sort;
+import pers.lilei.blog.bean.resultBean.SortResultBean;
 
 import java.util.List;
 
@@ -24,5 +25,5 @@ public interface SortService {
 
     List<Sort> getAllSort();
 
-    List<Sort> getMySort(Long userId);
+    List<SortResultBean> getMySort(Long userId);
 }

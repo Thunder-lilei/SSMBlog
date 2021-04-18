@@ -1,6 +1,9 @@
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pers.lilei.blog.bean.Label;
+import pers.lilei.blog.dao.LabelMapper;
+import pers.lilei.blog.bean.resultBean.LabelResultBean;
+import pers.lilei.blog.param.UserParam;
 import pers.lilei.blog.service.LabelService;
 
 import java.util.List;
@@ -15,14 +18,18 @@ import java.util.List;
 public class LabelServiceTest extends BaseTest{
     @Autowired
     LabelService labelService;
+    @Autowired
+    LabelMapper labelMapper;
     @Test
     public void getAllLabel() {
         List<Label> labelList = labelService.getAllLabel();
         labelList.forEach(temp-> System.out.println(temp.getLabelName()));
     }
     @Test
-    public void getMyLabel() {
-        List<Label> labelList = labelService.getMyLabel(1L);
-        labelList.forEach(temp-> System.out.println(temp.getLabelName()));
+    public void selectLabelByUserId() {
+        UserParam userParam = new UserParam();
+        userParam.setUserId(1L);
+        List<LabelResultBean> labelResultBeanList = labelMapper.selectLabelByUserId(userParam);
+        labelResultBeanList.forEach(temp-> System.out.println(temp.getLabelId()+" "+temp.getNum()+" "+temp.getLabelName()));
     }
 }

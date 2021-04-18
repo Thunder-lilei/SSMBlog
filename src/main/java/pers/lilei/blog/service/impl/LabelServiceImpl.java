@@ -2,10 +2,13 @@ package pers.lilei.blog.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pers.lilei.blog.bean.resultBean.LabelResultBean;
 import pers.lilei.blog.dao.LabelMapper;
 import pers.lilei.blog.bean.Label;
+import pers.lilei.blog.param.UserParam;
 import pers.lilei.blog.service.LabelService;
 
+import java.awt.peer.LabelPeer;
 import java.util.List;
 
 /**
@@ -59,8 +62,16 @@ public class LabelServiceImpl implements LabelService {
         return labelMapper.selectAllLabel();
     }
 
+    /**
+     * @description 获取当前用户使用的标签及当前标签所属的博文数量
+     * @author lilei
+     * @Time 2021/4/18
+     * @updateTime 2021/4/18
+     */
     @Override
-    public List<Label> getMyLabel(Long userId) {
-        return labelMapper.selectLabelByUserId(userId);
+    public List<LabelResultBean> getMyLabel(Long userId) {
+        UserParam userParam = new UserParam();
+        userParam.setUserId(userId);
+        return labelMapper.selectLabelByUserId(userParam);
     }
 }

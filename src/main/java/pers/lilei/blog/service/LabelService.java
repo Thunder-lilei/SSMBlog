@@ -1,6 +1,7 @@
 package pers.lilei.blog.service;
 
 import pers.lilei.blog.bean.Label;
+import pers.lilei.blog.bean.resultBean.LabelResultBean;
 
 import java.util.List;
 
@@ -24,5 +25,6 @@ public interface LabelService {
 
     List<Label> getAllLabel();
 
-    List<Label> getMyLabel(Long userId);
+    List<LabelResultBean> getMyLabel(Long userId);
+
 }

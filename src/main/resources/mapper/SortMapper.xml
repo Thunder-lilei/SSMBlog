@@ -113,13 +113,42 @@
     from tbl_sort
     where sort_id in (select sort_id from tbl_article_sort where article_id = #{articleId,jdbcType=BIGINT});
   </select>
-  <select id="selectSortByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from tbl_sort
-    where sort_id in
-    (select sort_id from tbl_article_sort where article_id in
-    (select article_id from tbl_article where user_id = #{userId,jdbcType=BIGINT}) group by sort_id)
+  <select id="selectSortByUserId" resultType="pers.lilei.blog.bean.resultBean.SortResultBean">
+    SELECT
+	count(*) AS num, tas.sort_id, ts.sort_name
+    FROM
+        tbl_article_sort tas
+    LEFT JOIN tbl_sort ts ON ts.sort_id = tas.sort_id
+    WHERE
+	tas.sort_id IN
+	(
+	    select
+        sort_id
+        from tbl_sort
+        where sort_id
+        in
+        (
+          select sort_id
+          from tbl_article_sort
+          where article_id
+          in
+          (
+            select article_id
+            from tbl_article
+            where user_id = #{param.userId}
+          )
+          group by sort_id
+        )
+	)
+	AND article_id IN (
+	SELECT
+		article_id
+	FROM
+		tbl_article
+	WHERE
+	user_id = #{param.userId}
+	)
+	GROUP BY tas.sort_id
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from tbl_sort

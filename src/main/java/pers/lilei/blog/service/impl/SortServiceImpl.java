@@ -2,8 +2,10 @@ package pers.lilei.blog.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pers.lilei.blog.bean.resultBean.SortResultBean;
 import pers.lilei.blog.dao.SortMapper;
 import pers.lilei.blog.bean.Sort;
+import pers.lilei.blog.param.UserParam;
 import pers.lilei.blog.service.SortService;
 
 import java.util.List;
@@ -60,7 +62,9 @@ public class SortServiceImpl implements SortService {
     }
 
     @Override
-    public List<Sort> getMySort(Long userId) {
-        return sortMapper.selectSortByUserId(userId);
+    public List<SortResultBean> getMySort(Long userId) {
+        UserParam userParam = new UserParam();
+        userParam.setUserId(userId);
+        return sortMapper.selectSortByUserId(userParam);
     }
 }

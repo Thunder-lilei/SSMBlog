@@ -143,15 +143,42 @@
     from tbl_label
     where label_id in (select label_id from tbl_article_label where article_id = #{articleId,jdbcType=BIGINT});
   </select>
-  <select id="selectLabelByUserId" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
-    select
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from tbl_label
-    where label_id in
-    (select label_id from tbl_article_label where article_id in
-    (select article_id from tbl_article where user_id = #{userId,jdbcType=BIGINT}) group by label_id)
+  <select id="selectLabelByUserId" resultType="pers.lilei.blog.bean.resultBean.LabelResultBean">
+    SELECT
+	count(*) AS num, tal.label_id, tl.label_name
+    FROM
+        tbl_article_label tal
+    LEFT JOIN tbl_label tl ON tl.label_id = tal.label_id
+    WHERE
+	tal.label_id IN
+	(
+	    select
+        label_id
+        from tbl_label
+        where label_id
+        in
+        (
+          select label_id
+          from tbl_article_label
+          where article_id
+          in
+          (
+            select article_id
+            from tbl_article
+            where user_id = #{param.userId}
+          )
+          group by label_id
+        )
+	)
+	AND article_id IN (
+	SELECT
+		article_id
+	FROM
+		tbl_article
+	WHERE
+	user_id = #{param.userId}
+	)
+	GROUP BY tal.label_id
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from tbl_label

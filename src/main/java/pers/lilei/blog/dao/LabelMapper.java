@@ -2,8 +2,11 @@ package pers.lilei.blog.dao;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.junit.Test;
 import pers.lilei.blog.bean.Label;
 import pers.lilei.blog.bean.LabelExample;
+import pers.lilei.blog.bean.resultBean.LabelResultBean;
+import pers.lilei.blog.param.UserParam;
 
 public interface LabelMapper {
     long countByExample(LabelExample example);
@@ -26,7 +29,7 @@ public interface LabelMapper {
 
     List<Label> selectAllLabel();
 
-    List<Label> selectLabelByUserId(Long userId);
+    List<LabelResultBean> selectLabelByUserId(@Param("param")UserParam userParam);
 
     List<Label> selectLabelByArticleId(Long articleId);
 
