@@ -6,9 +6,11 @@ import org.apache.ibatis.annotations.Param;
 import pers.lilei.blog.bean.Article;
 import pers.lilei.blog.bean.ArticleExample;
 import pers.lilei.blog.bean.ArticleWithBLOBs;
-import pers.lilei.blog.param.ArticleBaseInfoParam;
+import pers.lilei.blog.bean.resultBean.ArticleBaseInfoBean;
 import pers.lilei.blog.param.ArticleWithUserBaseInfoParam;
+import pers.lilei.blog.param.PageParam;
 import pers.lilei.blog.param.RecommendUserParam;
+import pers.lilei.blog.param.UserParam;
 
 public interface ArticleMapper {
     long countByExample(ArticleExample example);
@@ -31,21 +33,21 @@ public interface ArticleMapper {
 
     List<ArticleWithUserBaseInfoParam> selectAllArticleWithUserBaseInfoByUserId(Long userId);
 
-    List<ArticleBaseInfoParam> selectSortAboutArticleWithUserId(@Param("sortId") Long sortId, @Param("userId") Long userId);
+    List<ArticleBaseInfoBean> selectSortAboutArticleWithUserId(@Param("sortId") Long sortId, @Param("userId") Long userId);
 
-    List<ArticleBaseInfoParam> selectLabelAboutArticleWithUserId(@Param("labelId") Long labelId, @Param("userId") Long userId);
+    List<ArticleBaseInfoBean> selectLabelAboutArticleWithUserId(@Param("labelId") Long labelId, @Param("userId") Long userId);
 
-    List<ArticleBaseInfoParam> selectSortAboutArticleWithUserIdAndKey(@Param("sortId") Long sortId, @Param("userId") Long userId, @Param("key") String key);
+    List<ArticleBaseInfoBean> selectSortAboutArticleWithUserIdAndKey(@Param("sortId") Long sortId, @Param("userId") Long userId, @Param("key") String key);
 
-    List<ArticleBaseInfoParam> selectLabelAboutArticleWithUserIdAndKey(@Param("labelId") Long labelId, @Param("userId") Long userId, @Param("key") String key);
+    List<ArticleBaseInfoBean> selectLabelAboutArticleWithUserIdAndKey(@Param("labelId") Long labelId, @Param("userId") Long userId, @Param("key") String key);
 
     List<ArticleWithUserBaseInfoParam> selectArticleWithUserBaseInfoByUserIdAndKey(@Param("userId") Long userId, @Param("key") String key);
 
-    List<ArticleBaseInfoParam> selectAllArticleBaseInfoByUserId(Long userId);
+    List<ArticleBaseInfoBean> selectAllArticleBaseInfoByUserId(Long userId);
 
     List<ArticleWithUserBaseInfoParam> selectArticleByKey(String key);
 
-    List<ArticleBaseInfoParam> selectArticleBaseInfoByUserIdAndKey(@Param("userId") Long userId, @Param("key") String key);
+    List<ArticleBaseInfoBean> selectArticleBaseInfoByUserIdAndKey(@Param("userId") Long userId, @Param("key") String key);
 
     List<ArticleWithUserBaseInfoParam> getRecommendArticle(int size);
 
@@ -64,4 +66,8 @@ public interface ArticleMapper {
     int updateByPrimaryKeyWithBLOBs(ArticleWithBLOBs record);
 
     int updateByPrimaryKey(Article record);
+
+    List<ArticleBaseInfoBean> getArticleByUserOrder(@Param("param") UserParam userParam, @Param("pageParam") PageParam pageParam);
+
+    int getArticleByUserOrderCount(@Param("param") UserParam userParam);
 }

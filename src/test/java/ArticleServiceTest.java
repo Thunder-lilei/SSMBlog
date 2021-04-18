@@ -5,10 +5,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pers.lilei.blog.bean.ArticleWithBLOBs;
 import pers.lilei.blog.bean.Label;
-import pers.lilei.blog.param.ArticleBaseInfoParam;
-import pers.lilei.blog.param.ArticleParam;
-import pers.lilei.blog.param.ArticleWithUserBaseInfoParam;
-import pers.lilei.blog.param.RecommendUserParam;
+import pers.lilei.blog.bean.resultBean.ArticleBaseInfoBean;
+import pers.lilei.blog.param.*;
 import pers.lilei.blog.service.ArticleService;
 
 import java.util.List;
@@ -64,21 +62,21 @@ public class ArticleServiceTest extends BaseTest{
     }
     @Test
     public void getSortAboutArticle() {
-        PageInfo<ArticleBaseInfoParam> articleWithBLOBsPageInfo = articleService.getSortAboutArticleWithUserId(1, 10, 3L, 1L);
-        List<ArticleBaseInfoParam> articleBaseInfoParamList = articleWithBLOBsPageInfo.getList();
-        articleBaseInfoParamList.forEach(temp-> System.out.println(temp.getArticleTitle()));
+        PageInfo<ArticleBaseInfoBean> articleWithBLOBsPageInfo = articleService.getSortAboutArticleWithUserId(1, 10, 3L, 1L);
+        List<ArticleBaseInfoBean> articleBaseInfoBeanList = articleWithBLOBsPageInfo.getList();
+        articleBaseInfoBeanList.forEach(temp-> System.out.println(temp.getArticleTitle()));
     }
     @Test
     public void getLabelAboutArticle() {
-        PageInfo<ArticleBaseInfoParam> articleWithBLOBsPageInfo = articleService.getLabelAboutArticleWithUserId(1, 10, 3L, 1L);
-        List<ArticleBaseInfoParam> articleBaseInfoParamList = articleWithBLOBsPageInfo.getList();
-        articleBaseInfoParamList.forEach(temp-> System.out.println(temp.getArticleTitle()));
+        PageInfo<ArticleBaseInfoBean> articleWithBLOBsPageInfo = articleService.getLabelAboutArticleWithUserId(1, 10, 3L, 1L);
+        List<ArticleBaseInfoBean> articleBaseInfoBeanList = articleWithBLOBsPageInfo.getList();
+        articleBaseInfoBeanList.forEach(temp-> System.out.println(temp.getArticleTitle()));
     }
     @Test
     public void getSortAboutArticleAndKey() {
-        PageInfo<ArticleBaseInfoParam> articleWithBLOBsPageInfo = articleService.getSortAboutArticleWithUserIdAndKey(1, 10, 3L, 1L, "一");
-        List<ArticleBaseInfoParam> articleBaseInfoParamList = articleWithBLOBsPageInfo.getList();
-        articleBaseInfoParamList.forEach(temp-> System.out.println(temp.getArticleTitle()));
+        PageInfo<ArticleBaseInfoBean> articleWithBLOBsPageInfo = articleService.getSortAboutArticleWithUserIdAndKey(1, 10, 3L, 1L, "一");
+        List<ArticleBaseInfoBean> articleBaseInfoBeanList = articleWithBLOBsPageInfo.getList();
+        articleBaseInfoBeanList.forEach(temp-> System.out.println(temp.getArticleTitle()));
     }
     @Test
     public void searchArticle() {
@@ -97,5 +95,17 @@ public class ArticleServiceTest extends BaseTest{
         ArticleParam articleParam = new ArticleParam();
         articleParam.setArticleId(5L);
         System.out.println(articleService.getArticleCommentNum(articleParam));
+    }
+
+    @Test
+    public void getArticleByUserOrder() {
+        UserParam userParam = new UserParam();
+        userParam.setUserId(1L);
+        PageParam pageParam = new PageParam();
+        pageParam.setPageIndex(0);
+        pageParam.setPageSize(5);
+        System.out.println("总数："+articleService.getArticleByUserOrderCount(userParam));
+        List<ArticleBaseInfoBean> articleBaseInfoBeanList = articleService.getArticleByUserOrder(userParam, pageParam);
+        articleBaseInfoBeanList.forEach(temp-> System.out.println(temp.getArticleId()));
     }
 }

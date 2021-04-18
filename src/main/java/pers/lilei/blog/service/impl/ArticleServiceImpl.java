@@ -8,10 +8,8 @@ import pers.lilei.blog.dao.ArticleMapper;
 import pers.lilei.blog.dao.CommentMapper;
 import pers.lilei.blog.dao.UserMapper;
 import pers.lilei.blog.bean.ArticleWithBLOBs;
-import pers.lilei.blog.param.ArticleBaseInfoParam;
-import pers.lilei.blog.param.ArticleParam;
-import pers.lilei.blog.param.ArticleWithUserBaseInfoParam;
-import pers.lilei.blog.param.RecommendUserParam;
+import pers.lilei.blog.bean.resultBean.ArticleBaseInfoBean;
+import pers.lilei.blog.param.*;
 import pers.lilei.blog.service.ArticleService;
 
 import java.util.List;
@@ -78,45 +76,45 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public PageInfo<ArticleBaseInfoParam> selectAllArticleBaseInfoByUserId(int pageNow, int pageSize, Long userId) {
+    public PageInfo<ArticleBaseInfoBean> selectAllArticleBaseInfoByUserId(int pageNow, int pageSize, Long userId) {
         PageHelper.startPage(pageNow, pageSize);
-        List<ArticleBaseInfoParam> articleBaseInfoParamList = articleMapper.selectAllArticleBaseInfoByUserId(userId);
-        return new PageInfo<>(articleBaseInfoParamList);
+        List<ArticleBaseInfoBean> articleBaseInfoBeanList = articleMapper.selectAllArticleBaseInfoByUserId(userId);
+        return new PageInfo<>(articleBaseInfoBeanList);
     }
 
     @Override
-    public PageInfo<ArticleBaseInfoParam> selectArticleBaseInfoByUserIdAndKey(int pageNow, int pageSize, Long userId, String key) {
+    public PageInfo<ArticleBaseInfoBean> selectArticleBaseInfoByUserIdAndKey(int pageNow, int pageSize, Long userId, String key) {
         PageHelper.startPage(pageNow, pageSize);
-        List<ArticleBaseInfoParam> articleBaseInfoParamList = articleMapper.selectArticleBaseInfoByUserIdAndKey(userId, key);
-        return new PageInfo<>(articleBaseInfoParamList);
+        List<ArticleBaseInfoBean> articleBaseInfoBeanList = articleMapper.selectArticleBaseInfoByUserIdAndKey(userId, key);
+        return new PageInfo<>(articleBaseInfoBeanList);
     }
 
     @Override
-    public PageInfo<ArticleBaseInfoParam> getSortAboutArticleWithUserId(int pageNow, int pageSize, Long sortId, Long userId) {
+    public PageInfo<ArticleBaseInfoBean> getSortAboutArticleWithUserId(int pageNow, int pageSize, Long sortId, Long userId) {
         PageHelper.startPage(pageNow, pageSize);
-        List<ArticleBaseInfoParam> articleBaseInfoParamList = articleMapper.selectSortAboutArticleWithUserId(sortId, userId);
-        return new PageInfo<>(articleBaseInfoParamList);
+        List<ArticleBaseInfoBean> articleBaseInfoBeanList = articleMapper.selectSortAboutArticleWithUserId(sortId, userId);
+        return new PageInfo<>(articleBaseInfoBeanList);
     }
 
     @Override
-    public PageInfo<ArticleBaseInfoParam> getLabelAboutArticleWithUserId(int pageNow, int pageSize, Long labelId, Long userId) {
+    public PageInfo<ArticleBaseInfoBean> getLabelAboutArticleWithUserId(int pageNow, int pageSize, Long labelId, Long userId) {
         PageHelper.startPage(pageNow, pageSize);
-        List<ArticleBaseInfoParam> articleBaseInfoParamList = articleMapper.selectLabelAboutArticleWithUserId(labelId, userId);
-        return new PageInfo<>(articleBaseInfoParamList);
+        List<ArticleBaseInfoBean> articleBaseInfoBeanList = articleMapper.selectLabelAboutArticleWithUserId(labelId, userId);
+        return new PageInfo<>(articleBaseInfoBeanList);
     }
 
     @Override
-    public PageInfo<ArticleBaseInfoParam> getSortAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long sortId, Long userId, String key) {
+    public PageInfo<ArticleBaseInfoBean> getSortAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long sortId, Long userId, String key) {
         PageHelper.startPage(pageNow, pageSize);
-        List<ArticleBaseInfoParam> articleBaseInfoParamList = articleMapper.selectSortAboutArticleWithUserIdAndKey(sortId, userId, key);
-        return new PageInfo<>(articleBaseInfoParamList);
+        List<ArticleBaseInfoBean> articleBaseInfoBeanList = articleMapper.selectSortAboutArticleWithUserIdAndKey(sortId, userId, key);
+        return new PageInfo<>(articleBaseInfoBeanList);
     }
 
     @Override
-    public PageInfo<ArticleBaseInfoParam> getLabelAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long labelId, Long userId, String key) {
+    public PageInfo<ArticleBaseInfoBean> getLabelAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long labelId, Long userId, String key) {
         PageHelper.startPage(pageNow, pageSize);
-        List<ArticleBaseInfoParam> articleBaseInfoParamList = articleMapper.selectLabelAboutArticleWithUserIdAndKey(labelId, userId, key);
-        return new PageInfo<>(articleBaseInfoParamList);
+        List<ArticleBaseInfoBean> articleBaseInfoBeanList = articleMapper.selectLabelAboutArticleWithUserIdAndKey(labelId, userId, key);
+        return new PageInfo<>(articleBaseInfoBeanList);
     }
 
     @Override
@@ -205,5 +203,15 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public int getArticleCommentNum(ArticleParam articleParam) {
         return commentMapper.selectArticleCommentNum(articleParam);
+    }
+
+    @Override
+    public List<ArticleBaseInfoBean> getArticleByUserOrder(UserParam userParam, PageParam pageParam) {
+        return articleMapper.getArticleByUserOrder(userParam, pageParam);
+    }
+
+    @Override
+    public int getArticleByUserOrderCount(UserParam userParam) {
+        return articleMapper.getArticleByUserOrderCount(userParam);
     }
 }

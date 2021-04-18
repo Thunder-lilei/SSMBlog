@@ -1,6 +1,7 @@
 package pers.lilei.blog.web;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.page.PageParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,9 @@ import pers.lilei.blog.bean.Label;
 import pers.lilei.blog.bean.Sort;
 import pers.lilei.blog.bean.User;
 import pers.lilei.blog.param.ArticleParam;
+import pers.lilei.blog.param.PageParam;
+import pers.lilei.blog.param.PageUserParam;
+import pers.lilei.blog.param.UserParam;
 import pers.lilei.blog.service.*;
 
 import java.util.*;
@@ -491,6 +495,29 @@ public class ArticleController extends BaseController{
             modelMap.put("articleCommentNum", articleService.getArticleCommentNum(articleParam));
         } else {
             modelMap.put(MessageConstant.MESSAGE, "错误的参数");
+        }
+        return modelMap;
+    }
+
+    /**
+     * @description 获取当前用户博文时间轴
+     * @author lilei
+     * @Time 2021/4/18
+     * @updateTime 2021/4/18
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getArticleByUserOrder", method = RequestMethod.POST)
+    private Map<String,Object> getArticleByUserOrder(@RequestBody PageParam pageParam){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            UserParam userParam = new UserParam();
+            userParam.setUserId(user.getUserId());
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("articleList", articleService.getArticleByUserOrder(userParam, pageParam));
+            modelMap.put("articleListCount", articleService.getArticleByUserOrderCount(userParam));
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
         }
         return modelMap;
     }

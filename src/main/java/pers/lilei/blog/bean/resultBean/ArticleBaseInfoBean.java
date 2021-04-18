@@ -1,4 +1,9 @@
-package pers.lilei.blog.param;
+package pers.lilei.blog.bean.resultBean;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 /**
  * <h3>SSMBlog</h3>
@@ -7,7 +12,7 @@ package pers.lilei.blog.param;
  * @author : 李雷
  * @date : 2021-01-15 22:31
  **/
-public class ArticleBaseInfoParam {
+public class ArticleBaseInfoBean {
     private Long articleId;
 
     private String articleTitle;
@@ -17,6 +22,10 @@ public class ArticleBaseInfoParam {
     private Long articleLikeCount;
 
     private Long articleViews;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+    private Date createTime;
 
     public Long getArticleViews() {
         return articleViews;

@@ -2,10 +2,8 @@ package pers.lilei.blog.service;
 
 import com.github.pagehelper.PageInfo;
 import pers.lilei.blog.bean.ArticleWithBLOBs;
-import pers.lilei.blog.param.ArticleBaseInfoParam;
-import pers.lilei.blog.param.ArticleParam;
-import pers.lilei.blog.param.ArticleWithUserBaseInfoParam;
-import pers.lilei.blog.param.RecommendUserParam;
+import pers.lilei.blog.bean.resultBean.ArticleBaseInfoBean;
+import pers.lilei.blog.param.*;
 
 import java.util.List;
 
@@ -21,17 +19,17 @@ public interface ArticleService {
 
     PageInfo<ArticleWithUserBaseInfoParam> selectArticleWithUserBaseInfoByUserIdAndKey(int pageNow, int pageSize, Long userId, String key);
 
-    PageInfo<ArticleBaseInfoParam> selectAllArticleBaseInfoByUserId(int pageNow, int pageSize, Long userId);
+    PageInfo<ArticleBaseInfoBean> selectAllArticleBaseInfoByUserId(int pageNow, int pageSize, Long userId);
 
-    PageInfo<ArticleBaseInfoParam> selectArticleBaseInfoByUserIdAndKey(int pageNow, int pageSize, Long userId, String key);
+    PageInfo<ArticleBaseInfoBean> selectArticleBaseInfoByUserIdAndKey(int pageNow, int pageSize, Long userId, String key);
 
-    PageInfo<ArticleBaseInfoParam> getSortAboutArticleWithUserId(int pageNow, int pageSize, Long sortId, Long userId);
+    PageInfo<ArticleBaseInfoBean> getSortAboutArticleWithUserId(int pageNow, int pageSize, Long sortId, Long userId);
 
-    PageInfo<ArticleBaseInfoParam> getLabelAboutArticleWithUserId(int pageNow, int pageSize, Long labelId, Long userId);
+    PageInfo<ArticleBaseInfoBean> getLabelAboutArticleWithUserId(int pageNow, int pageSize, Long labelId, Long userId);
 
-    PageInfo<ArticleBaseInfoParam> getSortAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long sortId, Long userId, String key);
+    PageInfo<ArticleBaseInfoBean> getSortAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long sortId, Long userId, String key);
 
-    PageInfo<ArticleBaseInfoParam> getLabelAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long labelId, Long userId, String key);
+    PageInfo<ArticleBaseInfoBean> getLabelAboutArticleWithUserIdAndKey(int pageNow, int pageSize, Long labelId, Long userId, String key);
 
     PageInfo<ArticleWithUserBaseInfoParam> searchArticle(int pageNow, int pageSize, String key);
 
@@ -52,5 +50,9 @@ public interface ArticleService {
     Long getUserIdByArticleId(Long articleId);
 
     int getArticleCommentNum(ArticleParam articleParam);
+
+    List<ArticleBaseInfoBean> getArticleByUserOrder(UserParam userParam, PageParam pageParam);
+
+    int getArticleByUserOrderCount(UserParam userParam);
 
 }
