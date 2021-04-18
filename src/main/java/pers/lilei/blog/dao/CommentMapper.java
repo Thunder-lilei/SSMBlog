@@ -44,4 +44,6 @@ public interface CommentMapper {
     int updateByPrimaryKey(Comment record);
 
     int selectArticleCommentNum(@Param("param")ArticleParam articleParam);
+
+    Long getArticleIdByCommentId(@Param("param")CommentParam commentParam);
 }

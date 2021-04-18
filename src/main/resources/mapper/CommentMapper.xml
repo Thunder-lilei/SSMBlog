@@ -354,4 +354,9 @@
     where article_id = #{param.articleId,jdbcType=BIGINT}
     and del_flag = 0
   </select>
+  <select id="getArticleIdByCommentId" resultType="java.lang.Long">
+    select article_id
+    from tbl_comment
+    where comment_id = #{param.commentId}
+  </select>
 </mapper>

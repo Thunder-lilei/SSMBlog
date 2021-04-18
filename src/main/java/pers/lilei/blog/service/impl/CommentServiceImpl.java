@@ -44,7 +44,7 @@ public class CommentServiceImpl implements CommentService {
      **/
     @Override
     public Integer addComment(Comment comment) {
-        if (commentMapper.insertSelective(comment) != 0) {
+        if (commentMapper.insertSelective(comment) > 0) {
             ArticleWithBLOBs articleWithBLOBs = articleMapper.selectByPrimaryKey(comment.getArticleId());
             //博文评论数加一
             articleWithBLOBs.setArticleCommentCount(articleWithBLOBs.getArticleCommentCount() + 1);
@@ -58,7 +58,16 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Integer deleteComment(CommentParam commentParam) {
-        return commentMapper.deleteByPrimaryKey(commentParam);
+        if (commentMapper.deleteByPrimaryKey(commentParam) > 0) {
+            ArticleWithBLOBs articleWithBLOBs = articleMapper.selectByPrimaryKey(commentMapper.getArticleIdByCommentId(commentParam));
+            //博文评论数减一
+            articleWithBLOBs.setArticleCommentCount(articleWithBLOBs.getArticleCommentCount() - 1);
+            if (articleMapper.updateByPrimaryKeySelective(articleWithBLOBs) == 0) {
+                return 0;
+            }
+            return 1;
+        }
+        return 0;
     }
 
     @Override
