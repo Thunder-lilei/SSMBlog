@@ -14,6 +14,8 @@ public interface DraftMapper {
 
     int deleteByPrimaryKey(Long draftId);
 
+    int deleteDraft(@Param("param")DraftParam draftParam);
+
     int insert(DraftWithBLOBs record);
 
     int insertSelective(DraftWithBLOBs record);

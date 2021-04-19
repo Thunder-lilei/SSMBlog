@@ -142,6 +142,11 @@
     delete from tbl_draft
     where draft_id = #{draftId,jdbcType=BIGINT}
   </delete>
+  <update id="deleteDraft">
+    update tbl_draft
+    set del_flag = 1
+    where draft_id = #{param.draftId,jdbcType=BIGINT}
+  </update>
   <delete id="deleteByExample" parameterType="pers.lilei.blog.bean.DraftExample">
     delete from tbl_draft
     <if test="_parameter != null">

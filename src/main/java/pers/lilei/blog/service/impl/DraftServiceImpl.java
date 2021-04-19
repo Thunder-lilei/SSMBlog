@@ -101,7 +101,7 @@ public class DraftServiceImpl implements DraftService {
         if (articleSortMapper.deleteAllDraftSort(draftParam) < 0) {
             return -1;
         }
-        return draftMapper.deleteByPrimaryKey(draftParam.getDraftId());
+        return draftMapper.deleteDraft(draftParam);
     }
 
     @Override
