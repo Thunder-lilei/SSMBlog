@@ -95,6 +95,12 @@
     from tbl_article_label
     where article_id = #{articleId,jdbcType=BIGINT} AND label_id = #{labelId,jdbcType=BIGINT}
   </select>
+  <select id="selectByDraftIdAndLabelId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_article_label
+    where draft_id = #{draftId,jdbcType=BIGINT} AND label_id = #{labelId,jdbcType=BIGINT}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from tbl_article_label
     where id = #{id,jdbcType=BIGINT}
@@ -102,6 +108,18 @@
   <delete id="deleteByArticleIdAndLabelId" parameterType="java.lang.Long">
     delete from tbl_article_label
     where article_id = #{articleId,jdbcType=BIGINT} AND label_id = #{labelId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByDraftIdIdAndLabelId" parameterType="java.lang.Long">
+    delete from tbl_article_label
+    where draft_id = #{draftId,jdbcType=BIGINT} AND label_id = #{labelId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteAllArticleLabel">
+    delete from tbl_article_label
+    where article_id = #{param.articleId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteAllDraftLabel">
+    delete from tbl_article_label
+    where draft_id = #{param.draftId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="pers.lilei.blog.bean.ArticleLabelExample">
     delete from tbl_article_label
@@ -124,6 +142,9 @@
       <if test="articleId != null">
         article_id,
       </if>
+      <if test="draftId != null">
+        draft_id,
+      </if>
       <if test="labelId != null">
         label_id,
       </if>
@@ -140,6 +161,9 @@
       </if>
       <if test="articleId != null">
         #{articleId,jdbcType=BIGINT},
+      </if>
+      <if test="draftId != null">
+        #{draftId,jdbcType=BIGINT},
       </if>
       <if test="labelId != null">
         #{labelId,jdbcType=BIGINT},

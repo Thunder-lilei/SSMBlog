@@ -7,11 +7,21 @@ public class ArticleLabel {
 
     private Long articleId;
 
+    private Long draftId;
+
     private Long labelId;
 
     private Date createTime;
 
     private Date updateTime;
+
+    public Long getDraftId() {
+        return draftId;
+    }
+
+    public void setDraftId(Long draftId) {
+        this.draftId = draftId;
+    }
 
     public Long getId() {
         return id;

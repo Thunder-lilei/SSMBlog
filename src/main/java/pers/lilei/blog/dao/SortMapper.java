@@ -30,6 +30,8 @@ public interface SortMapper {
 
     List<Sort> selectSortByArticleId(Long articleId);
 
+    List<Sort> selectSortByDraftId(Long draftId);
+
     List<SortResultBean> selectSortByUserId(@Param("param")UserParam userParam);
 
     int updateByExampleSelective(@Param("record") Sort record, @Param("example") SortExample example);

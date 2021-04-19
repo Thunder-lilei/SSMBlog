@@ -113,6 +113,12 @@
     from tbl_sort
     where sort_id in (select sort_id from tbl_article_sort where article_id = #{articleId,jdbcType=BIGINT});
   </select>
+  <select id="selectSortByDraftId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_sort
+    where sort_id in (select sort_id from tbl_article_sort where draft_id = #{draftId,jdbcType=BIGINT});
+  </select>
   <select id="selectSortByUserId" resultType="pers.lilei.blog.bean.resultBean.SortResultBean">
     SELECT
 	count(*) AS num, tas.sort_id, ts.sort_name

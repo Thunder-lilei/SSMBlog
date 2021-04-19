@@ -104,4 +104,18 @@ public class ArticleSortController extends BaseController{
         modelMap.put("sortList", articleSortService.getAllArticleSort(articleId));
         return modelMap;
     }
+    /**
+     * @description 获取草稿分类
+     * @author lilei
+     * @Time 2021/4/19
+     * @updateTime 2021/4/19
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getDraftSort", method = RequestMethod.POST)
+    private Map<String,Object> getDraftSort(@RequestParam Long draftId){
+        Map<String,Object> modelMap = new HashMap<>();
+        modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+        modelMap.put("sortList", articleSortService.getAllDraftSort(draftId));
+        return modelMap;
+    }
 }

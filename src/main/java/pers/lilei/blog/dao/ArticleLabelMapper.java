@@ -4,6 +4,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import pers.lilei.blog.bean.ArticleLabel;
 import pers.lilei.blog.bean.ArticleLabelExample;
+import pers.lilei.blog.param.ArticleParam;
+import pers.lilei.blog.param.DraftParam;
 
 public interface ArticleLabelMapper {
     long countByExample(ArticleLabelExample example);
@@ -14,6 +16,12 @@ public interface ArticleLabelMapper {
 
     int deleteByArticleIdAndLabelId(@Param("articleId") Long articleId, @Param("labelId") Long labelId);
 
+    int deleteByDraftIdIdAndLabelId(@Param("draftId") Long draftId, @Param("labelId") Long labelId);
+
+    int deleteAllArticleLabel(@Param("param")ArticleParam articleParam);
+
+    int deleteAllDraftLabel(@Param("param") DraftParam draftParam);
+
     int insert(ArticleLabel record);
 
     int insertSelective(ArticleLabel record);
@@ -23,6 +31,8 @@ public interface ArticleLabelMapper {
     ArticleLabel selectByPrimaryKey(Long id);
 
     ArticleLabel selectByArticleIdAndLabelId(@Param("articleId") Long articleId, @Param("labelId") Long labelId);
+
+    ArticleLabel selectByDraftIdAndLabelId(@Param("draftId") Long draftId, @Param("labelId") Long labelId);
 
     int updateByExampleSelective(@Param("record") ArticleLabel record, @Param("example") ArticleLabelExample example);
 

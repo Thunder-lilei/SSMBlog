@@ -95,6 +95,12 @@
     from tbl_article_sort
     where sort_id = #{sortId,jdbcType=BIGINT} AND article_id = #{articleId,jdbcType=BIGINT}
   </select>
+  <select id="selectByDraftIdAndSortId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_article_sort
+    where sort_id = #{sortId,jdbcType=BIGINT} AND draft_id = #{draftId,jdbcType=BIGINT}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from tbl_article_sort
     where id = #{id,jdbcType=BIGINT}
@@ -102,6 +108,18 @@
   <delete id="deleteByArticleIdAndSortId" parameterType="java.lang.Long">
     delete from tbl_article_sort
     where article_id = #{articleId,jdbcType=BIGINT} AND sort_id = #{sortId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByDraftIdAndSortId" parameterType="java.lang.Long">
+    delete from tbl_article_sort
+    where draft_id = #{draftId,jdbcType=BIGINT} AND sort_id = #{sortId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteAllDraftSort" parameterType="java.lang.Long">
+    delete from tbl_article_sort
+    where draft_id = #{param.draftId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteAllArticleSort" parameterType="java.lang.Long">
+    delete from tbl_article_sort
+    where article_id = #{param.articleId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="pers.lilei.blog.bean.ArticleSortExample">
     delete from tbl_article_sort
@@ -124,6 +142,9 @@
       <if test="articleId != null">
         article_id,
       </if>
+      <if test="draftId != null">
+        draft_id,
+      </if>
       <if test="sortId != null">
         sort_id,
       </if>
@@ -140,6 +161,9 @@
       </if>
       <if test="articleId != null">
         #{articleId,jdbcType=BIGINT},
+      </if>
+      <if test="draftId != null">
+        #{draftId,jdbcType=BIGINT},
       </if>
       <if test="sortId != null">
         #{sortId,jdbcType=BIGINT},

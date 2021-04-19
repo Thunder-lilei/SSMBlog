@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="pers.lilei.blog.dao.LabelMapper">
-  <resultMap id="BaseResultMap" type="pers.lilei.blog.bean.Label">
-    <id column="label_id" jdbcType="BIGINT" property="labelId" />
-    <result column="label_name" jdbcType="VARCHAR" property="labelName" />
+<mapper namespace="pers.lilei.blog.dao.DraftMapper">
+  <resultMap id="BaseResultMap" type="pers.lilei.blog.bean.Draft">
+    <id column="draft_id" jdbcType="BIGINT" property="draftId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_flag" jdbcType="BIT" property="delFlag" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="pers.lilei.blog.bean.Label">
-    <result column="label_description" jdbcType="LONGVARCHAR" property="labelDescription" />
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="pers.lilei.blog.bean.DraftWithBLOBs">
+    <result column="article_title" jdbcType="LONGVARCHAR" property="articleTitle" />
+    <result column="article_content" jdbcType="LONGVARCHAR" property="articleContent" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,12 +71,12 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    label_id, label_name, create_time, update_time
+    draft_id, user_id, create_time, update_time, del_flag
   </sql>
   <sql id="Blob_Column_List">
-    label_description
+    article_title, article_content
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="pers.lilei.blog.bean.LabelExample" resultMap="ResultMapWithBLOBs">
+  <select id="selectByExampleWithBLOBs" parameterType="pers.lilei.blog.bean.DraftExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -82,7 +84,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from tbl_label
+    from tbl_draft
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,13 +92,28 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="pers.lilei.blog.bean.LabelExample" resultMap="BaseResultMap">
+  <select id="selectUserDraft" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_draft
+    where user_id = #{param.userId}
+    and del_flag = 0
+  </select>
+  <select id="selectUserDraftCount" resultType="int">
+    select count(*)
+    from tbl_draft
+    where user_id = #{param.userId}
+    and del_flag = 0
+  </select>
+  <select id="selectByExample" parameterType="pers.lilei.blog.bean.DraftExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from tbl_label
+    from tbl_draft
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -109,109 +126,44 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from tbl_label
-    where label_id = #{labelId,jdbcType=BIGINT}
+    from tbl_draft
+    where draft_id = #{draftId,jdbcType=BIGINT}
   </select>
-  <select id="selectByLabelName" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+  <select id="selectByTitle" resultMap="ResultMapWithBLOBs">
     select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from tbl_label
-    where label_name = #{labelName,jdbcType=VARCHAR}
-  </select>
-  <select id="selectByLabelNameWithoutLabelId" resultMap="ResultMapWithBLOBs">
-    select
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from tbl_label
-    where label_name = #{labelName,jdbcType=VARCHAR} AND label_id != #{labelId,jdbcType=BIGINT}
-  </select>
-  <select id="selectAllLabel" resultMap="ResultMapWithBLOBs">
-    select
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from tbl_label
-  </select>
-  <select id="selectLabelByArticleId" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
-    select
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from tbl_label
-    where label_id in (select label_id from tbl_article_label where article_id = #{articleId,jdbcType=BIGINT});
-  </select>
-  <select id="selectLabelByDraftId" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
-    select
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from tbl_label
-    where label_id in (select label_id from tbl_article_label where draft_id = #{draftId,jdbcType=BIGINT});
-  </select>
-  <select id="selectLabelByUserId" resultType="pers.lilei.blog.bean.resultBean.LabelResultBean">
-    SELECT
-	count(*) AS num, tal.label_id, tl.label_name
-    FROM
-        tbl_article_label tal
-    LEFT JOIN tbl_label tl ON tl.label_id = tal.label_id
-    WHERE
-	tal.label_id IN
-	(
-	    select
-        label_id
-        from tbl_label
-        where label_id
-        in
-        (
-          select label_id
-          from tbl_article_label
-          where article_id
-          in
-          (
-            select article_id
-            from tbl_article
-            where user_id = #{param.userId}
-          )
-          group by label_id
-        )
-	)
-	AND article_id IN (
-	SELECT
-		article_id
-	FROM
-		tbl_article
-	WHERE
-	user_id = #{param.userId}
-	)
-	GROUP BY tal.label_id
+    from tbl_draft
+    where article_title = #{param.articleTitle}
+    and del_flag = 0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from tbl_label
-    where label_id = #{labelId,jdbcType=BIGINT}
+    delete from tbl_draft
+    where draft_id = #{draftId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="pers.lilei.blog.bean.LabelExample">
-    delete from tbl_label
+  <delete id="deleteByExample" parameterType="pers.lilei.blog.bean.DraftExample">
+    delete from tbl_draft
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="pers.lilei.blog.bean.Label">
-    insert into tbl_label (label_id, label_name, create_time,
-      update_time, label_description)
-    values (#{labelId,jdbcType=BIGINT}, #{labelName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
-      #{updateTime,jdbcType=TIMESTAMP}, #{labelDescription,jdbcType=LONGVARCHAR})
+  <insert id="insert" parameterType="pers.lilei.blog.bean.DraftWithBLOBs">
+    insert into tbl_draft (draft_id, user_id, create_time,
+      update_time, del_flag, article_title,
+      article_content)
+    values (#{draftId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=BIT}, #{articleTitle,jdbcType=LONGVARCHAR},
+      #{articleContent,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="pers.lilei.blog.bean.Label">
-    insert into tbl_label
+  <insert id="insertSelective" parameterType="pers.lilei.blog.bean.DraftWithBLOBs">
+    insert into tbl_draft
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="labelId != null">
-        label_id,
+      <if test="draftId != null">
+        draft_id,
       </if>
-      <if test="labelName != null">
-        label_name,
+      <if test="userId != null">
+        user_id,
       </if>
       <if test="createTime != null">
         create_time,
@@ -219,16 +171,22 @@
       <if test="updateTime != null">
         update_time,
       </if>
-      <if test="labelDescription != null">
-        label_description,
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+      <if test="articleTitle != null">
+        article_title,
+      </if>
+      <if test="articleContent != null">
+        article_content,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="labelId != null">
-        #{labelId,jdbcType=BIGINT},
+      <if test="draftId != null">
+        #{draftId,jdbcType=BIGINT},
       </if>
-      <if test="labelName != null">
-        #{labelName,jdbcType=VARCHAR},
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -236,25 +194,31 @@
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="labelDescription != null">
-        #{labelDescription,jdbcType=LONGVARCHAR},
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=BIT},
+      </if>
+      <if test="articleTitle != null">
+        #{articleTitle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="articleContent != null">
+        #{articleContent,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="pers.lilei.blog.bean.LabelExample" resultType="java.lang.Long">
-    select count(*) from tbl_label
+  <select id="countByExample" parameterType="pers.lilei.blog.bean.DraftExample" resultType="java.lang.Long">
+    select count(*) from tbl_draft
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update tbl_label
+    update tbl_draft
     <set>
-      <if test="record.labelId != null">
-        label_id = #{record.labelId,jdbcType=BIGINT},
+      <if test="record.draftId != null">
+        draft_id = #{record.draftId,jdbcType=BIGINT},
       </if>
-      <if test="record.labelName != null">
-        label_name = #{record.labelName,jdbcType=VARCHAR},
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=BIGINT},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -262,8 +226,14 @@
       <if test="record.updateTime != null">
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.labelDescription != null">
-        label_description = #{record.labelDescription,jdbcType=LONGVARCHAR},
+      <if test="record.delFlag != null">
+        del_flag = #{record.delFlag,jdbcType=BIT},
+      </if>
+      <if test="record.articleTitle != null">
+        article_title = #{record.articleTitle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.articleContent != null">
+        article_content = #{record.articleContent,jdbcType=LONGVARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -271,31 +241,34 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map">
-    update tbl_label
-    set label_id = #{record.labelId,jdbcType=BIGINT},
-      label_name = #{record.labelName,jdbcType=VARCHAR},
+    update tbl_draft
+    set draft_id = #{record.draftId,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      label_description = #{record.labelDescription,jdbcType=LONGVARCHAR}
+      del_flag = #{record.delFlag,jdbcType=BIT},
+      article_title = #{record.articleTitle,jdbcType=LONGVARCHAR},
+      article_content = #{record.articleContent,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update tbl_label
-    set label_id = #{record.labelId,jdbcType=BIGINT},
-      label_name = #{record.labelName,jdbcType=VARCHAR},
+    update tbl_draft
+    set draft_id = #{record.draftId,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      del_flag = #{record.delFlag,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="pers.lilei.blog.bean.Label">
-    update tbl_label
+  <update id="updateByPrimaryKeySelective" parameterType="pers.lilei.blog.bean.DraftWithBLOBs">
+    update tbl_draft
     <set>
-      <if test="labelName != null">
-        label_name = #{labelName,jdbcType=VARCHAR},
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -303,25 +276,34 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="labelDescription != null">
-        label_description = #{labelDescription,jdbcType=LONGVARCHAR},
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=BIT},
+      </if>
+      <if test="articleTitle != null">
+        article_title = #{articleTitle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="articleContent != null">
+        article_content = #{articleContent,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where label_id = #{labelId,jdbcType=BIGINT}
+    where draft_id = #{draftId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="pers.lilei.blog.bean.Label">
-    update tbl_label
-    set label_name = #{labelName,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="pers.lilei.blog.bean.DraftWithBLOBs">
+    update tbl_draft
+    set user_id = #{userId,jdbcType=BIGINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      label_description = #{labelDescription,jdbcType=LONGVARCHAR}
-    where label_id = #{labelId,jdbcType=BIGINT}
+      del_flag = #{delFlag,jdbcType=BIT},
+      article_title = #{articleTitle,jdbcType=LONGVARCHAR},
+      article_content = #{articleContent,jdbcType=LONGVARCHAR}
+    where draft_id = #{draftId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="pers.lilei.blog.bean.Label">
-    update tbl_label
-    set label_name = #{labelName,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="pers.lilei.blog.bean.Draft">
+    update tbl_draft
+    set user_id = #{userId,jdbcType=BIGINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where label_id = #{labelId,jdbcType=BIGINT}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=BIT}
+    where draft_id = #{draftId,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -33,6 +33,8 @@ public interface LabelMapper {
 
     List<Label> selectLabelByArticleId(Long articleId);
 
+    List<Label> selectLabelByDraftId(Long draftId);
+
     Label selectByLabelNameWithoutLabelId(@Param("labelName") String labelName, @Param("labelId") Long labelId);
 
     int updateByExampleSelective(@Param("record") Label record, @Param("example") LabelExample example);

@@ -100,4 +100,18 @@ public class ArticleLabelController extends BaseController{
         modelMap.put("labelList", articleLabelService.getAllArticleLabel(articleId));
         return modelMap;
     }
+    /**
+     * @description 获取草稿标签
+     * @author lilei
+     * @Time 2021/4/19
+     * @updateTime 2021/4/19
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getDraftLabel", method = RequestMethod.POST)
+    private Map<String,Object> getDraftLabel(@RequestParam Long draftId){
+        Map<String,Object> modelMap = new HashMap<>();
+        modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+        modelMap.put("labelList", articleLabelService.getAllDraftLabel(draftId));
+        return modelMap;
+    }
 }

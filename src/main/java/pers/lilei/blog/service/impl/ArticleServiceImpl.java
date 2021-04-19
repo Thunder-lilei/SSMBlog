@@ -4,13 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pers.lilei.blog.dao.ArticleMapper;
-import pers.lilei.blog.dao.CommentMapper;
-import pers.lilei.blog.dao.UserMapper;
+import pers.lilei.blog.dao.*;
 import pers.lilei.blog.bean.ArticleWithBLOBs;
 import pers.lilei.blog.bean.resultBean.ArticleBaseInfoBean;
 import pers.lilei.blog.param.*;
+import pers.lilei.blog.service.ArticleLabelService;
 import pers.lilei.blog.service.ArticleService;
+import pers.lilei.blog.service.ArticleSortService;
 
 import java.util.List;
 
@@ -26,12 +26,18 @@ public class ArticleServiceImpl implements ArticleService {
     ArticleMapper articleMapper;
     UserMapper userMapper;
     CommentMapper commentMapper;
+    ArticleLabelMapper articleLabelMapper;
+    ArticleSortMapper articleSortMapper;
     @Autowired
-    public ArticleServiceImpl(ArticleMapper articleMapper, UserMapper userMapper, CommentMapper commentMapper) {
+    public ArticleServiceImpl(ArticleMapper articleMapper, UserMapper userMapper, CommentMapper commentMapper, ArticleLabelMapper articleLabelMapper, ArticleSortMapper articleSortMapper) {
         this.articleMapper = articleMapper;
         this.userMapper = userMapper;
         this.commentMapper = commentMapper;
+        this.articleLabelMapper = articleLabelMapper;
+        this.articleSortMapper = articleSortMapper;
     }
+
+
 
     /*
      * @Author 李雷
@@ -152,6 +158,16 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Integer deleteArticleByArticleId(Long articleId) {
+        ArticleParam articleParam = new ArticleParam();
+        articleParam.setArticleId(articleId);
+        //移除关联的所有标签
+        if (articleLabelMapper.deleteAllArticleLabel(articleParam) < 0) {
+            return -1;
+        }
+        //移除关联的所有分类
+        if (articleSortMapper.deleteAllArticleSort(articleParam) < 0) {
+            return -1;
+        }
         return articleMapper.deleteByPrimaryKey(articleId);
     }
 

@@ -182,7 +182,7 @@ public class ArticleController extends BaseController{
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             session.setAttribute("showArticle", articleWithBLOBs);
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "获取失败！");
+            modelMap.put(MessageConstant.MESSAGE, "未能查询到需要编辑的博文！");
         }
         return modelMap;
     }
@@ -206,9 +206,9 @@ public class ArticleController extends BaseController{
             articleService.updateArticle(articleWithBLOBs);
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             modelMap.put("article", articleWithBLOBs);
-            session.setAttribute("showArticle", null);
+            session.removeAttribute("showArticle");
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "获取失败！");
+            modelMap.put(MessageConstant.MESSAGE, "获取编辑博文失败！");
         }
         return modelMap;
     }

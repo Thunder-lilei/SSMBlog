@@ -2,6 +2,8 @@ package pers.lilei.blog.service;
 
 import pers.lilei.blog.bean.ArticleSort;
 import pers.lilei.blog.bean.Sort;
+import pers.lilei.blog.param.ArticleParam;
+import pers.lilei.blog.param.DraftParam;
 
 import java.util.List;
 
@@ -15,13 +17,29 @@ import java.util.List;
 public interface ArticleSortService {
     Integer addArticleSortList(List<Sort> sortList, Long articleId);
 
+    Integer addDraftSortList(List<Sort> sortList, Long draftId);
+
     Integer addArticleSort(ArticleSort articleSort);
+
+    Integer addDraftSort(ArticleSort articleSort);
 
     Integer deleteArticleSort(Long articleId, Long sortId);
 
+    Integer deleteDraftSort(Long draftId, Long sortId);
+
+    int deleteAllArticleSort(ArticleParam articleParam);
+
+    int deleteAllDraftSort(DraftParam draftParam);
+
     List<Sort> getAllArticleSort(Long articleId);
 
-    ArticleSort selectByArticleIdAndSortId(Long articleID, Long sortId);
+    List<Sort> getAllDraftSort(Long draftId);
+
+    ArticleSort selectByArticleIdAndSortId(Long articleId, Long sortId);
+
+    ArticleSort selectByDraftIdAndSortId(Long draftId, Long sortId);
 
     Integer updateArticleSortList(List<Sort> sortList, Long articleId);
+
+    Integer updateDraftSortList(List<Sort> sortList, Long draftId);
 }

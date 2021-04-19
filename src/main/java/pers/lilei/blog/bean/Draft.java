@@ -2,18 +2,16 @@ package pers.lilei.blog.bean;
 
 import java.util.Date;
 
-public class ArticleSort {
-    private Long id;
-
-    private Long articleId;
-
+public class Draft {
     private Long draftId;
 
-    private Long sortId;
+    private Long userId;
 
     private Date createTime;
 
     private Date updateTime;
+
+    private Boolean delFlag;
 
     public Long getDraftId() {
         return draftId;
@@ -23,28 +21,12 @@ public class ArticleSort {
         this.draftId = draftId;
     }
 
-    public Long getId() {
-        return id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getArticleId() {
-        return articleId;
-    }
-
-    public void setArticleId(Long articleId) {
-        this.articleId = articleId;
-    }
-
-    public Long getSortId() {
-        return sortId;
-    }
-
-    public void setSortId(Long sortId) {
-        this.sortId = sortId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Date getCreateTime() {
@@ -61,5 +43,13 @@ public class ArticleSort {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Boolean getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(Boolean delFlag) {
+        this.delFlag = delFlag;
     }
 }
