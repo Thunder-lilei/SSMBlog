@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import pers.lilei.blog.constant.MessageConstant;
 import pers.lilei.blog.constant.RoleConstant;
 import pers.lilei.blog.bean.User;
+import pers.lilei.blog.param.UserLoginParam;
 import pers.lilei.blog.service.UserService;
 import pers.lilei.blog.util.BCrypt;
 import pers.lilei.blog.util.MailUtils;
@@ -523,18 +524,39 @@ public class UserController extends BaseController{
      **/
     @ResponseBody
     @RequestMapping(value = "/mailLogin", method = RequestMethod.POST)
-    private Map<String,Object> mailLogin(@RequestParam String mail, @RequestParam int code){
+    private Map<String,Object> mailLogin(@RequestBody UserLoginParam userLoginParam){
         Map<String,Object> modelMap = new HashMap<>();
-        if (!mail.equals(session.getAttribute("loginMail"))) {
-            modelMap.put(MessageConstant.MESSAGE, "邮箱不匹配！");
-            return modelMap;
+        //非密码登录用户
+        if (userLoginParam.getMail().equals("") || userLoginParam.getMail() == null) {
+            //验证登录邮箱，避免更换了登录邮箱
+            String loginEmail = (String) session.getAttribute("loginMail");
+            if (!loginEmail.equals("") && !userLoginParam.getMail().equals(loginEmail)) {
+                modelMap.put(MessageConstant.MESSAGE, "邮箱不匹配！");
+                return modelMap;
+            }
         }
-        if (code != (int)session.getAttribute("mailCode")) {
-            modelMap.put(MessageConstant.MESSAGE, "验证码错误！");
-            return modelMap;
+        //获取邮箱用户
+        User user = userService.selectByEmail(userLoginParam.getMail());
+        //使用密码登录
+        if (!userLoginParam.getPassword().equals("") && userLoginParam.getPassword() != null) {
+            //密码校验
+            if (user != null && BCrypt.checkpw(userLoginParam.getPassword(), user.getUserPassword())) {
+                session.setAttribute("user", user);
+                modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            } else {
+                modelMap.put(MessageConstant.MESSAGE, "密码错误！");
+                return modelMap;
+            }
+        } else {
+            //验证码校验
+            if (userLoginParam.getCode() != (int)session.getAttribute("mailCode")) {
+                modelMap.put(MessageConstant.MESSAGE, "验证码错误！");
+                return modelMap;
+            } else {
+                session.setAttribute("user", user);
+                modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            }
         }
-        session.setAttribute("user", userService.selectByEmail(mail));
-        modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
         return modelMap;
     }
 }
