@@ -12,6 +12,7 @@ import pers.lilei.blog.dao.ArticleSortMapper;
 import pers.lilei.blog.dao.DraftMapper;
 import pers.lilei.blog.param.ArticleParam;
 import pers.lilei.blog.param.DraftParam;
+import pers.lilei.blog.param.UserParam;
 import pers.lilei.blog.service.ArticleLabelService;
 import pers.lilei.blog.service.ArticleSortService;
 import pers.lilei.blog.service.DraftService;
@@ -115,5 +116,10 @@ public class DraftServiceImpl implements DraftService {
     @Override
     public DraftWithBLOBs selectByDraftId(DraftParam draftParam) {
         return draftMapper.selectByPrimaryKey(draftParam.getDraftId());
+    }
+
+    @Override
+    public int getSurplusDraftCount(DraftParam draftParam) {
+        return DraftConstant.DRAFT_COUNT - draftMapper.selectUserDraftCount(draftParam);
     }
 }

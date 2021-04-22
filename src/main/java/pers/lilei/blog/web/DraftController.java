@@ -238,4 +238,25 @@ public class DraftController extends BaseController{
         }
         return modelMap;
     }
+    /**
+     * @description 获取剩余可添加的草稿数量
+     * @author lilei
+     * @Time 2021/4/22
+     * @updateTime 2021/4/22
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getSurplusDraftCount", method = RequestMethod.POST)
+    private Map<String,Object> getSurplusDraftCount(){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            DraftParam draftParam = new DraftParam();
+            draftParam.setUserId(user.getUserId());
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("surplusDraftCount", draftService.getSurplusDraftCount(draftParam));
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
 }

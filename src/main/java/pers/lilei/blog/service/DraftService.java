@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pers.lilei.blog.bean.ArticleWithBLOBs;
 import pers.lilei.blog.bean.DraftWithBLOBs;
 import pers.lilei.blog.param.DraftParam;
+import pers.lilei.blog.param.UserParam;
 
 import java.util.List;
 
@@ -30,4 +31,6 @@ public interface DraftService {
     int deleteDraft(DraftParam draftParam);
 
     int uploadDraft(DraftWithBLOBs draftWithBLOBs, ArticleWithBLOBs articleWithBLOBs);
+
+    int getSurplusDraftCount(DraftParam draftParam);
 }
