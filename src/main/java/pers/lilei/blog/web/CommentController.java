@@ -47,12 +47,8 @@ public class CommentController extends BaseController{
     private Map<String,Object> getComment(@RequestParam Long articleId){
         Map<String,Object> modelMap = new HashMap<>();
         List<CommentWithUserBaseInfoParam> commentWithUserBaseInfoParamList = commentService.getCommentByArticleId(articleId);
-        if (!commentWithUserBaseInfoParamList.isEmpty()) {
-            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-            modelMap.put("commentList", commentWithUserBaseInfoParamList);
-        } else {
-            modelMap.put(MessageConstant.MESSAGE, "获取评论失败！");
-        }
+        modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+        modelMap.put("commentList", commentWithUserBaseInfoParamList);
         return modelMap;
     }
     /*
