@@ -4,10 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pers.lilei.blog.bean.resultBean.UserResultBean;
 import pers.lilei.blog.dao.UserFriendMapper;
 import pers.lilei.blog.dao.UserMapper;
 import pers.lilei.blog.bean.User;
 import pers.lilei.blog.param.UserBaseInfoParam;
+import pers.lilei.blog.param.UserParam;
 import pers.lilei.blog.service.UserService;
 import pers.lilei.blog.util.BCrypt;
 
@@ -210,6 +212,11 @@ public class UserServiceImpl implements UserService {
         //密码加密
         user.setUserPassword(BCrypt.hashpw(user.getUserPassword(), BCrypt.gensalt()));
         return userMapper.updatePasswordByEmail(user);
+    }
+
+    @Override
+    public UserResultBean getUserById(UserParam userParam) {
+        return userMapper.selectUserById(userParam);
     }
 
 }

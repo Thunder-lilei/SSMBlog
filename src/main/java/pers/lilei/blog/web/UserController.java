@@ -3,10 +3,12 @@ package pers.lilei.blog.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import pers.lilei.blog.bean.resultBean.UserResultBean;
 import pers.lilei.blog.constant.MessageConstant;
 import pers.lilei.blog.constant.RoleConstant;
 import pers.lilei.blog.bean.User;
 import pers.lilei.blog.param.UserLoginParam;
+import pers.lilei.blog.param.UserParam;
 import pers.lilei.blog.service.UserService;
 import pers.lilei.blog.util.BCrypt;
 import pers.lilei.blog.util.MailUtils;
@@ -559,6 +561,25 @@ public class UserController extends BaseController{
                 session.setAttribute("user", user);
                 modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             }
+        }
+        return modelMap;
+    }
+    /**
+     * @description 获取用户信息
+     * @author lilei
+     * @Time 2021/4/24
+     * @updateTime 2021/4/24
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getArticleUser", method = RequestMethod.POST)
+    private Map<String,Object> getArticleUser(@RequestBody UserParam userParam){
+        Map<String,Object> modelMap = new HashMap<>();
+        UserResultBean userResultBean = userService.getUserById(userParam);
+        if (userResultBean != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("articleUser",userResultBean);
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未查询到该用户信息！");
         }
         return modelMap;
     }

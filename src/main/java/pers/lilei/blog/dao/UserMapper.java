@@ -4,7 +4,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import pers.lilei.blog.bean.User;
 import pers.lilei.blog.bean.UserExample;
+import pers.lilei.blog.bean.resultBean.UserResultBean;
 import pers.lilei.blog.param.UserBaseInfoParam;
+import pers.lilei.blog.param.UserParam;
 
 public interface UserMapper {
     long countByExample(UserExample example);
@@ -56,4 +58,6 @@ public interface UserMapper {
     int updatePasswordByEmail(User record);
 
     int updateByPrimaryKey(User record);
+
+    UserResultBean selectUserById(@Param("param") UserParam userParam);
 }

@@ -96,6 +96,12 @@
     from tbl_user
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
+  <select id="selectUserById" resultType="pers.lilei.blog.bean.resultBean.UserResultBean">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_user
+    where user_id = #{param.userId}
+  </select>
   <select id="selectUserBaseInfoByPrimaryKey" parameterType="java.lang.Long" resultType="pers.lilei.blog.param.UserBaseInfoParam">
     select
     <include refid="Base_Column_List" />

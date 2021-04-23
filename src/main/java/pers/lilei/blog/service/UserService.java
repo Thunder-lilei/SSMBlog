@@ -2,7 +2,9 @@ package pers.lilei.blog.service;
 
 import com.github.pagehelper.PageInfo;
 import pers.lilei.blog.bean.User;
+import pers.lilei.blog.bean.resultBean.UserResultBean;
 import pers.lilei.blog.param.UserBaseInfoParam;
+import pers.lilei.blog.param.UserParam;
 
 import java.util.List;
 
@@ -55,4 +57,6 @@ public interface UserService {
     Integer updatePasswordByTel(User record);
 
     Integer updatePasswordByEmail(User record);
+
+    UserResultBean getUserById(UserParam userParam);
 }

@@ -1,9 +1,11 @@
 import com.github.pagehelper.PageInfo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import pers.lilei.blog.bean.resultBean.UserResultBean;
 import pers.lilei.blog.constant.MessageConstant;
 import pers.lilei.blog.bean.User;
 import pers.lilei.blog.param.UserBaseInfoParam;
+import pers.lilei.blog.param.UserParam;
 import pers.lilei.blog.service.UserService;
 import pers.lilei.blog.util.BCrypt;
 
@@ -135,5 +137,12 @@ public class UserServiceTest extends BaseTest{
 			Integer code = (int)((Math.random()*9+1)*100000);
 			System.out.println(code.toString());
 		}
+	}
+	@Test
+	public void getUserById() {
+		UserParam userParam = new UserParam();
+		userParam.setUserId(5L);
+		UserResultBean userResultBean = userService.getUserById(userParam);
+		System.out.println(userResultBean.getUserNickname());
 	}
 }
