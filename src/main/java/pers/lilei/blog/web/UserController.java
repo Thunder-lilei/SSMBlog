@@ -10,6 +10,7 @@ import pers.lilei.blog.param.UserLoginParam;
 import pers.lilei.blog.service.UserService;
 import pers.lilei.blog.util.BCrypt;
 import pers.lilei.blog.util.MailUtils;
+import pers.lilei.blog.util.NumberUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -504,7 +505,8 @@ public class UserController extends BaseController{
             return modelMap;
         }
         //生成随机验证码
-        Integer code = (int)((Math.random()*9+1)*100000);
+//        Integer code = (int)((Math.random()*9+1)*100000);
+        String code = NumberUtil.getCode();
         MailUtils.SendMail(mail, code.toString(), "SSM个人博客系统给您发送的登录验证码为：");
         modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
         //设置预登陆的邮箱和验证码
@@ -549,10 +551,11 @@ public class UserController extends BaseController{
             }
         } else {
             //验证码校验
-            if (userLoginParam.getCode() != (int)session.getAttribute("mailCode")) {
+            if (!userLoginParam.getCode().equals(session.getAttribute("mailCode"))) {
                 modelMap.put(MessageConstant.MESSAGE, "验证码错误！");
                 return modelMap;
             } else {
+                session.removeAttribute("mailCode");
                 session.setAttribute("user", user);
                 modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             }

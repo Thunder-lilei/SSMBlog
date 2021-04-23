@@ -21,7 +21,7 @@ public class UserLoginParam {
      * @Time 2021/4/21
      * @updateTime 2021/4/21
      */
-    private int code;
+    private String code;
     /**
      * @description 密码
      * @author lilei
@@ -38,11 +38,11 @@ public class UserLoginParam {
         this.mail = mail;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
