@@ -5,6 +5,7 @@ import com.github.pagehelper.page.PageParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import pers.lilei.blog.bean.resultBean.ArticleBaseInfoBean;
 import pers.lilei.blog.constant.ArticleConstant;
 import pers.lilei.blog.constant.MessageConstant;
 import pers.lilei.blog.bean.ArticleWithBLOBs;
@@ -574,6 +575,25 @@ public class ArticleController extends BaseController{
             modelMap.put("newArticleList", articleService.getNewArticleByUser(userParam, ArticleConstant.NEW_ARTICLE_NUM));
         } else {
             modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
+    /**
+     * @description 查询博文
+     * @author lilei
+     * @Time 2021/4/24
+     * @updateTime 2021/4/24
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getArticle", method = RequestMethod.POST)
+    private Map<String,Object> getArticle(@RequestBody ArticleParam articleParam){
+        Map<String,Object> modelMap = new HashMap<>();
+        ArticleWithBLOBs articleWithBLOBs = articleService.selectArticleById(articleParam);
+        if (articleWithBLOBs != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("article", articleWithBLOBs);
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "查询博文失败！");
         }
         return modelMap;
     }

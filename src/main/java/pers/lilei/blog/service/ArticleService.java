@@ -72,5 +72,12 @@ public interface ArticleService {
      * @updateTime 2021/4/24
      */
     List<ArticleBaseInfoBean> selectUserArticleBaseInfo(PageUserParam pageUserParam);
+    /**
+     * @description 查询博文
+     * @author lilei
+     * @Time 2021/4/24
+     * @updateTime 2021/4/24
+     */
+    ArticleWithBLOBs selectArticleById(ArticleParam articleParam);
 
 }
