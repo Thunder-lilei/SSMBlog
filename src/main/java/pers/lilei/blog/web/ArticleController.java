@@ -60,6 +60,21 @@ public class ArticleController extends BaseController{
         }
         return modelMap;
     }
+    /**
+     * @description 分页查询用户博文
+     * @author lilei
+     * @Time 2021/4/24
+     * @updateTime 2021/4/24
+     */
+    @ResponseBody
+    @RequestMapping(value = "/selectUserArticleBaseInfo", method = RequestMethod.POST)
+    private Map<String,Object> selectUserArticleBaseInfo(@RequestBody PageUserParam pageUserParam){
+        Map<String,Object> modelMap = new HashMap<>();
+        modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+        modelMap.put("articleList", articleService.selectUserArticleBaseInfo(pageUserParam));
+        modelMap.put("articleCount", articleService.getArticleByUserOrderCount(pageUserParam.getUserParam()));
+        return modelMap;
+    }
     /*
      * @Author 李雷
      * @Description

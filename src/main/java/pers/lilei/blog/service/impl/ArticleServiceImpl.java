@@ -89,6 +89,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<ArticleBaseInfoBean> selectUserArticleBaseInfo(PageUserParam pageUserParam) {
+        return articleMapper.selectUserArticleBaseInfo(pageUserParam);
+    }
+
+    @Override
     public PageInfo<ArticleBaseInfoBean> selectArticleBaseInfoByUserIdAndKey(int pageNow, int pageSize, Long userId, String key) {
         PageHelper.startPage(pageNow, pageSize);
         List<ArticleBaseInfoBean> articleBaseInfoBeanList = articleMapper.selectArticleBaseInfoByUserIdAndKey(userId, key);

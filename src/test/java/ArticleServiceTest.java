@@ -116,4 +116,17 @@ public class ArticleServiceTest extends BaseTest{
         List<ArticleBaseInfoBean> articleBaseInfoBeanList = articleService.getNewArticleByUser(userParam, ArticleConstant.NEW_ARTICLE_NUM);
         articleBaseInfoBeanList.forEach(temp-> System.out.println(temp.getArticleTitle()));
     }
+    @Test
+    public void selectUserArticleBaseInfo() {
+        PageUserParam pageUserParam = new PageUserParam();
+        PageParam pageParam = new PageParam();
+        UserParam userParam = new UserParam();
+        pageParam.setPageIndex(0);
+        pageParam.setPageSize(5);
+        userParam.setUserId(1L);
+        pageUserParam.setPageParam(pageParam);
+        pageUserParam.setUserParam(userParam);
+        List<ArticleBaseInfoBean> articleBaseInfoBeanList = articleService.selectUserArticleBaseInfo(pageUserParam);
+        articleBaseInfoBeanList.forEach(temp-> System.out.println(temp.getArticleTitle()));
+    }
 }

@@ -7,10 +7,7 @@ import pers.lilei.blog.bean.Article;
 import pers.lilei.blog.bean.ArticleExample;
 import pers.lilei.blog.bean.ArticleWithBLOBs;
 import pers.lilei.blog.bean.resultBean.ArticleBaseInfoBean;
-import pers.lilei.blog.param.ArticleWithUserBaseInfoParam;
-import pers.lilei.blog.param.PageParam;
-import pers.lilei.blog.param.RecommendUserParam;
-import pers.lilei.blog.param.UserParam;
+import pers.lilei.blog.param.*;
 
 public interface ArticleMapper {
     long countByExample(ArticleExample example);
@@ -44,6 +41,8 @@ public interface ArticleMapper {
     List<ArticleWithUserBaseInfoParam> selectArticleWithUserBaseInfoByUserIdAndKey(@Param("userId") Long userId, @Param("key") String key);
 
     List<ArticleBaseInfoBean> selectAllArticleBaseInfoByUserId(Long userId);
+
+    List<ArticleBaseInfoBean> selectUserArticleBaseInfo(@Param("param")PageUserParam pageUserParam);
 
     List<ArticleWithUserBaseInfoParam> selectArticleByKey(String key);
 

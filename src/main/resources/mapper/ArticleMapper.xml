@@ -470,4 +470,13 @@
     ORDER BY article_date DESC
     LIMIT #{num}
   </select>
+  <select id="selectUserArticleBaseInfo" resultType="pers.lilei.blog.bean.resultBean.ArticleBaseInfoBean">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_article
+    where user_id = #{param.userParam.userId}
+    LIMIT #{param.pageParam.pageIndex},#{param.pageParam.pageSize}
+  </select>
 </mapper>
