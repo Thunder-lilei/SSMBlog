@@ -53,6 +53,17 @@ public interface ArticleService {
 
     List<ArticleBaseInfoBean> getArticleByUserOrder(UserParam userParam, PageParam pageParam);
 
+    /**
+     * @description 获取用户的博文总数
+     * @author lilei
+     */
     int getArticleByUserOrderCount(UserParam userParam);
+    /**
+     * @description 获取用户的最新博文
+     * @author lilei
+     * @Time 2021/4/24
+     * @updateTime 2021/4/24
+     */
+    List<ArticleBaseInfoBean> getNewArticleByUser(UserParam userParam, int num);
 
 }

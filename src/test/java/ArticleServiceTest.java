@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pers.lilei.blog.bean.ArticleWithBLOBs;
 import pers.lilei.blog.bean.Label;
 import pers.lilei.blog.bean.resultBean.ArticleBaseInfoBean;
+import pers.lilei.blog.constant.ArticleConstant;
 import pers.lilei.blog.param.*;
 import pers.lilei.blog.service.ArticleService;
 
@@ -107,5 +108,12 @@ public class ArticleServiceTest extends BaseTest{
         System.out.println("总数："+articleService.getArticleByUserOrderCount(userParam));
         List<ArticleBaseInfoBean> articleBaseInfoBeanList = articleService.getArticleByUserOrder(userParam, pageParam);
         articleBaseInfoBeanList.forEach(temp-> System.out.println(temp.getArticleId()));
+    }
+    @Test
+    public void getNewArticleByUser() {
+        UserParam userParam = new UserParam();
+        userParam.setUserId(1L);
+        List<ArticleBaseInfoBean> articleBaseInfoBeanList = articleService.getNewArticleByUser(userParam, ArticleConstant.NEW_ARTICLE_NUM);
+        articleBaseInfoBeanList.forEach(temp-> System.out.println(temp.getArticleTitle()));
     }
 }

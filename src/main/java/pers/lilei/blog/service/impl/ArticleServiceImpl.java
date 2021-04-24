@@ -230,4 +230,9 @@ public class ArticleServiceImpl implements ArticleService {
     public int getArticleByUserOrderCount(UserParam userParam) {
         return articleMapper.getArticleByUserOrderCount(userParam);
     }
+
+    @Override
+    public List<ArticleBaseInfoBean> getNewArticleByUser(UserParam userParam, int num) {
+        return articleMapper.getNewArticleByUser(userParam, num);
+    }
 }

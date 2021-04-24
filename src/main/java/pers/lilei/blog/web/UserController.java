@@ -459,7 +459,7 @@ public class UserController extends BaseController{
         if (user != null) {
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             modelMap.put("user", user);
-            session.setAttribute("showUser", null);
+            session.removeAttribute("showUser");
         } else {
             modelMap.put(MessageConstant.MESSAGE, "获取失败！");
         }

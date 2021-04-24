@@ -5,6 +5,7 @@ import com.github.pagehelper.page.PageParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import pers.lilei.blog.constant.ArticleConstant;
 import pers.lilei.blog.constant.MessageConstant;
 import pers.lilei.blog.bean.ArticleWithBLOBs;
 import pers.lilei.blog.bean.Label;
@@ -516,6 +517,46 @@ public class ArticleController extends BaseController{
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             modelMap.put("articleList", articleService.getArticleByUserOrder(userParam, pageParam));
             modelMap.put("articleListCount", articleService.getArticleByUserOrderCount(userParam));
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
+    /**
+     * @description 获取当前用户的博文数量
+     * @author lilei
+     * @Time 2021/4/24
+     * @updateTime 2021/4/24
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getArticleCountByUser", method = RequestMethod.POST)
+    private Map<String,Object> getArticleCountByUser(){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            UserParam userParam = new UserParam();
+            userParam.setUserId(user.getUserId());
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("articleCount", articleService.getArticleByUserOrderCount(userParam));
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
+    /**
+     * @description 获取用户的最新博文
+     * @author lilei
+     * @Time 2021/4/24
+     * @updateTime 2021/4/24
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getNewArticleByUser", method = RequestMethod.POST)
+    private Map<String,Object> getNewArticleByUser(@RequestBody UserParam userParam){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("newArticleList", articleService.getNewArticleByUser(userParam, ArticleConstant.NEW_ARTICLE_NUM));
         } else {
             modelMap.put(MessageConstant.MESSAGE, "未登录！");
         }

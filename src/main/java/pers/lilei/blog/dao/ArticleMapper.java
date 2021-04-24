@@ -70,4 +70,6 @@ public interface ArticleMapper {
     List<ArticleBaseInfoBean> getArticleByUserOrder(@Param("param") UserParam userParam, @Param("pageParam") PageParam pageParam);
 
     int getArticleByUserOrderCount(@Param("param") UserParam userParam);
+
+    List<ArticleBaseInfoBean> getNewArticleByUser(@Param("param") UserParam userParam, @Param("num") int num);
 }
