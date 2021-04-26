@@ -559,6 +559,24 @@ public class ArticleController extends BaseController{
         }
         return modelMap;
     }
+   /**
+    * @description 获取用户的博文总数
+    * @author lilei
+    * @Time 2021/4/26
+    * @updateTime 2021/4/26
+    */
+    @ResponseBody
+    @RequestMapping(value = "/getUserArticleCount", method = RequestMethod.POST)
+    private Map<String,Object> getUserArticleCount(@RequestBody UserParam userParam){
+        Map<String,Object> modelMap = new HashMap<>();
+        if (userParam != null) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("articleCount", articleService.getArticleByUserOrderCount(userParam));
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未接收到用户信息！");
+        }
+        return modelMap;
+    }
     /**
      * @description 获取用户的最新博文
      * @author lilei
@@ -566,15 +584,14 @@ public class ArticleController extends BaseController{
      * @updateTime 2021/4/24
      */
     @ResponseBody
-    @RequestMapping(value = "/getNewArticleByUser", method = RequestMethod.POST)
-    private Map<String,Object> getNewArticleByUser(@RequestBody UserParam userParam){
+    @RequestMapping(value = "/getUserNewArticle", method = RequestMethod.POST)
+    private Map<String,Object> getUserNewArticle(@RequestBody UserParam userParam){
         Map<String,Object> modelMap = new HashMap<>();
-        User user = (User) session.getAttribute("user");
-        if (user != null) {
+        if (userParam != null) {
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             modelMap.put("newArticleList", articleService.getNewArticleByUser(userParam, ArticleConstant.NEW_ARTICLE_NUM));
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+            modelMap.put(MessageConstant.MESSAGE, "未接收到用户信息！");
         }
         return modelMap;
     }

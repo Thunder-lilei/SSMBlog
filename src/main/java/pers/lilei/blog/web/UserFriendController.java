@@ -8,6 +8,8 @@ import pers.lilei.blog.constant.MessageConstant;
 import pers.lilei.blog.bean.User;
 import pers.lilei.blog.bean.UserFriend;
 import pers.lilei.blog.param.UserBaseInfoParam;
+import pers.lilei.blog.param.UserFunParam;
+import pers.lilei.blog.param.UserParam;
 import pers.lilei.blog.service.UserFriendService;
 import pers.lilei.blog.service.UserService;
 
@@ -239,6 +241,21 @@ public class UserFriendController extends BaseController{
         } else {
             modelMap.put(MessageConstant.MESSAGE, "未登录！");
         }
+        return modelMap;
+    }
+
+    /**
+     * @description 获取用户粉丝数量
+     * @author lilei
+     * @Time 2021/4/26
+     * @updateTime 2021/4/26
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getUserFunCount", method = RequestMethod.POST)
+    private Map<String,Object> getUserFunCount(@RequestBody UserFunParam userFunParam){
+        Map<String,Object> modelMap = new HashMap<>();
+        modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+        modelMap.put("funCount", userFriendService.getUserFunCount(userFunParam));
         return modelMap;
     }
 }

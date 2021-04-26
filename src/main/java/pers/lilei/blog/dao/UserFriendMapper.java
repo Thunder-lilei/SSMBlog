@@ -4,6 +4,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import pers.lilei.blog.bean.UserFriend;
 import pers.lilei.blog.bean.UserFriendExample;
+import pers.lilei.blog.param.UserFunParam;
+import pers.lilei.blog.param.UserParam;
 
 public interface UserFriendMapper {
     long countByExample(UserFriendExample example);
@@ -39,4 +41,6 @@ public interface UserFriendMapper {
     int updateByPrimaryKey(UserFriend record);
 
     int updateFriendNickNameByUserIdAndUserFriendId(UserFriend userFriend);
+
+    int selectUserFunCount(@Param("param") UserFunParam userFunParam);
 }

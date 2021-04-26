@@ -60,4 +60,5 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     UserResultBean selectUserById(@Param("param") UserParam userParam);
+
 }

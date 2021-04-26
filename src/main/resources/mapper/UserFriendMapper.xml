@@ -255,4 +255,9 @@
     set user_nickname = #{userNickname,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=BIGINT} AND user_friend_id = #{userFriendId,jdbcType=BIGINT}
   </update>
+  <select id="selectUserFunCount" resultType="int">
+  select count(*)
+  from tbl_user_friend
+  where user_friend_id = #{param.userId}
+  </select>
 </mapper>

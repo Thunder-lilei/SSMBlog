@@ -25,7 +25,15 @@ public class ArticleBaseInfoBean {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
-    private Date createTime;
+    private Date articleDate;
+
+    public Date getArticleDate() {
+        return articleDate;
+    }
+
+    public void setArticleDate(Date articleDate) {
+        this.articleDate = articleDate;
+    }
 
     public Long getArticleViews() {
         return articleViews;

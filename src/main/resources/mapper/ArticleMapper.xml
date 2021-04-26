@@ -464,7 +464,10 @@
     where user_id = #{param.userId}
   </select>
   <select id="getNewArticleByUser" resultType="pers.lilei.blog.bean.resultBean.ArticleBaseInfoBean">
-    select article_title
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from tbl_article
     where user_id = #{param.userId}
     ORDER BY article_date DESC

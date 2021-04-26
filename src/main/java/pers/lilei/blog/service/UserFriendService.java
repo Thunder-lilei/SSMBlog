@@ -1,6 +1,7 @@
 package pers.lilei.blog.service;
 
 import pers.lilei.blog.bean.UserFriend;
+import pers.lilei.blog.param.UserFunParam;
 
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface UserFriendService {
     Integer deleteFriend(Long userId, Long userFriendId);
 
     Integer updateFriendNickNameByUserIdAndUserFriendId(UserFriend userFriend);
+
+    int getUserFunCount(UserFunParam userFunParam);
 }

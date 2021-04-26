@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.lilei.blog.dao.UserFriendMapper;
 import pers.lilei.blog.bean.UserFriend;
+import pers.lilei.blog.param.UserFunParam;
 import pers.lilei.blog.service.UserFriendService;
 
 import java.util.List;
@@ -64,5 +65,10 @@ public class UserFriendServiceImpl implements UserFriendService {
     @Override
     public Integer updateFriendNickNameByUserIdAndUserFriendId(UserFriend userFriend) {
         return userFriendMapper.updateFriendNickNameByUserIdAndUserFriendId(userFriend);
+    }
+
+    @Override
+    public int getUserFunCount(UserFunParam userFunParam) {
+        return userFriendMapper.selectUserFunCount(userFunParam);
     }
 }
