@@ -14,6 +14,16 @@ public class UserBaseInfoParam {
 
     private String userProfilePhoto;
 
+    private String userRole;
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
+    }
+
     public String getUserProfilePhoto() {
         return userProfilePhoto;
     }

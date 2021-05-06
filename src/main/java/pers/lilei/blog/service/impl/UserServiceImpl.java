@@ -110,13 +110,14 @@ public class UserServiceImpl implements UserService {
      * @return com.github.pagehelper.PageInfo<pers.lilei.blog.pojo.UserBaseInfoPojo>
      **/
     @Override
-    public PageInfo<UserBaseInfoParam> getFriendByUserId(int pageNow, int pageSize, List<Long> userIdList) {
+    public PageInfo<UserBaseInfoParam> getFriendByUserId(int pageNow, int pageSize, List<Long> userIdList, Long userId) {
         PageHelper.startPage(pageNow, pageSize);
         List<UserBaseInfoParam> userBaseInfoParamList = userMapper.getAllByUserId(userIdList);
         for (UserBaseInfoParam userBaseInfoParam : userBaseInfoParamList) {
             //设置备注
-            if (!userFriendMapper.getNickNameByFriendId(userBaseInfoParam.getUserId()).isEmpty()) {
-                userBaseInfoParam.setUserNickname(userFriendMapper.getNickNameByFriendId(userBaseInfoParam.getUserId()));
+            String friendNickName = userFriendMapper.getNickNameByFriendId(userBaseInfoParam.getUserId(), userId);
+            if (friendNickName != null && !friendNickName.equals("") && !friendNickName.isEmpty()) {
+                userBaseInfoParam.setUserNickname(friendNickName);
             }
         }
         return new PageInfo<>(userBaseInfoParamList);
@@ -138,12 +139,13 @@ public class UserServiceImpl implements UserService {
      * @return java.util.List<pers.lilei.blog.pojo.UserBaseInfoPojo>
      **/
     @Override
-    public List<UserBaseInfoParam> getFriendByUserIdList(List<Long> userIdList) {
+    public List<UserBaseInfoParam> getFriendByUserIdList(List<Long> userIdList, Long userId) {
         List<UserBaseInfoParam> userBaseInfoParamList = userMapper.getAllByUserId(userIdList);
         for (UserBaseInfoParam userBaseInfoParam : userBaseInfoParamList) {
             //设置备注
-            if (!userFriendMapper.getNickNameByFriendId(userBaseInfoParam.getUserId()).isEmpty()) {
-                userBaseInfoParam.setUserNickname(userFriendMapper.getNickNameByFriendId(userBaseInfoParam.getUserId()));
+            String friendNickName = userFriendMapper.getNickNameByFriendId(userBaseInfoParam.getUserId(), userId);
+            if (friendNickName != null && !friendNickName.equals("") && !friendNickName.isEmpty()) {
+                userBaseInfoParam.setUserNickname(friendNickName);
             }
         }
         return userBaseInfoParamList;

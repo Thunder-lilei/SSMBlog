@@ -24,7 +24,7 @@ public interface UserFriendMapper {
 
     UserFriend selectByPrimaryKey(Long id);
 
-    String getNickNameByFriendId(Long userFriendId);
+    String getNickNameByFriendId(@Param("userFriendId") Long userFriendId, @Param("userId") Long userId);
 
     List<Long> getAllFriendIdByUserId(Long userId);
 

@@ -481,7 +481,7 @@ public class UserController extends BaseController{
         User user = (User) session.getAttribute("user");
         if (user != null) {
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-            modelMap.put("result", RoleConstant.adminIdList.contains(user.getUserId()));
+            modelMap.put("result", RoleConstant.adminIdList.contains(user.getUserRole()));
         } else {
             modelMap.put(MessageConstant.MESSAGE, "未登录！");
         }

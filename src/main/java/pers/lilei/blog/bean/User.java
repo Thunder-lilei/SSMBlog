@@ -26,6 +26,8 @@ public class User {
 
     private String userNickname;
 
+    private String userRole;
+
     private Date createTime;
 
     private Date updateTime;
@@ -47,6 +49,14 @@ public class User {
     public void setTimeNull() {
         this.createTime = null;
         this.updateTime = null;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 
     public Long getUserId() {

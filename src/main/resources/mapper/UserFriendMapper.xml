@@ -87,7 +87,8 @@
   <select id="getNickNameByFriendId" parameterType="java.lang.Long" resultType="java.lang.String">
     select user_nickname
     from tbl_user_friend
-    where user_friend_id = #{userFriendId,jdbcType=BIGINT}
+    where user_friend_id = #{userFriendId}
+    and user_id = #{userId}
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select

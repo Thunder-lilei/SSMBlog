@@ -22,7 +22,7 @@ public class UserFriendServiceTest extends BaseTest{
     UserService userService;
     @Test
     public void getAllFriendIdByUserId() {
-        List<Long> friendIdList = userFriendService.getAllFriendIdByUserId(1L);
+        List<Long> friendIdList = userFriendService.getAllFriendIdByUserId(3L);
         friendIdList.forEach(temp-> System.out.println(temp));
     }
     @Test
@@ -37,11 +37,17 @@ public class UserFriendServiceTest extends BaseTest{
         userFriend.setUserNickname("小王");
         System.out.println(userFriendService.updateFriendNickNameByUserIdAndUserFriendId(userFriend));
     }
+//    @Test
+//    public void getFriend() {
+//        List<Long> friendIdList = userFriendService.getAllFriendIdByUserId(1L);
+//        PageInfo<UserBaseInfoParam> userBaseInfoPojoPageInfo = userService.getFriendByUserId(1, 10, friendIdList);
+//        List<UserBaseInfoParam> userBaseInfoParamList = userBaseInfoPojoPageInfo.getList();
+//        userBaseInfoParamList.forEach(temp-> System.out.println(temp.getUserNickname()));
+//    }
     @Test
-    public void getFriend() {
-        List<Long> friendIdList = userFriendService.getAllFriendIdByUserId(1L);
-        PageInfo<UserBaseInfoParam> userBaseInfoPojoPageInfo = userService.getFriendByUserId(1, 10, friendIdList);
-        List<UserBaseInfoParam> userBaseInfoParamList = userBaseInfoPojoPageInfo.getList();
+    public void getFriendList() {
+        List<Long> friendIdList = userFriendService.getAllFriendIdByUserId(3L);
+        List<UserBaseInfoParam> userBaseInfoParamList = userService.getFriendByUserIdList(friendIdList, 3L);
         userBaseInfoParamList.forEach(temp-> System.out.println(temp.getUserNickname()));
     }
 }

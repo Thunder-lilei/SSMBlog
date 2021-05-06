@@ -11,6 +11,7 @@
     <result column="user_age" jdbcType="TINYINT" property="userAge" />
     <result column="user_telephone_number" jdbcType="BIGINT" property="userTelephoneNumber" />
     <result column="user_nickname" jdbcType="VARCHAR" property="userNickname" />
+    <result column="user_role" jdbcType="TINYINT" property="userRole" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
@@ -74,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List">
     user_id, user_name, user_password, user_email, user_profile_photo, user_birthday,
-    user_age, user_telephone_number, user_nickname, create_time, update_time
+    user_age, user_telephone_number, user_nickname, user_role, create_time, update_time
   </sql>
   <select id="selectByExample" parameterType="pers.lilei.blog.bean.UserExample" resultMap="BaseResultMap">
     select

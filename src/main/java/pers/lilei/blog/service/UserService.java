@@ -40,11 +40,11 @@ public interface UserService {
 
     PageInfo<UserBaseInfoParam> getAllByUserId(int pageNow, int pageSize, List<Long> userIdList);
 
-    PageInfo<UserBaseInfoParam> getFriendByUserId(int pageNow, int pageSize, List<Long> userIdList);
+    PageInfo<UserBaseInfoParam> getFriendByUserId(int pageNow, int pageSize, List<Long> userIdList, Long userId);
 
     List<UserBaseInfoParam> getAllByUserIdList(List<Long> userIdList);
 
-    List<UserBaseInfoParam> getFriendByUserIdList(List<Long> userIdList);
+    List<UserBaseInfoParam> getFriendByUserIdList(List<Long> userIdList, Long userId);
 
     List<UserBaseInfoParam> getAllByUserIdAndKeyList(List<Long> userIdList, String key);
 
