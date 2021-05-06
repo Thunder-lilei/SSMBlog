@@ -13,4 +13,19 @@ import java.util.List;
  **/
 public class RoleConstant {
     public static final List<String> adminIdList = Arrays.asList("1");
+
+    /**
+     * @description 管理员常量
+     * @author lilei
+     * @Time 2021/5/7
+     * @updateTime 2021/5/7
+     */
+    public static final String adminNum = "1";
+    /**
+     * @description 普通用户常量
+     * @author lilei
+     * @Time 2021/5/7
+     * @updateTime 2021/5/7
+     */
+    public static final String userNum = "0";
 }

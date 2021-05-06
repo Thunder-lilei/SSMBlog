@@ -370,6 +370,9 @@
       <if test="userNickname != null">
         user_nickname = #{userNickname,jdbcType=VARCHAR},
       </if>
+      <if test="userRole != null">
+        user_role = #{userRole,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>

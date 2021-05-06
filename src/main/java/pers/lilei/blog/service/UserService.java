@@ -59,4 +59,8 @@ public interface UserService {
     Integer updatePasswordByEmail(User record);
 
     UserResultBean getUserById(UserParam userParam);
+
+    int addAdmin(UserParam userParam);
+
+    int removeAdmin(UserParam userParam);
 }

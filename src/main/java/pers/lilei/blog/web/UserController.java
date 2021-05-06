@@ -338,7 +338,7 @@ public class UserController extends BaseController{
     private Map<String,Object> selectAllUserBaseInfo(@RequestParam Integer pageNow, @RequestParam Integer pageSize) {
         Map<String, Object> modelMap = new HashMap<>();
         User user = (User) session.getAttribute("user");
-        if (user != null && RoleConstant.adminIdList.contains(user.getUserId())) {
+        if (user != null && RoleConstant.adminNum.equals(user.getUserRole())) {
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             modelMap.put("allUserPageInfo", userService.selectAllUserBaseInfo(pageNow, pageSize));
         } else {
@@ -481,9 +481,58 @@ public class UserController extends BaseController{
         User user = (User) session.getAttribute("user");
         if (user != null) {
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-            modelMap.put("result", RoleConstant.adminIdList.contains(user.getUserRole()));
+            modelMap.put("result", RoleConstant.adminNum.equals(user.getUserRole()));
         } else {
             modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
+
+    /**
+     * @description 添加管理
+     * @author lilei
+     * @Time 2021/5/7
+     * @updateTime 2021/5/7
+     */
+    @ResponseBody
+    @RequestMapping(value = "/addAdmin", method = RequestMethod.POST)
+    private Map<String,Object> addAdmin(@RequestBody UserParam userParam){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        if (user.getUserId().equals(userParam.getUserId())) {
+            modelMap.put(MessageConstant.MESSAGE, "您已经是管理员了！");
+            return modelMap;
+        }
+        if (userParam != null) {
+            if (userService.addAdmin(userParam) > 0) {
+                modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            } else {
+                modelMap.put(MessageConstant.MESSAGE, "设置管理员失败！");
+            }
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "请检查参数！");
+        }
+        return modelMap;
+    }
+    /**
+     * @description 设置用户
+     * @author lilei
+     * @Time 2021/5/7
+     * @updateTime 2021/5/7
+     */
+    @ResponseBody
+    @RequestMapping(value = "/removeAdmin", method = RequestMethod.POST)
+    private Map<String,Object> removeAdmin(@RequestBody UserParam userParam){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        if (user.getUserId().equals(userParam.getUserId())) {
+            modelMap.put(MessageConstant.MESSAGE, "您不能移除自己的管理员身份！");
+            return modelMap;
+        }
+        if (userService.removeAdmin(userParam) > 0) {
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "设置用户失败！");
         }
         return modelMap;
     }

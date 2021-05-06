@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.lilei.blog.bean.resultBean.UserResultBean;
+import pers.lilei.blog.constant.RoleConstant;
 import pers.lilei.blog.dao.UserFriendMapper;
 import pers.lilei.blog.dao.UserMapper;
 import pers.lilei.blog.bean.User;
@@ -219,6 +220,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResultBean getUserById(UserParam userParam) {
         return userMapper.selectUserById(userParam);
+    }
+
+    @Override
+    public int addAdmin(UserParam userParam) {
+        User user = new User();
+        user.setUserId(userParam.getUserId());
+        user.setUserRole(RoleConstant.adminNum);
+        //修改该用户角色为管理员
+        return userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    @Override
+    public int removeAdmin(UserParam userParam) {
+        User user = new User();
+        user.setUserId(userParam.getUserId());
+        user.setUserRole(RoleConstant.userNum);
+        //修改该用户角色为用户
+        return userMapper.updateByPrimaryKeySelective(user);
     }
 
 }
