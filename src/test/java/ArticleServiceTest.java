@@ -121,11 +121,11 @@ public class ArticleServiceTest extends BaseTest{
         PageUserParam pageUserParam = new PageUserParam();
         PageParam pageParam = new PageParam();
         UserParam userParam = new UserParam();
-        pageParam.setPageIndex(0);
-        pageParam.setPageSize(5);
-        userParam.setUserId(1L);
         pageUserParam.setPageParam(pageParam);
         pageUserParam.setUserParam(userParam);
+        pageUserParam.getPageParam().setPageIndex(5);
+        pageUserParam.getPageParam().setPageSize(5);
+        pageUserParam.getUserParam().setUserId(1L);
         List<ArticleBaseInfoBean> articleBaseInfoBeanList = articleService.selectUserArticleBaseInfo(pageUserParam);
         articleBaseInfoBeanList.forEach(temp-> System.out.println(temp.getArticleTitle()));
     }
