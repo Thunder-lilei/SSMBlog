@@ -47,11 +47,15 @@ public class UserController extends BaseController{
         Map<String,Object> modelMap = new HashMap<>();
         if (user != null) {
             User LoginUser = userService.selectByUserName(user.getUserName());
-            if (LoginUser != null && BCrypt.checkpw(user.getUserPassword(),LoginUser.getUserPassword())) {
-                session.setAttribute("user", LoginUser);
-                modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            if (LoginUser != null) {
+                if (BCrypt.checkpw(user.getUserPassword(),LoginUser.getUserPassword())) {
+                    session.setAttribute("user", LoginUser);
+                    modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+                }else {
+                    modelMap.put(MessageConstant.MESSAGE, "密码 错误！");
+                }
             } else {
-                modelMap.put(MessageConstant.MESSAGE, "密码错误！");
+                modelMap.put(MessageConstant.MESSAGE, "账号错误！");
             }
         } else {
             modelMap.put(MessageConstant.MESSAGE, "请填写用户信息！");
@@ -203,8 +207,13 @@ public class UserController extends BaseController{
     @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
     private Map<String,Object> updateUser(@RequestBody User user){
         Map<String,Object> modelMap = new HashMap<>();
+        User loginUser = (User) session.getAttribute("user");
         if (user != null) {
             if (!userService.updateUserSelective(user).equals(0)) {
+                //当前登录用户信息更新
+                if (loginUser != null && loginUser.getUserId().equals(user.getUserId())) {
+                    session.setAttribute("user", user);
+                }
                 modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             } else {
                 modelMap.put(MessageConstant.MESSAGE, "尝试更换用户名！电话已被注册！邮箱已被注册！");

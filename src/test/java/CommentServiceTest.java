@@ -2,6 +2,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import pers.lilei.blog.bean.Comment;
+import pers.lilei.blog.dao.CommentMapper;
 import pers.lilei.blog.param.ArticleParam;
 import pers.lilei.blog.param.CommentParam;
 import pers.lilei.blog.param.CommentWithUserBaseInfoParam;
@@ -19,6 +20,8 @@ import java.util.List;
 public class CommentServiceTest extends BaseTest{
     @Autowired
     CommentService commentService;
+    @Autowired
+    CommentMapper commentMapper;
     @Test
     public void getRootCommentByArticleId() {
         List<CommentWithUserBaseInfoParam> commentList = commentService.getRootCommentByArticleId(5L);
@@ -28,15 +31,16 @@ public class CommentServiceTest extends BaseTest{
             System.out.println("获取根评论失败！");
         }
     }
-//    @Test
-//    public void getChildComment() {
-//        List<CommentWithUserBaseInfoPojo> commentList = commentService.getChildCommentByArticleIdAndParentCommentId(5L, 2L);
-//        if (!commentList.isEmpty()) {
-//            commentList.forEach(temp-> System.out.println(temp.getCommentContent()));
-//        } else {
-//            System.out.println("获取子评论失败！");
-//        }
-//    }
+    @Test
+    public void getChildComment() {
+        List<CommentWithUserBaseInfoParam> commentWithUserBaseInfoParamList =
+                commentMapper.getChildCommentByArticleIdAndParentCommentId(5L, 3L);
+        if (!commentWithUserBaseInfoParamList.isEmpty()) {
+            commentWithUserBaseInfoParamList.forEach(temp-> System.out.println(temp.getCommentContent()));
+        } else {
+            System.out.println("获取子评论失败！");
+        }
+    }
     @Test
     public void getCommentByArticleId() {
         List<CommentWithUserBaseInfoParam> commentList = commentService.getCommentByArticleId(5L);
