@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pers.lilei.blog.bean.resultBean.UserResultBean;
-import pers.lilei.blog.constant.MessageConstant;
 import pers.lilei.blog.constant.RoleConstant;
 import pers.lilei.blog.bean.User;
 import pers.lilei.blog.param.UserLoginParam;
@@ -13,8 +12,8 @@ import pers.lilei.blog.service.UserService;
 import pers.lilei.blog.util.BCrypt;
 import pers.lilei.blog.util.MailUtils;
 import pers.lilei.blog.util.NumberUtil;
+import pers.lilei.blog.util.ResultMessage;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -44,23 +43,21 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/toLoginByUserName", method = RequestMethod.POST)
     private Map<String,Object> toLoginByUserName(@RequestBody User user){
-        Map<String,Object> modelMap = new HashMap<>();
         if (user != null) {
             User LoginUser = userService.selectByUserName(user.getUserName());
             if (LoginUser != null) {
                 if (BCrypt.checkpw(user.getUserPassword(),LoginUser.getUserPassword())) {
                     session.setAttribute("user", LoginUser);
-                    modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+                    return ResultMessage.successMessage();
                 }else {
-                    modelMap.put(MessageConstant.MESSAGE, "密码 错误！");
+                    return ResultMessage.waringMessage("密码错误！");
                 }
             } else {
-                modelMap.put(MessageConstant.MESSAGE, "账号错误！");
+                return ResultMessage.waringMessage("账号错误！");
             }
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "请填写用户信息！");
+            return ResultMessage.waringMessage("请填写用户信息！");
         }
-        return modelMap;
     }
     /*
      * @Author 李雷
@@ -74,15 +71,12 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/getLoginUser", method = RequestMethod.POST)
     private Map<String,Object> getLoginUser(){
-        Map<String,Object> modelMap = new HashMap<>();
         User user = (User) session.getAttribute("user");
         if (user != null) {
-            modelMap.put("loginUser",user);
-            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            return ResultMessage.successMessageResult("loginUser", user);
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+            return ResultMessage.waringMessage("未登录！");
         }
-        return modelMap;
     }
     /*
      * @Author 李雷
@@ -97,16 +91,13 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/getUpdateUser", method = RequestMethod.POST)
     private Map<String,Object> getUpdateUser(){
-        Map<String,Object> modelMap = new HashMap<>();
         User user = (User) session.getAttribute("updateUser");
         if (user != null) {
-            modelMap.put("updateUser",user);
-            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             session.setAttribute("updateUser", null);
+            return ResultMessage.successMessageResult("updateUser", user);
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "没有设置需要修改信息的用户！");
+            return ResultMessage.waringMessage("没有设置需要修改信息的用户！");
         }
-        return modelMap;
     }
     /*
      * @Author 李雷
@@ -120,15 +111,13 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/setUpdateUser", method = RequestMethod.POST)
     private Map<String,Object> setUpdateUser(@RequestParam Long updateUserId){
-        Map<String,Object> modelMap = new HashMap<>();
         User user = userService.selectByPrimaryKey(updateUserId);
         if (user != null) {
             session.setAttribute("updateUser", user);
-            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            return ResultMessage.successMessage();
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "未查询到用户信息！");
+            return ResultMessage.waringMessage("未查询到用户信息！");
         }
-        return modelMap;
     }
     /*
      * @Author 李雷
@@ -142,15 +131,12 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/getUser", method = RequestMethod.POST)
     private Map<String,Object> getUser(@RequestParam Long userId){
-        Map<String,Object> modelMap = new HashMap<>();
         User user = userService.selectByPrimaryKey(userId);
         if (user != null) {
-            modelMap.put("updateUser",user);
-            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            return ResultMessage.successMessageResult("updateUser", user);
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "未查询到用户！");
+            return ResultMessage.waringMessage("未查询到用户！");
         }
-        return modelMap;
     }
     /*
      * @Author 李雷
@@ -164,15 +150,13 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     private Map<String,Object> logout(){
-        Map<String,Object> modelMap = new HashMap<>();
         User user = (User) session.getAttribute("user");
         if (user != null) {
             session.invalidate();
-            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            return ResultMessage.successMessage();
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+            return ResultMessage.waringMessage("未登录！");
         }
-        return modelMap;
     }
     /*
      * @Author 李雷
@@ -186,13 +170,11 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/registerUser", method = RequestMethod.POST)
     private Map<String,Object> registerUser(@RequestBody  User user){
-        Map<String,Object> modelMap = new HashMap<>();
         if (!userService.addUserSelective(user).equals(0)) {
-            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            return ResultMessage.successMessage();
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "尝试更换用户名！");
+            return ResultMessage.waringMessage("尝试更换用户名！");
         }
-        return modelMap;
     }
     /*
      * @Author 李雷
@@ -206,7 +188,6 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
     private Map<String,Object> updateUser(@RequestBody User user){
-        Map<String,Object> modelMap = new HashMap<>();
         User loginUser = (User) session.getAttribute("user");
         if (user != null) {
             if (!userService.updateUserSelective(user).equals(0)) {
@@ -214,14 +195,13 @@ public class UserController extends BaseController{
                 if (loginUser != null && loginUser.getUserId().equals(user.getUserId())) {
                     session.setAttribute("user", user);
                 }
-                modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+                return ResultMessage.successMessage();
             } else {
-                modelMap.put(MessageConstant.MESSAGE, "尝试更换用户名！电话已被注册！邮箱已被注册！");
+                return ResultMessage.waringMessage("尝试更换用户名！电话已被注册！邮箱已被注册！");
             }
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "请填写用户基本信息！");
+            return ResultMessage.waringMessage("请填写用户基本信息！");
         }
-        return modelMap;
     }
     /*
      * @Author 李雷
@@ -237,16 +217,13 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/updatePasswordByCode", method = RequestMethod.POST)
     private Map<String,Object> updatePasswordByCode(@RequestBody User user, @RequestParam Integer code){
-        Map<String,Object> modelMap = new HashMap<>();
         //验证码校验
         Integer sessionCode = (Integer) session.getAttribute("code");
-        if (code == null && !sessionCode.equals(code)) {
-            modelMap.put(MessageConstant.MESSAGE, "请填写正确的验证码！");
-            return modelMap;
+        if (!sessionCode.equals(code)) {
+            return ResultMessage.waringMessage("请填写正确的验证码！");
         }
         if (user.getUserPassword() == null) {
-            modelMap.put(MessageConstant.MESSAGE, "请填写密码！");
-            return modelMap;
+            return ResultMessage.waringMessage("请填写密码！");
         }
         User selectUser;
         if (user.getUserTelephoneNumber() != null) {
@@ -260,14 +237,13 @@ public class UserController extends BaseController{
         if (selectUser != null) {
             selectUser.setUserPassword(user.getUserPassword());
             if (!userService.updateUserSelective(selectUser).equals(0)) {
-                modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+                return ResultMessage.successMessage();
             }else {
-                modelMap.put(MessageConstant.MESSAGE, "密码修改失败！");
+                return ResultMessage.waringMessage("密码修改失败！");
             }
         }else {
-            modelMap.put(MessageConstant.MESSAGE, "电话或邮箱未匹配！");
+            return ResultMessage.waringMessage("电话或邮箱未匹配！");
         }
-        return modelMap;
     }
     /*
      * @Author 李雷
@@ -282,10 +258,7 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/selectUserBaseInfoByKey", method = RequestMethod.POST)
     private Map<String,Object> selectUserBaseInfoByKey(@RequestParam Integer pageNow, @RequestParam Integer pageSize, @RequestParam String key) {
-        Map<String, Object> modelMap = new HashMap<>();
-        modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-        modelMap.put("userPageInfo", userService.selectUserBaseInfoByKey(pageNow, pageSize, key));
-        return modelMap;
+        return ResultMessage.successMessageResult("userPageInfo", userService.selectUserBaseInfoByKey(pageNow, pageSize, key));
     }
     /*
      * @Author 李雷
@@ -300,15 +273,13 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/selectUserBaseInfoByKeyWithoutMine", method = RequestMethod.POST)
     private Map<String,Object> selectUserBaseInfoByKeyWithoutMine(@RequestParam Integer pageNow, @RequestParam Integer pageSize, @RequestParam String key) {
-        Map<String, Object> modelMap = new HashMap<>();
         User user = (User) session.getAttribute("user");
         if (user != null) {
-            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-            modelMap.put("userPageInfo", userService.selectUserBaseInfoByKeyWithoutMine(pageNow, pageSize, key, user.getUserId()));
+            return ResultMessage.successMessageResult("userPageInfo",
+                    userService.selectUserBaseInfoByKeyWithoutMine(pageNow, pageSize, key, user.getUserId()));
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+            return ResultMessage.waringMessage("未登录！");
         }
-        return modelMap;
     }
     /*
      * @Author 李雷
@@ -323,15 +294,13 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/selectUserBaseInfoByKeyWithoutMineList", method = RequestMethod.POST)
     private Map<String,Object> selectUserBaseInfoByKeyWithoutMineList(@RequestParam String key) {
-        Map<String, Object> modelMap = new HashMap<>();
         User user = (User) session.getAttribute("user");
         if (user != null) {
-            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-            modelMap.put("userList", userService.selectUserBaseInfoByKeyWithoutMineList(key, user.getUserId()));
+            return ResultMessage.successMessageResult("userList",
+                    userService.selectUserBaseInfoByKeyWithoutMineList(key, user.getUserId()));
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+            return ResultMessage.waringMessage("未登录！");
         }
-        return modelMap;
     }
     /*
      * @Author 李雷
@@ -345,15 +314,13 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/selectAllUserBaseInfo", method = RequestMethod.POST)
     private Map<String,Object> selectAllUserBaseInfo(@RequestParam Integer pageNow, @RequestParam Integer pageSize) {
-        Map<String, Object> modelMap = new HashMap<>();
         User user = (User) session.getAttribute("user");
         if (user != null && RoleConstant.adminNum.equals(user.getUserRole())) {
-            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-            modelMap.put("allUserPageInfo", userService.selectAllUserBaseInfo(pageNow, pageSize));
+            return ResultMessage.successMessageResult("allUserPageInfo",
+                    userService.selectAllUserBaseInfo(pageNow, pageSize));
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "非管理员账号！");
+            return ResultMessage.waringMessage("非管理员账号！");
         }
-        return modelMap;
     }
     /*
      * @Author 李雷
@@ -367,13 +334,11 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
     private Map<String,Object> deleteUser(@RequestParam Long userId) {
-        Map<String, Object> modelMap = new HashMap<>();
         if (!userService.deleteUserByUserId(userId).equals(0)) {
-            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            return ResultMessage.successMessage();
         }else {
-            modelMap.put(MessageConstant.MESSAGE, "删除失败");
+            return ResultMessage.waringMessage("删除失败");
         }
-        return modelMap;
     }
     /*
      * @Author 李雷
@@ -387,15 +352,13 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/changeHeadImg", method = RequestMethod.POST)
     private Map<String,Object> changeHeadImg(@RequestParam String imgUrl) {
-        Map<String, Object> modelMap = new HashMap<>();
         User user = (User) session.getAttribute("user");
         user.setUserProfilePhoto(imgUrl);
         if (!userService.updateUserSelective(user).equals(0)) {
-            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            return ResultMessage.successMessage();
         }else {
-            modelMap.put(MessageConstant.MESSAGE, "更改失败！");
+            return ResultMessage.waringMessage("更改失败！");
         }
-        return modelMap;
     }
     /*
      * @Author 李雷
@@ -409,8 +372,7 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/ifHaveSame", method = RequestMethod.POST)
     private Map<String,Object> checkUserName(String userName, String email, Long tel, @RequestParam Long userId) {
-        Map<String, Object> modelMap = new HashMap<>();
-        User user = null;
+        User user;
         //选择判断方式
         if (userName != null) {
             user = userService.selectByUserName(userName);
@@ -419,15 +381,14 @@ public class UserController extends BaseController{
         } else if (tel != null) {
             user = userService.selectByTel(tel);
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "请选择判断条件！");
+            return ResultMessage.waringMessage("请选择判断条件！");
         }
         //抛出自己
         if (user != null && !user.getUserId().equals(userId)) {
-            modelMap.put(MessageConstant.MESSAGE, true);
+            return ResultMessage.successMessageBoolean(true);
         } else {
-            modelMap.put(MessageConstant.MESSAGE, false);
+            return ResultMessage.successMessageBoolean(false);
         }
-        return modelMap;
     }
     /*
      * @Author 李雷
@@ -441,15 +402,12 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/setShowUser", method = RequestMethod.POST)
     private Map<String,Object> setShowUser(@RequestParam Long userId){
-        Map<String,Object> modelMap = new HashMap<>();
         User user = userService.selectByPrimaryKey(userId);
         if (user != null) {
-            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-            session.setAttribute("showUser", user);
+            return ResultMessage.successMessageResult("showUser", user);
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "获取失败！");
+            return ResultMessage.waringMessage("获取失败！");
         }
-        return modelMap;
     }
     /*
      * @Author 李雷
@@ -463,16 +421,13 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/getShowUser", method = RequestMethod.POST)
     private Map<String,Object> getShowUser(){
-        Map<String,Object> modelMap = new HashMap<>();
         User user = (User) session.getAttribute("showUser");
         if (user != null) {
-            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-            modelMap.put("user", user);
             session.removeAttribute("showUser");
+            return ResultMessage.successMessageResult("user", user);
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "获取失败！");
+            return ResultMessage.waringMessage("获取失败！");
         }
-        return modelMap;
     }
     /*
      * @Author 李雷
@@ -486,15 +441,12 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/ifAdmin", method = RequestMethod.POST)
     private Map<String,Object> ifAdmin(){
-        Map<String,Object> modelMap = new HashMap<>();
         User user = (User) session.getAttribute("user");
         if (user != null) {
-            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-            modelMap.put("result", RoleConstant.adminNum.equals(user.getUserRole()));
+            return ResultMessage.successMessageResult("result", RoleConstant.adminNum.equals(user.getUserRole()));
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+            return ResultMessage.waringMessage("未登录！");
         }
-        return modelMap;
     }
 
     /**
@@ -506,22 +458,19 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/addAdmin", method = RequestMethod.POST)
     private Map<String,Object> addAdmin(@RequestBody UserParam userParam){
-        Map<String,Object> modelMap = new HashMap<>();
         User user = (User) session.getAttribute("user");
-        if (user.getUserId().equals(userParam.getUserId())) {
-            modelMap.put(MessageConstant.MESSAGE, "您已经是管理员了！");
-            return modelMap;
-        }
-        if (userParam != null) {
+        if (user != null) {
+            if (user.getUserId().equals(userParam.getUserId())) {
+                return ResultMessage.waringMessage("您已经是管理员了！");
+            }
             if (userService.addAdmin(userParam) > 0) {
-                modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+                return ResultMessage.successMessage();
             } else {
-                modelMap.put(MessageConstant.MESSAGE, "设置管理员失败！");
+                return ResultMessage.waringMessage("设置管理员失败！");
             }
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "请检查参数！");
+            return ResultMessage.waringMessage("未登录！");
         }
-        return modelMap;
     }
     /**
      * @description 设置用户
@@ -532,18 +481,15 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/removeAdmin", method = RequestMethod.POST)
     private Map<String,Object> removeAdmin(@RequestBody UserParam userParam){
-        Map<String,Object> modelMap = new HashMap<>();
         User user = (User) session.getAttribute("user");
         if (user.getUserId().equals(userParam.getUserId())) {
-            modelMap.put(MessageConstant.MESSAGE, "您不能移除自己的管理员身份！");
-            return modelMap;
+            return ResultMessage.waringMessage("您不能移除自己的管理员身份！");
         }
         if (userService.removeAdmin(userParam) > 0) {
-            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            return ResultMessage.successMessage();
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "设置用户失败！");
+            return ResultMessage.waringMessage("设置用户失败！");
         }
-        return modelMap;
     }
 
     /*
@@ -559,20 +505,17 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/setMailCode", method = RequestMethod.POST)
     private Map<String,Object> setMailCode(@RequestParam String mail){
-        Map<String,Object> modelMap = new HashMap<>();
         if (userService.selectByEmail(mail) == null) {
-            modelMap.put(MessageConstant.MESSAGE, "该邮箱未注册！");
-            return modelMap;
+            return ResultMessage.waringMessage("该邮箱未注册！");
         }
         //生成随机验证码
 //        Integer code = (int)((Math.random()*9+1)*100000);
         String code = NumberUtil.getCode();
-        MailUtils.SendMail(mail, code.toString(), "SSM个人博客系统给您发送的登录验证码为：");
-        modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+        MailUtils.SendMail(mail, code, "SSM个人博客系统给您发送的登录验证码为：");
         //设置预登陆的邮箱和验证码
         session.setAttribute("mailCode", code);
         session.setAttribute("loginMail", mail);
-        return modelMap;
+        return ResultMessage.successMessage();
     }
     /*
      * @Author 李雷
@@ -587,14 +530,12 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/mailLogin", method = RequestMethod.POST)
     private Map<String,Object> mailLogin(@RequestBody UserLoginParam userLoginParam){
-        Map<String,Object> modelMap = new HashMap<>();
         //非密码登录用户
         if (userLoginParam.getMail().equals("") || userLoginParam.getMail() == null) {
             //验证登录邮箱，避免更换了登录邮箱
             String loginEmail = (String) session.getAttribute("loginMail");
             if (!loginEmail.equals("") && !userLoginParam.getMail().equals(loginEmail)) {
-                modelMap.put(MessageConstant.MESSAGE, "邮箱不匹配！");
-                return modelMap;
+                return ResultMessage.waringMessage("邮箱不匹配！");
             }
         }
         //获取邮箱用户
@@ -604,23 +545,20 @@ public class UserController extends BaseController{
             //密码校验
             if (user != null && BCrypt.checkpw(userLoginParam.getPassword(), user.getUserPassword())) {
                 session.setAttribute("user", user);
-                modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+                return ResultMessage.successMessage();
             } else {
-                modelMap.put(MessageConstant.MESSAGE, "密码错误！");
-                return modelMap;
+                return ResultMessage.waringMessage("密码错误！");
             }
         } else {
             //验证码校验
             if (!userLoginParam.getCode().equals(session.getAttribute("mailCode"))) {
-                modelMap.put(MessageConstant.MESSAGE, "验证码错误！");
-                return modelMap;
+                return ResultMessage.waringMessage("验证码错误！");
             } else {
                 session.removeAttribute("mailCode");
                 session.setAttribute("user", user);
-                modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+                return ResultMessage.successMessage();
             }
         }
-        return modelMap;
     }
     /**
      * @description 获取用户信息
@@ -631,14 +569,11 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/getArticleUser", method = RequestMethod.POST)
     private Map<String,Object> getArticleUser(@RequestBody UserParam userParam){
-        Map<String,Object> modelMap = new HashMap<>();
         UserResultBean userResultBean = userService.getUserById(userParam);
         if (userResultBean != null) {
-            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
-            modelMap.put("articleUser",userResultBean);
+            return ResultMessage.successMessageResult("articleUser", userResultBean);
         } else {
-            modelMap.put(MessageConstant.MESSAGE, "未查询到该用户信息！");
+            return ResultMessage.waringMessage("未查询到该用户信息！");
         }
-        return modelMap;
     }
 }

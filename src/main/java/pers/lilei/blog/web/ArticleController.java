@@ -1,11 +1,9 @@
 package pers.lilei.blog.web;
 
 import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.page.PageParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import pers.lilei.blog.bean.resultBean.ArticleBaseInfoBean;
 import pers.lilei.blog.constant.ArticleConstant;
 import pers.lilei.blog.constant.MessageConstant;
 import pers.lilei.blog.bean.ArticleWithBLOBs;

@@ -9,7 +9,6 @@ import pers.lilei.blog.bean.User;
 import pers.lilei.blog.bean.UserFriend;
 import pers.lilei.blog.param.UserBaseInfoParam;
 import pers.lilei.blog.param.UserFunParam;
-import pers.lilei.blog.param.UserParam;
 import pers.lilei.blog.service.UserFriendService;
 import pers.lilei.blog.service.UserService;
 
