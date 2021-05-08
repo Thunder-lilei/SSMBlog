@@ -194,6 +194,21 @@
     (select article_id from tbl_article_label where label_id = #{labelId,jdbcType=BIGINT})
     AND user_id = #{userId,jdbcType=BIGINT}
   </select>
+  <select id="countLabelAboutArticleWithUserIdAndKey" resultType="int">
+    select count(*)
+    from tbl_article
+    where article_id in
+    (select article_id from tbl_article_label where label_id = #{param.labelId,jdbcType=BIGINT})
+    AND user_id = #{user.userId,jdbcType=BIGINT}
+  </select>
+  <select id="countSortAboutArticleWithUserIdAndKey" resultType="int">
+    select count(*)
+    from tbl_article
+    where article_id in
+    (select article_id from tbl_article_sort where sort_id = #{param.sortId,jdbcType=BIGINT})
+    AND user_id = #{user.userId,jdbcType=BIGINT}
+    AND CONCAT(article_title) LIKE "%"#{key,jdbcType=VARCHAR}"%"
+  </select>
   <select id="selectLabelAboutArticleWithUserIdAndKey" resultType="pers.lilei.blog.bean.resultBean.ArticleBaseInfoBean">
     select
     <include refid="Base_Column_List" />
@@ -481,6 +496,22 @@
     from tbl_article
     where user_id = #{param.userParam.userId}
     LIMIT #{param.pageParam.pageIndex},#{param.pageParam.pageSize}
+  </select>
+  <select id="selectUserArticleBaseInfoWithKey" resultType="pers.lilei.blog.bean.resultBean.ArticleBaseInfoBean">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_article
+    where user_id = #{user.userId}
+    AND CONCAT(article_title) LIKE "%"#{param.key,jdbcType=VARCHAR}"%"
+    LIMIT #{param.pageParam.pageIndex},#{param.pageParam.pageSize}
+  </select>
+  <select id="countUserArticleBaseInfoWithKey" resultType="int">
+    select count(*)
+    from tbl_article
+    where user_id = #{user.userId}
+    AND CONCAT(article_title) LIKE "%"#{param.key,jdbcType=VARCHAR}"%"
   </select>
   <select id="selectArticleById" resultType="pers.lilei.blog.bean.resultBean.ArticleBaseInfoBean">
     select

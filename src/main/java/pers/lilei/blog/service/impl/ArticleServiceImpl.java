@@ -94,6 +94,16 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<ArticleBaseInfoBean> selectUserArticleBaseInfoWithKey(PageKeyParam pageKeyParam, UserParam userParam) {
+        return articleMapper.selectUserArticleBaseInfoWithKey(pageKeyParam, userParam);
+    }
+
+    @Override
+    public int countUserArticleBaseInfoWithKey(PageKeyParam pageKeyParam, UserParam userParam) {
+        return articleMapper.countUserArticleBaseInfoWithKey(pageKeyParam, userParam);
+    }
+
+    @Override
     public ArticleWithBLOBs selectArticleById(ArticleParam articleParam) {
         return articleMapper.selectByPrimaryKey(articleParam.getArticleId());
     }
@@ -110,6 +120,24 @@ public class ArticleServiceImpl implements ArticleService {
         PageHelper.startPage(pageNow, pageSize);
         List<ArticleBaseInfoBean> articleBaseInfoBeanList = articleMapper.selectSortAboutArticleWithUserId(sortId, userId);
         return new PageInfo<>(articleBaseInfoBeanList);
+    }
+
+    @Override
+    public List<ArticleBaseInfoBean> getSortLabelAboutArticleWithUserIdAndKey(PageSortLabelKeyParam pageSortLabelKeyParam, UserParam userParam) {
+        if (pageSortLabelKeyParam.getLabelId() != null) {
+            return articleMapper.selectLabelAboutArticleWithUserIdAndKey(pageSortLabelKeyParam, userParam);
+        } else {
+            return articleMapper.selectSortAboutArticleWithUserIdAndKey(pageSortLabelKeyParam, userParam);
+        }
+    }
+
+    @Override
+    public int countSortLabelAboutArticleWithUserIdAndKey(PageSortLabelKeyParam pageSortLabelKeyParam, UserParam userParam) {
+        if (pageSortLabelKeyParam.getLabelId() != null) {
+            return articleMapper.countLabelAboutArticleWithUserIdAndKey(pageSortLabelKeyParam, userParam);
+        } else {
+            return articleMapper.countSortAboutArticleWithUserIdAndKey(pageSortLabelKeyParam, userParam);
+        }
     }
 
     @Override

@@ -73,6 +73,34 @@ public interface ArticleService {
      */
     List<ArticleBaseInfoBean> selectUserArticleBaseInfo(PageUserParam pageUserParam);
     /**
+     * @description 关键词分页查询用户分类博文
+     * @author lilei
+     * @Time 2021/5/9
+     * @updateTime 2021/5/9
+     */
+    List<ArticleBaseInfoBean> getSortLabelAboutArticleWithUserIdAndKey(PageSortLabelKeyParam pageSortLabelKeyParam, UserParam userParam);
+    /**
+     * @description 统计关键词分页查询用户分类博文数量
+     * @author lilei
+     * @Time 2021/5/9
+     * @updateTime 2021/5/9
+     */
+    int countSortLabelAboutArticleWithUserIdAndKey(PageSortLabelKeyParam pageSortLabelKeyParam, UserParam userParam);
+    /**
+     * @description 关键词分页查询用户博文列表
+     * @author lilei
+     * @Time 2021/5/8
+     * @updateTime 2021/5/8
+     */
+    List<ArticleBaseInfoBean> selectUserArticleBaseInfoWithKey(PageKeyParam pageKeyParam, UserParam userParam);
+    /**
+     * @description 统计关键词查询用户博文列表数量
+     * @author lilei
+     * @Time 2021/5/8
+     * @updateTime 2021/5/8
+     */
+    int countUserArticleBaseInfoWithKey(PageKeyParam pageKeyParam, UserParam userParam);
+    /**
      * @description 查询博文
      * @author lilei
      * @Time 2021/4/24

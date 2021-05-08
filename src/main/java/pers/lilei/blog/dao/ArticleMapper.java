@@ -34,6 +34,14 @@ public interface ArticleMapper {
 
     List<ArticleBaseInfoBean> selectLabelAboutArticleWithUserId(@Param("labelId") Long labelId, @Param("userId") Long userId);
 
+    List<ArticleBaseInfoBean> selectSortAboutArticleWithUserIdAndKey(@Param("param") PageSortLabelKeyParam pageSortLabelKeyParam, @Param("user") UserParam userParam);
+
+    List<ArticleBaseInfoBean> selectLabelAboutArticleWithUserIdAndKey(@Param("param") PageSortLabelKeyParam pageSortLabelKeyParam, @Param("user") UserParam userParam);
+
+    int countSortAboutArticleWithUserIdAndKey(@Param("param") PageSortLabelKeyParam pageSortLabelKeyParam, @Param("user") UserParam userParam);
+
+    int countLabelAboutArticleWithUserIdAndKey(@Param("param") PageSortLabelKeyParam pageSortLabelKeyParam, @Param("user") UserParam userParam);
+
     List<ArticleBaseInfoBean> selectSortAboutArticleWithUserIdAndKey(@Param("sortId") Long sortId, @Param("userId") Long userId, @Param("key") String key);
 
     List<ArticleBaseInfoBean> selectLabelAboutArticleWithUserIdAndKey(@Param("labelId") Long labelId, @Param("userId") Long userId, @Param("key") String key);
@@ -43,6 +51,10 @@ public interface ArticleMapper {
     List<ArticleBaseInfoBean> selectAllArticleBaseInfoByUserId(Long userId);
 
     List<ArticleBaseInfoBean> selectUserArticleBaseInfo(@Param("param")PageUserParam pageUserParam);
+
+    List<ArticleBaseInfoBean> selectUserArticleBaseInfoWithKey(@Param("param")PageKeyParam pageKeyParam, @Param("user") UserParam userParam);
+
+    int countUserArticleBaseInfoWithKey(@Param("param")PageKeyParam pageKeyParam, @Param("user") UserParam userParam);
 
     List<ArticleWithUserBaseInfoParam> selectArticleByKey(String key);
 

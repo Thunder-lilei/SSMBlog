@@ -10,10 +10,7 @@ import pers.lilei.blog.bean.ArticleWithBLOBs;
 import pers.lilei.blog.bean.Label;
 import pers.lilei.blog.bean.Sort;
 import pers.lilei.blog.bean.User;
-import pers.lilei.blog.param.ArticleParam;
-import pers.lilei.blog.param.PageParam;
-import pers.lilei.blog.param.PageUserParam;
-import pers.lilei.blog.param.UserParam;
+import pers.lilei.blog.param.*;
 import pers.lilei.blog.service.*;
 
 import java.util.*;
@@ -54,6 +51,28 @@ public class ArticleController extends BaseController{
         if (user != null) {
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             modelMap.put("articlePageInfo", articleService.selectAllArticleBaseInfoByUserId(pageNow, pageSize, user.getUserId()));
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
+    /**
+     * @description 关键词分页查询当前用户所有博文
+     * @author lilei
+     * @Time 2021/5/8
+     * @updateTime 2021/5/8
+     */
+    @ResponseBody
+    @RequestMapping(value = "/selectAllArticleBaseInfoWithKey", method = RequestMethod.POST)
+    private Map<String,Object> selectAllArticleBaseInfoWithKey(@RequestBody PageKeyParam pageKeyParam){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            UserParam userParam = new UserParam();
+            userParam.setUserId(user.getUserId());
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("articleList", articleService.selectUserArticleBaseInfoWithKey(pageKeyParam, userParam));
+            modelMap.put("articleListCount", articleService.countUserArticleBaseInfoWithKey(pageKeyParam, userParam));
         } else {
             modelMap.put(MessageConstant.MESSAGE, "未登录！");
         }
@@ -312,6 +331,28 @@ public class ArticleController extends BaseController{
         if (user != null) {
             modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
             modelMap.put("articlePageInfo", articleService.getSortAboutArticleWithUserId(pageNow, pageSize, sortId, user.getUserId()));
+        } else {
+            modelMap.put(MessageConstant.MESSAGE, "未登录！");
+        }
+        return modelMap;
+    }
+    /**
+     * @description 关键词分页获取当前用户当前分类、标签的博文
+     * @author lilei
+     * @Time 2021/5/9
+     * @updateTime 2021/5/9
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getSortLabelAboutArticleWithKey", method = RequestMethod.POST)
+    private Map<String,Object> getSortLabelAboutArticleWithKey(@RequestBody PageSortLabelKeyParam pageSortLabelKeyParam){
+        Map<String,Object> modelMap = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            UserParam userParam = new UserParam();
+            userParam.setUserId(user.getUserId());
+            modelMap.put(MessageConstant.MESSAGE, MessageConstant.MESSAGE_SUCCESS);
+            modelMap.put("articleList", articleService.getSortLabelAboutArticleWithUserIdAndKey(pageSortLabelKeyParam, userParam));
+            modelMap.put("articleListCount", articleService.countSortLabelAboutArticleWithUserIdAndKey(pageSortLabelKeyParam, userParam));
         } else {
             modelMap.put(MessageConstant.MESSAGE, "未登录！");
         }
